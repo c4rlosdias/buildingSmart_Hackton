@@ -17,7 +17,7 @@
   <idcs:constraint name="DirectNonWeldedPressure">
 
     <idcs:annotation>
-      <idcs:normativeText>
+      <idcs:normativeText xml:lang="en">
         The rupture pressure shall be at least five times the nominal charging pressure and not less than 5 MPa for directly pressurised extinguishers with non-welded joints.
       </idcs:normativeText>
       <idcs:description>
