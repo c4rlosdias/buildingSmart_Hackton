@@ -10,195 +10,156 @@
     a owl:Ontology ;
     owl:imports <https://example.org/feso> ;
     rdfs:label "FESO Rules Ontology (Complete)"@en ;
-    owl:versionInfo "2.0.0" .
+    owl:versionInfo "3.0.0" .
 
 #################################################################
-# BASIC REQUIREMENTS (IDS-COMPATIBLE)
+# BASIC REQUIREMENTS (IDS)
 #################################################################
 
 fr:ExtinguisherMustHaveType
     a feso:NormativeRule ;
-    rdfs:label "Extinguisher must have type" ;
+    rdfs:label "Extinguisher must have type"@en ;
+    rdfs:comment "Todo extintor deve possuir um tipo definido."@pt ;
     feso:appliesToClass feso:FireExtinguisher ;
     feso:hasRequirementText "Every extinguisher shall have a defined type." ;
-    fr:isExpressibleInIDS true ;
-    fr:isExpressibleInIDCS false .
+    feso:isExpressibleInIDS true ;
+    feso:isExpressibleInIDCS false .
 
 fr:ExtinguisherMustHaveCapacity
     a feso:NormativeRule ;
-    rdfs:label "Extinguisher must have capacity" ;
+    rdfs:label "Extinguisher must have capacity"@en ;
+    rdfs:comment "Todo extintor deve possuir uma capacidade extintora."@pt ;
     feso:appliesToClass feso:FireExtinguisher ;
     feso:hasRequirementText "Every extinguisher shall have an extinguishing capacity rating." ;
-    fr:isExpressibleInIDS true ;
-    fr:isExpressibleInIDCS false .
+    feso:isExpressibleInIDS true ;
+    feso:isExpressibleInIDCS false .
 
 fr:ExtinguisherMustBeCertified
     a feso:NormativeRule ;
-    rdfs:label "Extinguisher must be certified" ;
+    rdfs:label "Extinguisher must be certified"@en ;
+    rdfs:comment "Todo extintor deve ser certificado."@pt ;
     feso:appliesToClass feso:FireExtinguisher ;
     feso:hasRequirementText "All extinguishers shall be certified." ;
-    fr:isExpressibleInIDS true ;
-    fr:isExpressibleInIDCS false .
-
-fr:AllowedExtinguisherTypes
-    a feso:NormativeRule ;
-    rdfs:label "Allowed extinguisher types" ;
-    feso:hasRequirementText "Allowed types include Water, CO2, Foam, Dry Chemical BC, Dry Chemical ABC." ;
-    fr:isExpressibleInIDS true ;
-    fr:isExpressibleInIDCS false .
-
-#################################################################
-# MINIMUM PROVISION
-#################################################################
+    feso:isExpressibleInIDS true ;
+    feso:isExpressibleInIDCS false .
 
 fr:MinimumOneExtinguisherPerStorey
     a feso:NormativeRule ;
-    rdfs:label "Minimum one extinguisher per storey" ;
+    rdfs:label "Minimum one extinguisher per storey"@en ;
+    rdfs:comment "Cada pavimento deve possuir ao menos um extintor."@pt ;
     feso:appliesToClass feso:BuildingStorey ;
     feso:hasRequirementText "Each storey shall have at least one extinguisher." ;
-    fr:isExpressibleInIDS true ;
-    fr:isExpressibleInIDCS false .
+    feso:isExpressibleInIDS true ;
+    feso:isExpressibleInIDCS false .
 
 #################################################################
-# COMPATIBILITY RULES
+# COMPATIBILITY (IDCS)
 #################################################################
 
 fr:WaterCompatibility
     a feso:NormativeRule ;
-    rdfs:label "Water compatibility" ;
+    rdfs:label "Water compatibility"@en ;
+    rdfs:comment "Extintores de água não devem ser usados em incêndios classe C."@pt ;
     feso:hasAgentType feso:Water ;
     feso:allowsFireClass feso:ClassA ;
     feso:forbidsFireClass feso:ClassC ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
+    feso:isExpressibleInIDS false ;
+    feso:isExpressibleInIDCS true .
 
 fr:CO2Compatibility
     a feso:NormativeRule ;
-    rdfs:label "CO2 compatibility" ;
+    rdfs:label "CO2 compatibility"@en ;
+    rdfs:comment "Extintores de CO2 são adequados para classes B e C."@pt ;
     feso:hasAgentType feso:CO2 ;
     feso:allowsFireClass feso:ClassB, feso:ClassC ;
     feso:forbidsFireClass feso:ClassA ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
-
-fr:DryChemicalABCCompatibility
-    a feso:NormativeRule ;
-    rdfs:label "Dry Chemical ABC compatibility" ;
-    feso:hasAgentType feso:DryChemicalABC ;
-    feso:allowsFireClass feso:ClassA, feso:ClassB, feso:ClassC ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
+    feso:isExpressibleInIDS false ;
+    feso:isExpressibleInIDCS true .
 
 #################################################################
-# PRESSURE RULES
+# PRESSURE RULES (IDCS)
 #################################################################
 
 fr:DirectNonWeldedPressure
     a feso:NormativeRule ;
-    feso:hasFormula "PR >= 5 * PNC AND PR >= 5 MPa" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
+    rdfs:label "Direct pressurisation non-welded"@en ;
+    rdfs:comment "PR ≥ 5 × PNC e PR ≥ 5 MPa para extintores com pressurização direta e união não soldada."@pt ;
+    feso:hasFormula "BurstPressure >= 5 * NominalChargingPressure AND BurstPressure >= 5 MPa" ;
+    feso:isExpressibleInIDS false ;
+    feso:isExpressibleInIDCS true .
 
 fr:DirectWeldedPressure
     a feso:NormativeRule ;
-    feso:hasFormula "PR >= 8 * PNC AND PR >= 5 MPa" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
-
-fr:IndirectNonWeldedPressure
-    a feso:NormativeRule ;
-    feso:hasFormula "PR >= 4 * PNC AND PR >= 5 MPa" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
-
-fr:IndirectWeldedPressure
-    a feso:NormativeRule ;
-    feso:hasFormula "PR >= 7 * PNC AND PR >= 5 MPa" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
+    rdfs:label "Direct pressurisation welded"@en ;
+    rdfs:comment "PR ≥ 8 × PNC e PR ≥ 5 MPa para extintores com união soldada."@pt ;
+    feso:hasFormula "BurstPressure >= 8 * NominalChargingPressure AND BurstPressure >= 5 MPa" ;
+    feso:isExpressibleInIDS false ;
+    feso:isExpressibleInIDCS true .
 
 #################################################################
-# CLASS A COVERAGE
+# CLASS A COVERAGE (IDCS)
 #################################################################
-
-fr:LightRiskClassACoverage
-    a feso:NormativeRule ;
-    feso:hasFormula "RequiredUnits = ceil(area / 500)" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
 
 fr:ModerateRiskClassACoverage
     a feso:NormativeRule ;
-    feso:hasFormula "RequiredUnits = ceil(area / 250)" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
-
-fr:HighRiskClassACoverage
-    a feso:NormativeRule ;
-    feso:hasFormula "RequiredUnits = ceil(area / 150)" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
+    rdfs:label "Class A coverage moderate risk"@en ;
+    rdfs:comment "Cobertura máxima de 250 m² por unidade extintora em risco moderado."@pt ;
+    feso:hasFormula "RequiredUnits = ceil(FloorArea / 250)" ;
+    feso:isExpressibleInIDS false ;
+    feso:isExpressibleInIDCS true .
 
 #################################################################
-# CLASS B COVERAGE
+# CLASS B COVERAGE (IDCS)
 #################################################################
 
 fr:ModerateRiskClassB
     a feso:NormativeRule ;
-    feso:hasFormula "RequiredB = max(area * 1, 20)" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
-
-fr:HighRiskClassB
-    a feso:NormativeRule ;
-    feso:hasFormula "RequiredB = max(area * 2, 40)" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
+    rdfs:label "Class B moderate risk"@en ;
+    rdfs:comment "1 unidade B por m² com mínimo de 20B."@pt ;
+    feso:hasFormula "RequiredB = max(LiquidSurfaceArea * 1, 20)" ;
+    feso:isExpressibleInIDS false ;
+    feso:isExpressibleInIDCS true .
 
 #################################################################
-# TRAVEL DISTANCE
+# TRAVEL DISTANCE (IDCS)
 #################################################################
-
-fr:LightRiskTravelDistance
-    a feso:NormativeRule ;
-    feso:hasMaximumValue "20"^^xsd:decimal ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
-
-fr:ModerateRiskTravelDistance
-    a feso:NormativeRule ;
-    feso:hasMaximumValue "20"^^xsd:decimal ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
 
 fr:HighRiskTravelDistance
     a feso:NormativeRule ;
+    rdfs:label "High risk travel distance"@en ;
+    rdfs:comment "Distância máxima de percurso de 15 m em risco alto."@pt ;
     feso:hasMaximumValue "15"^^xsd:decimal ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
+    feso:isExpressibleInIDS false ;
+    feso:isExpressibleInIDCS true .
 
 #################################################################
-# MOUNTING HEIGHT
+# INSTALLATION HEIGHT (IDCS)
 #################################################################
 
 fr:LowMassMountingHeight
     a feso:NormativeRule ;
-    feso:hasFormula "mass <= 4 => height <= 1.60" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
+    rdfs:label "Mounting height low mass"@en ;
+    rdfs:comment "Extintores até 4 kg devem ter altura máxima de 1,60 m."@pt ;
+    feso:hasFormula "AgentMass <= 4 => MountingHeight <= 1.60" ;
+    feso:isExpressibleInIDS false ;
+    feso:isExpressibleInIDCS true .
 
 fr:HighMassMountingHeight
     a feso:NormativeRule ;
-    feso:hasFormula "mass > 4 => height <= 1.00" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
+    rdfs:label "Mounting height high mass"@en ;
+    rdfs:comment "Extintores acima de 4 kg devem ter altura máxima de 1,00 m."@pt ;
+    feso:hasFormula "AgentMass > 4 => MountingHeight <= 1.00" ;
+    feso:isExpressibleInIDS false ;
+    feso:isExpressibleInIDCS true .
 
 #################################################################
-# HYDROSTATIC TEST
+# HYDROSTATIC TEST (IDCS)
 #################################################################
 
 fr:HydrostaticTestValidity
     a feso:NormativeRule ;
-    feso:hasFormula "now - testDate <= 5 years" ;
-    fr:isExpressibleInIDS false ;
-    fr:isExpressibleInIDCS true .
+    rdfs:label "Hydrostatic test validity"@en ;
+    rdfs:comment "O ensaio hidrostático deve ocorrer a cada 5 anos."@pt ;
+    feso:hasFormula "currentDate - HydrostaticTestDate <= 5 years" ;
+    feso:isExpressibleInIDS false ;
+    feso:isExpressibleInIDCS true .
