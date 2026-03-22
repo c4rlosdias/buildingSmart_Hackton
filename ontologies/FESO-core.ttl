@@ -99,5 +99,10 @@ feso:hasUnit a owl:DatatypeProperty .
 
 feso:hasSourceSection a owl:DatatypeProperty .
 
-feso:isComputableByIDS a owl:DatatypeProperty .
-feso:isComputableBySHACLAlone a owl:DatatypeProperty .
+feso:isExpressibleInIDS a owl:DatatypeProperty ;
+    rdfs:domain feso:NormativeRule ;
+    rdfs:range xsd:boolean .
+
+feso:isExpressibleInIDCS a owl:DatatypeProperty ;
+    rdfs:domain feso:NormativeRule ;
+    rdfs:range xsd:boolean .
