@@ -1,0 +1,14 @@
+{"timestamp": "2026-03-22T20:10:11.060318", "capability": "ListIfcBuildingsCapability", "params": {}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:10:30.440267", "capability": "ListIfcElementsCapability", "params": {"ifc_class": "IfcWall"}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:10:40.984136", "capability": "InspectIfcElementCapability", "params": {"global_id": "1vpSl7B4TC3BvIL8jS9Vja"}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:15:41.741829", "capability": "InspectIfcElementCapability", "params": {"global_id": "1vpSl7B4TC3BvIL8jS9Vja"}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:19:29.663766", "capability": "InspectIfcElementCapability", "params": {"global_id": "1vpSl7B4TC3BvIL8jS9Vja"}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:20:09.441902", "capability": "InspectIfcElementCapability", "params": {"global_id": "1vpSl7B4TC3BvIL8jS9Vja"}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:22:17.398523", "capability": "InspectIfcElementCapability", "params": {"global_id": "1vpSl7B4TC3BvIL8jS9Vja"}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:25:33.102746", "capability": "ListIfcPropertySetsCapability", "params": {"global_id": "1vpSl7B4TC3BvIL8jS9Vja"}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:29:08.563301", "capability": "ListIfcPropertySetsCapability", "params": {"global_id": "1vpSl7B4TC3BvIL8jS9Vja"}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:29:19.772637", "capability": "ListIfcBuildingsCapability", "params": {}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:29:40.240921", "capability": "ListIfcElementsCapability", "params": {"ifc_class": "IfcWall"}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:33:46.560739", "capability": "ListIfcElementsCapability", "params": {"ifc_class": "IfcWall"}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:33:59.348388", "capability": "InspectIfcElementCapability", "params": {"global_id": "1vpSl7B4TC3BvIL8jS9Vja"}, "ifc_file": "CASA_3D.ifc"}
+{"timestamp": "2026-03-22T20:34:08.894512", "capability": "ListIfcBuildingsCapability", "params": {}, "ifc_file": "CASA_3D.ifc"}
