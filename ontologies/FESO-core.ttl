@@ -17,10 +17,14 @@
 # DOMAIN CLASSES
 #################################################################
 
+feso:ifc_equivalentClass rdf:type owl:AnnotationProperty .
+
 feso:FireExtinguisher a owl:Class ;
+    feso:ifc_equivalentClass "IfcFireSuppressionTerminal" ;
     rdfs:label "Fire Extinguisher"@en .
 
 feso:BuildingStorey a owl:Class ;
+    feso:ifc_equivalentClass "IfcBuildingStorey" ;
     rdfs:label "Building Storey"@en .
 
 feso:RiskClass a owl:Class .
