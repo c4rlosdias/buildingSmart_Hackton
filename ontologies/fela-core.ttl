@@ -17,8 +17,12 @@
 # DOMAIN CLASSES
 #################################################################
 
-fela:FireExtinguisher a owl:Class .
-fela:BuildingStorey a owl:Class .
+fela:ifc_equivalentClass rdf:type owl:AnnotationProperty .
+
+fela:FireExtinguisher a owl:Class ;
+    fela:ifc_equivalentClass "IfcFireSuppressionTerminal" .
+fela:BuildingStorey a owl:Class ;
+    fela:ifc_equivalentClass "IfcBuildingStorey" .
 
 fela:RiskClass a owl:Class .
 fela:FireClass a owl:Class .
