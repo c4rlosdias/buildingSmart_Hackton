@@ -2,7 +2,6 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:  <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
-@prefix dct:  <http://purl.org/dc/terms/> .
 
 @prefix feso: <https://example.org/feso#> .
 @prefix fr:   <https://example.org/feso-rules#> .
@@ -10,90 +9,196 @@
 <https://example.org/feso-rules>
     a owl:Ontology ;
     owl:imports <https://example.org/feso> ;
-    rdfs:label "FESO Rules Ontology"@en ;
-    owl:versionInfo "1.0.0" .
+    rdfs:label "FESO Rules Ontology (Complete)"@en ;
+    owl:versionInfo "2.0.0" .
+
+#################################################################
+# BASIC REQUIREMENTS (IDS-COMPATIBLE)
+#################################################################
+
+fr:ExtinguisherMustHaveType
+    a feso:NormativeRule ;
+    rdfs:label "Extinguisher must have type" ;
+    feso:appliesToClass feso:FireExtinguisher ;
+    feso:hasRequirementText "Every extinguisher shall have a defined type." ;
+    fr:isExpressibleInIDS true ;
+    fr:isExpressibleInIDCS false .
+
+fr:ExtinguisherMustHaveCapacity
+    a feso:NormativeRule ;
+    rdfs:label "Extinguisher must have capacity" ;
+    feso:appliesToClass feso:FireExtinguisher ;
+    feso:hasRequirementText "Every extinguisher shall have an extinguishing capacity rating." ;
+    fr:isExpressibleInIDS true ;
+    fr:isExpressibleInIDCS false .
+
+fr:ExtinguisherMustBeCertified
+    a feso:NormativeRule ;
+    rdfs:label "Extinguisher must be certified" ;
+    feso:appliesToClass feso:FireExtinguisher ;
+    feso:hasRequirementText "All extinguishers shall be certified." ;
+    fr:isExpressibleInIDS true ;
+    fr:isExpressibleInIDCS false .
+
+fr:AllowedExtinguisherTypes
+    a feso:NormativeRule ;
+    rdfs:label "Allowed extinguisher types" ;
+    feso:hasRequirementText "Allowed types include Water, CO2, Foam, Dry Chemical BC, Dry Chemical ABC." ;
+    fr:isExpressibleInIDS true ;
+    fr:isExpressibleInIDCS false .
+
+#################################################################
+# MINIMUM PROVISION
+#################################################################
+
+fr:MinimumOneExtinguisherPerStorey
+    a feso:NormativeRule ;
+    rdfs:label "Minimum one extinguisher per storey" ;
+    feso:appliesToClass feso:BuildingStorey ;
+    feso:hasRequirementText "Each storey shall have at least one extinguisher." ;
+    fr:isExpressibleInIDS true ;
+    fr:isExpressibleInIDCS false .
+
+#################################################################
+# COMPATIBILITY RULES
+#################################################################
+
+fr:WaterCompatibility
+    a feso:NormativeRule ;
+    rdfs:label "Water compatibility" ;
+    feso:hasAgentType feso:Water ;
+    feso:allowsFireClass feso:ClassA ;
+    feso:forbidsFireClass feso:ClassC ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
+
+fr:CO2Compatibility
+    a feso:NormativeRule ;
+    rdfs:label "CO2 compatibility" ;
+    feso:hasAgentType feso:CO2 ;
+    feso:allowsFireClass feso:ClassB, feso:ClassC ;
+    feso:forbidsFireClass feso:ClassA ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
+
+fr:DryChemicalABCCompatibility
+    a feso:NormativeRule ;
+    rdfs:label "Dry Chemical ABC compatibility" ;
+    feso:hasAgentType feso:DryChemicalABC ;
+    feso:allowsFireClass feso:ClassA, feso:ClassB, feso:ClassC ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
 
 #################################################################
 # PRESSURE RULES
 #################################################################
 
-fr:DirectNonWeldedPressureRule
+fr:DirectNonWeldedPressure
     a feso:NormativeRule ;
-    feso:appliesToClass feso:FireExtinguisher ;
     feso:hasFormula "PR >= 5 * PNC AND PR >= 5 MPa" ;
-    feso:hasConditionText "Direct pressurisation and non-welded joints." ;
-    feso:isComputableByIDS false ;
-    feso:isComputableBySHACLAlone true .
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
 
-fr:DirectWeldedPressureRule
+fr:DirectWeldedPressure
     a feso:NormativeRule ;
-    feso:appliesToClass feso:FireExtinguisher ;
     feso:hasFormula "PR >= 8 * PNC AND PR >= 5 MPa" ;
-    feso:hasConditionText "Direct pressurisation and welded joints." ;
-    feso:isComputableByIDS false ;
-    feso:isComputableBySHACLAlone true .
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
+
+fr:IndirectNonWeldedPressure
+    a feso:NormativeRule ;
+    feso:hasFormula "PR >= 4 * PNC AND PR >= 5 MPa" ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
+
+fr:IndirectWeldedPressure
+    a feso:NormativeRule ;
+    feso:hasFormula "PR >= 7 * PNC AND PR >= 5 MPa" ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
 
 #################################################################
-# CLASS B RULES
+# CLASS A COVERAGE
 #################################################################
 
-fr:ModerateRiskClassBRule
+fr:LightRiskClassACoverage
     a feso:NormativeRule ;
-    feso:appliesToClass feso:BuildingStorey ;
-    feso:hasRiskClass feso:ModerateRisk ;
-    feso:hasFormula "1 B unit per m2 of liquid surface, minimum 20B" ;
-    feso:hasMinimumValue "20"^^xsd:decimal ;
-    feso:isComputableByIDS false ;
-    feso:isComputableBySHACLAlone false .
+    feso:hasFormula "RequiredUnits = ceil(area / 500)" ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
 
-fr:HighRiskClassBRule
+fr:ModerateRiskClassACoverage
     a feso:NormativeRule ;
-    feso:appliesToClass feso:BuildingStorey ;
-    feso:hasRiskClass feso:HighRisk ;
-    feso:hasFormula "2 B units per m2 of liquid surface, minimum 40B" ;
-    feso:hasMinimumValue "40"^^xsd:decimal ;
-    feso:isComputableByIDS false ;
-    feso:isComputableBySHACLAlone false .
+    feso:hasFormula "RequiredUnits = ceil(area / 250)" ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
+
+fr:HighRiskClassACoverage
+    a feso:NormativeRule ;
+    feso:hasFormula "RequiredUnits = ceil(area / 150)" ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
+
+#################################################################
+# CLASS B COVERAGE
+#################################################################
+
+fr:ModerateRiskClassB
+    a feso:NormativeRule ;
+    feso:hasFormula "RequiredB = max(area * 1, 20)" ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
+
+fr:HighRiskClassB
+    a feso:NormativeRule ;
+    feso:hasFormula "RequiredB = max(area * 2, 40)" ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
 
 #################################################################
 # TRAVEL DISTANCE
 #################################################################
 
-fr:HighRiskTravelDistanceRule
+fr:LightRiskTravelDistance
     a feso:NormativeRule ;
-    feso:appliesToClass feso:BuildingStorey ;
-    feso:hasRiskClass feso:HighRisk ;
+    feso:hasMaximumValue "20"^^xsd:decimal ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
+
+fr:ModerateRiskTravelDistance
+    a feso:NormativeRule ;
+    feso:hasMaximumValue "20"^^xsd:decimal ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
+
+fr:HighRiskTravelDistance
+    a feso:NormativeRule ;
     feso:hasMaximumValue "15"^^xsd:decimal ;
-    feso:hasUnit "m" ;
-    feso:isComputableByIDS false ;
-    feso:isComputableBySHACLAlone false .
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
 
 #################################################################
 # MOUNTING HEIGHT
 #################################################################
 
-fr:LowMassMountingRule
+fr:LowMassMountingHeight
     a feso:NormativeRule ;
-    feso:appliesToClass feso:FireExtinguisher ;
-    feso:hasFormula "mass <= 4 kg => height <= 1.60 m" ;
-    feso:isComputableByIDS false ;
-    feso:isComputableBySHACLAlone true .
+    feso:hasFormula "mass <= 4 => height <= 1.60" ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
 
-fr:HighMassMountingRule
+fr:HighMassMountingHeight
     a feso:NormativeRule ;
-    feso:appliesToClass feso:FireExtinguisher ;
-    feso:hasFormula "mass > 4 kg => height <= 1.00 m" ;
-    feso:isComputableByIDS false ;
-    feso:isComputableBySHACLAlone true .
+    feso:hasFormula "mass > 4 => height <= 1.00" ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
 
 #################################################################
-# COMPATIBILITY
+# HYDROSTATIC TEST
 #################################################################
 
-fr:WaterCompatibilityRule
+fr:HydrostaticTestValidity
     a feso:NormativeRule ;
-    feso:hasAgentType feso:Water ;
-    feso:allowsFireClass feso:ClassA ;
-    feso:forbidsFireClass feso:ClassC ;
-    feso:isComputableByIDS false ;
-    feso:isComputableBySHACLAlone true .
+    feso:hasFormula "now - testDate <= 5 years" ;
+    fr:isExpressibleInIDS false ;
+    fr:isExpressibleInIDCS true .
