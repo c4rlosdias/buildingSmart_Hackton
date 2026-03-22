@@ -1,0 +1,177 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+
+@prefix fela: <https://example.org/fela#> .
+
+<https://example.org/fela>
+    a owl:Ontology ;
+    rdfs:label "FELA Core Ontology"@en ;
+    dct:title "FELA Core Ontology"@en ;
+    dct:description "Core ontology for fire extinguisher standards including property sets and rule metamodel."@en ;
+    owl:versionInfo "3.0.0" .
+
+#################################################################
+# DOMAIN CLASSES
+#################################################################
+
+fela:FireExtinguisher a owl:Class .
+fela:BuildingStorey a owl:Class .
+
+fela:RiskClass a owl:Class .
+fela:FireClass a owl:Class .
+fela:ExtinguishingAgent a owl:Class .
+
+#################################################################
+# PROPERTY SET MODEL
+#################################################################
+
+fela:PropertySet a owl:Class .
+
+fela:appliesTo a owl:ObjectProperty ;
+    rdfs:domain fela:PropertySet ;
+    rdfs:range owl:Class .
+
+fela:belongsToPset a owl:ObjectProperty ;
+    rdfs:domain rdf:Property ;
+    rdfs:range fela:PropertySet .
+
+#################################################################
+# PROPERTY SET DEFINITIONS
+#################################################################
+
+fela:Pset_FireExtinguisher_FELA a owl:Class ;
+    rdfs:subClassOf fela:PropertySet ;
+    fela:appliesTo fela:FireExtinguisher .
+
+fela:Pset_FireExtinguisher_Mechanical a owl:Class ;
+    rdfs:subClassOf fela:PropertySet ;
+    fela:appliesTo fela:FireExtinguisher .
+
+fela:Pset_FireExtinguisher_Installation a owl:Class ;
+    rdfs:subClassOf fela:PropertySet ;
+    fela:appliesTo fela:FireExtinguisher .
+
+fela:Pset_FireExtinguisher_Spatial a owl:Class ;
+    rdfs:subClassOf fela:PropertySet ;
+    fela:appliesTo fela:FireExtinguisher .
+
+fela:Pset_FireSafety_Context a owl:Class ;
+    rdfs:subClassOf fela:PropertySet ;
+    fela:appliesTo fela:FireExtinguisher .
+
+fela:Pset_BuildingStorey_FireSafety a owl:Class ;
+    rdfs:subClassOf fela:PropertySet ;
+    fela:appliesTo fela:BuildingStorey .
+
+#################################################################
+# ENUMERATIONS
+#################################################################
+
+fela:LightRisk a fela:RiskClass .
+fela:ModerateRisk a fela:RiskClass .
+fela:HighRisk a fela:RiskClass .
+
+fela:ClassA a fela:FireClass .
+fela:ClassB a fela:FireClass .
+fela:ClassC a fela:FireClass .
+
+fela:Water a fela:ExtinguishingAgent .
+fela:CO2 a fela:ExtinguishingAgent .
+fela:Foam a fela:ExtinguishingAgent .
+fela:DryChemicalABC a fela:ExtinguishingAgent .
+fela:DryChemicalBC a fela:ExtinguishingAgent .
+
+#################################################################
+# PROPERTIES (ALIGNED WITH IFC)
+#################################################################
+
+fela:BurstPressure a owl:DatatypeProperty ;
+    rdfs:label "Burst Pressure"@en ;
+    rdfs:comment "Pressão de Ruptura"@pt ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_Mechanical .
+
+fela:NominalChargingPressure a owl:DatatypeProperty ;
+    rdfs:label "Nominal Charging Pressure"@en ;
+    rdfs:comment "Pressão Nominal de Carga"@pt ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_Mechanical .
+
+fela:PressurisationMode a owl:DatatypeProperty ;
+    rdfs:label "Pressurisation Mode"@en ;
+    rdfs:comment "Tipo de Pressurização"@pt ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_Mechanical .
+
+fela:JointType a owl:DatatypeProperty ;
+    rdfs:label "Joint Type"@en ;
+    rdfs:comment "Tipo de União"@pt ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_Mechanical .
+
+fela:ExtinguisherType a owl:DatatypeProperty ;
+    rdfs:label "Extinguisher Type"@en ;
+    rdfs:comment "Tipo de Extintor"@pt ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_FELA .
+
+fela:ExtinguishingCapacity a owl:DatatypeProperty ;
+    rdfs:label "Extinguishing Capacity"@en ;
+    rdfs:comment "Capacidade Extintora"@pt ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_FELA .
+
+fela:IsCertified a owl:DatatypeProperty ;
+    rdfs:label "Is Certified"@en ;
+    rdfs:comment "Certificado"@pt ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_FELA .
+
+fela:AgentMass a owl:DatatypeProperty ;
+    rdfs:label "Agent Mass"@en ;
+    rdfs:comment "Massa do Agente Extintor"@pt ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_FELA .
+
+fela:HydrostaticTestDate a owl:DatatypeProperty ;
+    rdfs:label "Hydrostatic Test Date"@en ;
+    rdfs:comment "Data do Ensaio Hidrostático"@pt ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_FELA .
+
+fela:RiskClassProperty a owl:ObjectProperty ;
+    rdfs:range fela:RiskClass ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_Installation .
+
+fela:MountingHeight a owl:DatatypeProperty ;
+    rdfs:label "Mounting Height"@en ;
+    rdfs:comment "Altura de Instalação"@pt ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_Installation .
+
+fela:MaxTravelDistance a owl:DatatypeProperty ;
+    rdfs:label "Maximum Travel Distance"@en ;
+    rdfs:comment "Distância Máxima de Percurso"@pt ;
+    fela:belongsToPset fela:Pset_FireExtinguisher_Spatial .
+
+fela:FloorArea a owl:DatatypeProperty ;
+    rdfs:label "Floor Area"@en ;
+    rdfs:comment "Área do Pavimento"@pt ;
+    fela:belongsToPset fela:Pset_BuildingStorey_FireSafety .
+
+fela:LiquidSurfaceArea a owl:DatatypeProperty ;
+    rdfs:label "Liquid Surface Area"@en ;
+    rdfs:comment "Área de Superfície de Líquido Inflamável"@pt ;
+    fela:belongsToPset fela:Pset_BuildingStorey_FireSafety .
+
+fela:FireClassProperty a owl:ObjectProperty ;
+    rdfs:range fela:FireClass ;
+    fela:belongsToPset fela:Pset_FireSafety_Context .
+
+#################################################################
+# RULE METAMODEL
+#################################################################
+
+fela:NormativeRule a owl:Class .
+
+fela:appliesToClass a owl:ObjectProperty ;
+    rdfs:domain fela:NormativeRule ;
+    rdfs:range owl:Class .
+
+fela:hasFormula a owl:DatatypeProperty .
+fela:hasRequirementText a owl:DatatypeProperty .
+fela:isExpressibleInIDS a owl:DatatypeProperty .
+fela:isExpressibleInIDCS a owl:DatatypeProperty .

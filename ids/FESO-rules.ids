@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ids xmlns="http://standards.buildingsmart.org/IDS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.buildingsmart.org/IDS http://standards.buildingsmart.org/IDS/1.0/ids.xsd">
+    <info>
+        <title>Generated IDS</title>
+    </info>
+    <specifications>
+        <specification name="Extinguisher must be certified" ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" description="All extinguishers shall be certified.">
+            <applicability minOccurs="1" maxOccurs="1" />
+            <requirements />
+        </specification>
+        <specification name="Extinguisher must have type" ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" description="Every extinguisher shall have a defined type.">
+            <applicability minOccurs="1" maxOccurs="1" />
+            <requirements />
+        </specification>
+        <specification name="Allowed extinguisher types" ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" description="Allowed types include Water, CO2, Foam, Dry Chemical BC, Dry Chemical ABC.">
+            <applicability minOccurs="1" maxOccurs="1" />
+            <requirements />
+        </specification>
+        <specification name="Minimum one extinguisher per storey" ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" description="Each storey shall have at least one extinguisher.">
+            <applicability minOccurs="1" maxOccurs="1" />
+            <requirements />
+        </specification>
+        <specification name="Extinguisher must have capacity" ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" description="Every extinguisher shall have an extinguishing capacity rating.">
+            <applicability minOccurs="1" maxOccurs="1" />
+            <requirements />
+        </specification>
+    </specifications>
+</ids>
