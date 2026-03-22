@@ -15,6 +15,18 @@
   <!-- ===================================================== -->
 
   <idcs:constraint name="DirectNonWeldedPressure">
+
+    <idcs:annotation>
+      <idcs:normativeText>
+        The rupture pressure shall be at least five times the nominal charging pressure and not less than 5 MPa for directly pressurised extinguishers with non-welded joints.
+      </idcs:normativeText>
+      <idcs:description>
+        Cross-property relationship between PR and PNC with minimum threshold and conditional applicability.
+      </idcs:description>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+      <idcs:clause>Pressure resistance requirements</idcs:clause>
+    </idcs:annotation>
+
     <idcs:appliesTo>
       <idcs:entity>FireExtinguisher</idcs:entity>
     </idcs:appliesTo>
@@ -47,6 +59,18 @@
   <!-- ===================================================== -->
 
   <idcs:constraint name="ModerateRiskClassB">
+
+    <idcs:annotation>
+      <idcs:normativeText>
+        For moderate risk, one unit of class B extinguishing capacity shall be provided per square metre of flammable liquid surface, with a minimum of 20B.
+      </idcs:normativeText>
+      <idcs:description>
+        Required extinguishing capacity is proportional to liquid surface area with a minimum threshold.
+      </idcs:description>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>7.3</idcs:clause>
+    </idcs:annotation>
+
     <idcs:appliesTo>
       <idcs:entity>BuildingStorey</idcs:entity>
     </idcs:appliesTo>
@@ -67,6 +91,18 @@
   </idcs:constraint>
 
   <idcs:constraint name="HighRiskClassB">
+
+    <idcs:annotation>
+      <idcs:normativeText>
+        For high risk, two units of class B extinguishing capacity shall be provided per square metre of flammable liquid surface, with a minimum of 40B.
+      </idcs:normativeText>
+      <idcs:description>
+        Increased extinguishing capacity requirement proportional to hazard level and area.
+      </idcs:description>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>7.3</idcs:clause>
+    </idcs:annotation>
+
     <idcs:appliesTo>
       <idcs:entity>BuildingStorey</idcs:entity>
     </idcs:appliesTo>
@@ -91,6 +127,18 @@
   <!-- ===================================================== -->
 
   <idcs:constraint name="HighRiskTravelDistance">
+
+    <idcs:annotation>
+      <idcs:normativeText>
+        The maximum travel distance to reach a fire extinguisher shall not exceed 15 metres for high risk areas.
+      </idcs:normativeText>
+      <idcs:description>
+        Spatial constraint based on accessibility distance within the protected area.
+      </idcs:description>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>Travel distance requirements</idcs:clause>
+    </idcs:annotation>
+
     <idcs:appliesTo>
       <idcs:entity>BuildingStorey</idcs:entity>
     </idcs:appliesTo>
@@ -112,6 +160,18 @@
   <!-- ===================================================== -->
 
   <idcs:constraint name="LowMassMountingHeight">
+
+    <idcs:annotation>
+      <idcs:normativeText>
+        Fire extinguishers with mass up to 4 kg shall be installed so that the handle height does not exceed 1.60 metres.
+      </idcs:normativeText>
+      <idcs:description>
+        Conditional constraint relating extinguisher mass to installation height.
+      </idcs:description>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>Installation height requirements</idcs:clause>
+    </idcs:annotation>
+
     <idcs:appliesTo>
       <idcs:entity>FireExtinguisher</idcs:entity>
     </idcs:appliesTo>
@@ -129,6 +189,18 @@
   </idcs:constraint>
 
   <idcs:constraint name="HighMassMountingHeight">
+
+    <idcs:annotation>
+      <idcs:normativeText>
+        Fire extinguishers with mass greater than 4 kg shall be installed so that the handle height does not exceed 1.00 metre.
+      </idcs:normativeText>
+      <idcs:description>
+        Conditional constraint relating higher mass to lower mounting height.
+      </idcs:description>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>Installation height requirements</idcs:clause>
+    </idcs:annotation>
+
     <idcs:appliesTo>
       <idcs:entity>FireExtinguisher</idcs:entity>
     </idcs:appliesTo>
@@ -150,6 +222,18 @@
   <!-- ===================================================== -->
 
   <idcs:constraint name="WaterCompatibility">
+
+    <idcs:annotation>
+      <idcs:normativeText>
+        Water extinguishers shall be used for Class A fires and shall not be used for Class C fires.
+      </idcs:normativeText>
+      <idcs:description>
+        Compatibility constraint between extinguishing agent and fire class.
+      </idcs:description>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+      <idcs:clause>Agent compatibility</idcs:clause>
+    </idcs:annotation>
+
     <idcs:appliesTo>
       <idcs:entity>FireExtinguisher</idcs:entity>
     </idcs:appliesTo>
@@ -170,6 +254,18 @@
   <!-- ===================================================== -->
 
   <idcs:constraint name="HydrostaticTestValidity">
+
+    <idcs:annotation>
+      <idcs:normativeText>
+        The hydrostatic test shall be performed at intervals not exceeding five years.
+      </idcs:normativeText>
+      <idcs:description>
+        Time-based validation comparing current date with last hydrostatic test.
+      </idcs:description>
+      <idcs:source>ABNT NBR 15808 / NBR 12962</idcs:source>
+      <idcs:clause>Maintenance requirements</idcs:clause>
+    </idcs:annotation>
+
     <idcs:appliesTo>
       <idcs:entity>FireExtinguisher</idcs:entity>
     </idcs:appliesTo>
