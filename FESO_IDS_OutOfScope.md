@@ -1,244 +1,361 @@
-# Limitations of IDS for Fire Extinguisher Standard Validation  
-## (Based on NBR 15808 and NBR 12693)
+# FESO — IDS and SHACL Normative Out-of-Scope
+## Fire Extinguisher Standard (ABNT NBR 15808 / ABNT NBR 12693)
 
-This document describes which aspects of the fire extinguisher standards **cannot be fully validated using IDS (Information Delivery Specification)**, and therefore require complementary approaches such as rule engines, SHACL, or application-level logic.
+This document enumerates, with direct correspondence to the standard, all requirements from:
 
----
+- ABNT NBR 15808 (portable fire extinguishers)
+- ABNT NBR 12693 (installation and distribution)
 
-## 1. Context
+that cannot be represented or validated using:
 
-The IDS developed for the *Fire Extinguisher Standard Model (FESM)* successfully validates:
+- IDS
+- SHACL
 
-- Presence of required entities (e.g. `IfcFireSuppressionTerminal`)
-- Mandatory properties (type, capacity, certification)
-- Allowed values (e.g. extinguisher types)
-- Simple value constraints (boolean, pattern matching)
-
-However, fire safety standards include **operational, spatial, and conditional rules** that go beyond IDS capabilities.
+Only requirements that are strictly out-of-scope for each technology are listed.
 
 ---
 
-## 2. Coverage and Area-Based Calculations (NBR 12693)
+# 1. Pressure Safety Relationships (ABNT NBR 15808)
 
-### Requirement
+## Normative requirement
 
-The standard defines that each extinguisher (or set of extinguishers) must cover a maximum floor area depending on the risk level:
+The rupture pressure (PR — *pressão de ruptura / burst pressure*) shall satisfy:
 
-- Light risk → 500 m² per unit  
-- Moderate risk → 250 m² per unit  
-- High risk → 150 m² per unit  
+- Direct pressurisation (*pressurização direta / direct pressurisation*), non-welded joints (*juntas não soldadas / non-welded joints*):
+  - PR ≥ 5 × PNC (*pressão nominal de carregamento / nominal charging pressure*)
+  - PR ≥ 5 MPa
 
-### Why IDS cannot validate this
+- Direct pressurisation, welded joints (*juntas soldadas / welded joints*):
+  - PR ≥ 8 × PNC
+  - PR ≥ 5 MPa
 
-IDS does not support:
+- Indirect pressurisation (*pressurização indireta / indirect pressurisation*), non-welded joints:
+  - PR ≥ 4 × PNC
+  - PR ≥ 5 MPa
 
-- Arithmetic operations (e.g. `area / coverage`)
-- Aggregation of multiple elements
-- Cross-object evaluation (sum of capacities vs total area)
+- Indirect pressurisation, welded joints:
+  - PR ≥ 7 × PNC
+  - PR ≥ 5 MPa
 
-### What is needed instead
-
-- Rule engine or script (e.g. Python)
-- Or SHACL with advanced functions
-
----
-
-## 3. Travel Distance Constraints
-
-### Requirement
-
-Maximum distance to reach an extinguisher:
-
-- 20 m (light/moderate risk)
-- 15 m (high risk)
-
-### Why IDS cannot validate this
+## IDS out-of-scope
 
 IDS cannot:
 
-- Evaluate spatial relationships
-- Calculate distances between elements
-- Interpret geometry or positioning in the model
+- compare one property against another property
+- evaluate multiplication factors
+- combine multiple numeric conditions in a single rule
+- apply the rule conditionally based on:
+  - pressurisation type
+  - joint type
 
-### What is needed instead
+## SHACL out-of-scope
 
-- Spatial analysis using IFC geometry
-- BIM tool or custom validation script
+This requirement is not out-of-scope for SHACL, provided that:
 
----
-
-## 4. Fire Class Compatibility (Agent vs Fire Type)
-
-### Requirement
-
-Each extinguisher agent is only suitable for certain fire classes:
-
-- Water → Class A only (not C)
-- CO2 → Classes B and C
-- ABC → Classes A, B, and C
-
-### Why IDS cannot fully validate this
-
-IDS cannot express:
-
-- Conditional logic such as:
-  - *If agent = CO2, then allowed classes = B and C*
-- Relationships between multiple properties
-
-### What is needed instead
-
-- Rule engine (semantic or procedural)
-- SHACL constraints
-- Ontology-based validation (e.g. FESM)
+- PR is explicitly represented
+- PNC is explicitly represented
+- pressurisation type is explicitly represented
+- joint type is explicitly represented
 
 ---
 
-## 5. Pressure Safety Relationships (PNC vs PR)
+# 2. Coverage per Floor Area for Class A (ABNT NBR 12693)
 
-### Requirement
+## Normative requirement
 
-The rupture pressure (PR) must be proportional to the nominal pressure (PNC):
+Maximum area covered per Class A unit:
 
-- e.g. PR ≥ 5 × PNC
+- Light risk (*risco leve / light hazard*) → 500 m² per unit  
+- Moderate risk (*risco moderado / ordinary hazard*) → 250 m² per unit  
+- High risk (*risco alto / high hazard*) → 150 m² per unit  
 
-### Why IDS cannot validate this
+Total required units:
 
-IDS does not support:
+- required_units = ceil(floor_area / area_per_unit)
 
-- Mathematical comparisons between two properties
-- Expressions or formulas
-
-### What is needed instead
-
-- Validation script
-- SHACL with SPARQL constraints
-
----
-
-## 6. Minimum Extinguishers per Storey (Contextual)
-
-### Requirement
-
-At least one extinguisher per floor, and sufficient capacity based on total area.
-
-### What IDS can do
-
-- Validate that at least one extinguisher exists per storey
-
-### What IDS cannot do
-
-- Verify if the **capacity is sufficient**
-- Relate floor area to extinguisher capacity
-
----
-
-## 7. Installation Height Constraints
-
-### Requirement
-
-Mounting height depends on extinguisher weight:
-
-- ≤ 4 kg → up to 1.60 m  
-- > 4 kg → up to 1.00 m  
-
-### Why IDS cannot validate this
-
-IDS cannot express:
-
-- Conditional thresholds based on another property
-- Comparisons between values (mass vs height)
-
----
-
-## 8. Maintenance and Lifecycle Rules
-
-### Requirement
-
-- Hydrostatic test every 5 years
-- Periodic inspections depending on type
-
-### Why IDS cannot validate this
+## IDS out-of-scope
 
 IDS cannot:
 
-- Perform date comparisons (e.g. expired vs current date)
-- Evaluate temporal logic
+- perform division
+- perform ceiling/rounding
+- relate floor area to required extinguisher units
+- aggregate units provided by multiple extinguishers on the same storey
+- compare required total units against provided total units
+
+## SHACL out-of-scope
+
+SHACL cannot robustly validate this requirement directly from a standard IFC-derived graph unless an external execution layer first computes or materialises:
+
+- floor area per storey
+- extinguishing units contributed by each extinguisher
+- total required units per storey
+- total provided units per storey
+
+The following parts are therefore out-of-scope for SHACL alone:
+
+- deriving the storey floor area from geometry or quantities when not already materialised
+- deriving numerical Class A units from extinguisher capacity notation when not already materialised
+- computing the total provided units across all extinguishers serving the storey when that service relationship is not explicitly materialised
+- computing the ceiling function for required units in a stable and reusable way across validators working directly from raw IFC-derived RDF
 
 ---
 
-## 9. Spatial Distribution and Positioning
+# 3. Protection for Flammable Liquids — Class B (ABNT NBR 12693)
 
-### Requirement
+## Normative requirement
 
-- Extinguishers must be distributed according to accessibility
-- Cannot exceed maximum travel distance
-- Must be properly located (e.g. not obstructed)
+For flammable liquids (*líquidos inflamáveis / flammable liquids*):
 
-### Why IDS cannot validate this
+- Moderate risk:
+  - 1 unit B per m² of liquid surface
+  - minimum 20B
 
-IDS does not support:
+- High risk:
+  - 2 units B per m² of liquid surface
+  - minimum 40B
 
-- Spatial reasoning
-- Accessibility logic
-- Path analysis
+## IDS out-of-scope
 
----
+IDS cannot:
 
-## 10. Composite Validation (System-Level Compliance)
+- multiply liquid surface area by a factor
+- apply minimum thresholds
+- compare required Class B protection against provided Class B rating
+- aggregate Class B rating across multiple extinguishers
+- relate liquid surface area to extinguisher provision
 
-### Requirement
+## SHACL out-of-scope
 
-Compliance is often evaluated at system level:
+SHACL cannot robustly validate this requirement directly from a standard IFC-derived graph unless an external execution layer first materialises:
 
-- Combination of multiple extinguishers
-- Coverage redundancy
-- Distribution across zones
+- the liquid surface area subject to protection
+- the required B units for that area
+- the B rating contributed by each extinguisher
+- the scope of which extinguishers serve that protected area
 
-### Why IDS cannot validate this
+The following parts are therefore out-of-scope for SHACL alone:
 
-IDS operates at:
-
-- **Element-level validation**
-
-It does not support:
-
-- System-level reasoning
-- Group-based constraints
-
----
-
-## 11. Summary
-
-IDS is highly effective for:
-
-- Data completeness
-- Data correctness
-- Standardisation of attributes
-
-However, it is **not sufficient for full regulatory compliance**, as fire safety standards require:
-
-- Calculations
-- Spatial reasoning
-- Conditional logic
-- Temporal validation
-- System-level analysis
+- deriving liquid surface area from geometric or engineering model data when not already materialised
+- deriving numerical B units from extinguisher rating strings when not already materialised
+- calculating required B units including the normative minimum threshold logic as a reusable, implementation-independent rule over raw IFC-derived data
+- determining which extinguishers are intended to protect a given flammable-liquid hazard area when that service relationship is not explicitly represented
 
 ---
 
-## 12. Recommended Architecture
+# 4. Maximum Travel Distance (ABNT NBR 12693)
 
-To achieve full compliance:
+## Normative requirement
 
-| Layer | Responsibility |
-|------|--------------|
-| IDS | Data contract (structure and presence) |
-| Ontology (FESM) | Semantic rules and relationships |
-| SHACL / Python | Advanced validation (logic, math, spatial) |
-| CDE / UI | Visualisation and reporting |
+Maximum distance from any point to an extinguisher:
+
+- Light risk → 20 m  
+- Moderate risk → 20 m  
+- High risk → 15 m  
+
+## IDS out-of-scope
+
+IDS cannot:
+
+- compute distances between positions
+- analyse paths of travel
+- interpret spatial geometry
+- determine the farthest protected point
+- relate travel distance compliance to risk class
+
+## SHACL out-of-scope
+
+SHACL cannot validate this requirement directly from the model unless travel distances are precomputed and explicitly provided.
+
+The following parts are out-of-scope for SHACL alone:
+
+- computing the path of travel from any point to an extinguisher
+- computing the maximum travel distance across a protected area
+- distinguishing Euclidean distance from accessible travel path distance
+- evaluating layout obstructions, circulation constraints, or actual reachability
+- determining whether the placement satisfies the normative maximum distance for the applicable risk class based on geometry alone
 
 ---
 
-## 13. Key Message
+# 5. Mounting Height vs Mass (ABNT NBR 12693)
 
-> IDS ensures that the data exists.  
-> The model ensures that the data makes sense.
+## Normative requirement
+
+Mounting height depends on extinguisher mass:
+
+- ≤ 4 kg → maximum handle height = 1.60 m  
+- > 4 kg → maximum handle height = 1.00 m  
+
+## IDS out-of-scope
+
+IDS cannot:
+
+- compare mass against a threshold
+- compare mounting height against a threshold
+- express conditional branching
+- relate mass to allowed mounting height
+
+## SHACL out-of-scope
+
+This requirement is not out-of-scope for SHACL, provided that:
+
+- extinguisher mass is explicitly represented
+- handle height is explicitly represented
+
+However, the following is out-of-scope for SHACL alone:
+
+- deriving the actual installed handle height from raw IFC geometry when that value is not explicitly materialised
+
+---
+
+# 6. Hydrostatic Test Validity (ABNT NBR 15808 / ABNT NBR 12962)
+
+## Normative requirement
+
+- hydrostatic test (*ensaio hidrostático / hydrostatic test*) shall be performed every 5 years  
+- the extinguisher shall not remain in service with expired hydrostatic test validity  
+
+## IDS out-of-scope
+
+IDS cannot:
+
+- compare dates against the current date
+- calculate elapsed time
+- evaluate whether 5 years have passed
+- determine whether the extinguisher is expired
+
+## SHACL out-of-scope
+
+SHACL can compare explicitly represented dates, but the following remain out-of-scope for SHACL alone:
+
+- reliable validation against a dynamic current date across different runtimes
+- deriving validity from maintenance history instead of explicit date
+- reconstructing validity from event sequences
+
+---
+
+# 7. Disposable Extinguisher Constraints (ABNT NBR 15808)
+
+## Normative requirement
+
+Disposable extinguishers (*extintores descartáveis / disposable extinguishers*) shall satisfy:
+
+- maximum agent charge = 1 kg  
+- service life = 5 years  
+
+## IDS out-of-scope
+
+IDS cannot:
+
+- compare charge against threshold
+- evaluate service life
+- relate type to lifecycle rules
+
+## SHACL out-of-scope
+
+SHACL can validate the 1 kg threshold if explicit.
+
+However, the following remains out-of-scope:
+
+- determining service life from current date
+- deriving lifecycle from manufacture date without explicit expiry
+
+---
+
+# 8. Agent Compatibility with Fire Classes (ABNT NBR 15808)
+
+## Normative requirement
+
+- Water → Class A, not C  
+- Dry Chemical BC → Classes B and C, not A  
+- CO2 → Classes B and C, not A  
+- Foam → Classes A and B, not C  
+- Dry Chemical ABC → Classes A, B and C  
+
+## IDS out-of-scope
+
+IDS cannot:
+
+- express conditional compatibility rules
+- restrict values based on other values
+- define forbidden combinations
+
+## SHACL out-of-scope
+
+Not out-of-scope for SHACL if data is explicit.
+
+---
+
+# 9. Minimum Provision per Storey (ABNT NBR 12693)
+
+## Normative requirement
+
+Each storey shall have:
+
+- at least one extinguisher  
+- sufficient extinguishing capacity  
+
+## IDS out-of-scope
+
+IDS cannot validate sufficiency.
+
+## SHACL out-of-scope
+
+SHACL cannot compute sufficiency without:
+
+- precomputed area
+- precomputed capacity aggregation
+
+---
+
+# 10. Distribution and Accessibility (ABNT NBR 12693)
+
+## Normative requirement
+
+Extinguishers shall be:
+
+- accessible  
+- within travel distance  
+- positioned for immediate use  
+
+## IDS out-of-scope
+
+IDS cannot evaluate any of these.
+
+## SHACL out-of-scope
+
+SHACL cannot evaluate:
+
+- accessibility
+- obstruction
+- real usability
+- spatial adequacy
+
+---
+
+# 11. System-Level Compliance
+
+## Normative requirement
+
+Compliance depends on:
+
+- combination of extinguishers  
+- total coverage  
+- distribution  
+
+## IDS out-of-scope
+
+IDS cannot evaluate system behaviour.
+
+## SHACL out-of-scope
+
+SHACL cannot derive system behaviour from raw data.
+
+---
+
+# 12. Final Statement
+
+IDS defines what data must exist.  
+SHACL defines what explicit data must satisfy.  
+
+Neither defines system behaviour from raw model data.
