@@ -8,31 +8,33 @@
     <ids:description>
       IDS specification for portable fire extinguishers. This file contains only requirements that can be expressed with IDS.
     </ids:description>
-    <ids:version>1.0</ids:version>
+    <ids:version>2.0</ids:version>
     <ids:author>Hackathon prototype</ids:author>
   </ids:info>
 
-  <ids:specification name="Fire Extinguisher Entity">
+  <ids:specification name="Fire Extinguisher Core Properties">
 
     <ids:annotation>
       <ids:normativeText>
-        Fire extinguishers shall be properly identified and classified according to their type and capacity.
+        Fire extinguishers shall be properly identified and classified according to their type, extinguishing capacity, certification status and agent mass.
       </ids:normativeText>
       <ids:description>
-        Basic identification properties required for all extinguishers.
+        Basic data required for all extinguisher definitions.
       </ids:description>
-      <ids:source>ABNT NBR 15808</ids:source>
-      <ids:clause>General requirements</ids:clause>
+      <ids:source>Project reference summary based on ABNT NBR 15808</ids:source>
+      <ids:clause>Sections 1, 3, 5 and 6</ids:clause>
+      <ids:applicabilityNote>
+        Extintores devem ser corretamente identificados e classificados quanto ao tipo, capacidade extintora, certificação e massa do agente.
+      </ids:applicabilityNote>
     </ids:annotation>
 
     <ids:applicability>
       <ids:entity>
-        <ids:name>IfcFireSuppressionTerminal</ids:name>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
       </ids:entity>
     </ids:applicability>
 
     <ids:requirements>
-
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_FESO</ids:propertySet>
         <ids:name>ExtinguisherType</ids:name>
@@ -53,10 +55,9 @@
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_FESO</ids:propertySet>
-        <ids:name>AgentMass_kg</ids:name>
+        <ids:name>AgentMass</ids:name>
         <ids:dataType>IFCMASSMEASURE</ids:dataType>
       </ids:property>
-
     </ids:requirements>
   </ids:specification>
 
@@ -64,18 +65,21 @@
 
     <ids:annotation>
       <ids:normativeText>
-        Only specific types of extinguishers shall be used depending on their extinguishing agent.
+        The extinguishing agent type shall be one of the recognised extinguisher types covered by the standard.
       </ids:normativeText>
       <ids:description>
-        Restricts extinguisher types to those defined by the standard.
+        Restricts extinguisher definitions to recognised agent families.
       </ids:description>
-      <ids:source>ABNT NBR 15808</ids:source>
-      <ids:clause>Classification of extinguishers</ids:clause>
+      <ids:source>Project reference summary based on ABNT NBR 15808</ids:source>
+      <ids:clause>Section 1</ids:clause>
+      <ids:applicabilityNote>
+        O tipo de agente extintor deve pertencer ao conjunto de tipos reconhecidos pela norma.
+      </ids:applicabilityNote>
     </ids:annotation>
 
     <ids:applicability>
       <ids:entity>
-        <ids:name>IfcFireSuppressionTerminal</ids:name>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
       </ids:entity>
     </ids:applicability>
 
@@ -98,18 +102,21 @@
 
     <ids:annotation>
       <ids:normativeText>
-        All fire extinguishers shall be certified according to applicable regulations.
+        All extinguishers shall be certified.
       </ids:normativeText>
       <ids:description>
-        Ensures only certified extinguishers are used.
+        Ensures the extinguisher has a declared certification status and that the value is true.
       </ids:description>
-      <ids:source>ABNT NBR 15808</ids:source>
-      <ids:clause>Certification requirements</ids:clause>
+      <ids:source>Project reference summary based on ABNT NBR 15808</ids:source>
+      <ids:clause>Section 3</ids:clause>
+      <ids:applicabilityNote>
+        Todos os extintores devem ser certificados.
+      </ids:applicabilityNote>
     </ids:annotation>
 
     <ids:applicability>
       <ids:entity>
-        <ids:name>IfcFireSuppressionTerminal</ids:name>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
       </ids:entity>
     </ids:applicability>
 
@@ -126,18 +133,21 @@
 
     <ids:annotation>
       <ids:normativeText>
-        The extinguishing capacity shall be expressed using standard notation (e.g., 2A:20B:C).
+        The extinguishing capacity shall be expressed using standard rating notation.
       </ids:normativeText>
       <ids:description>
-        Ensures standardized format for capacity classification.
+        Validates the capacity string format, such as 2A, 20B:C or 2A:20B:C.
       </ids:description>
-      <ids:source>ABNT NBR 15808</ids:source>
-      <ids:clause>Capacity classification</ids:clause>
+      <ids:source>Project reference summary based on ABNT NBR 15808</ids:source>
+      <ids:clause>Section 3</ids:clause>
+      <ids:applicabilityNote>
+        A capacidade extintora deve ser expressa usando a notação padrão de classificação.
+      </ids:applicabilityNote>
     </ids:annotation>
 
     <ids:applicability>
       <ids:entity>
-        <ids:name>IfcFireSuppressionTerminal</ids:name>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
       </ids:entity>
     </ids:applicability>
 
@@ -150,27 +160,78 @@
     </ids:requirements>
   </ids:specification>
 
-  <ids:specification name="Optional Installation Data">
+  <ids:specification name="Mechanical Property Presence">
 
     <ids:annotation>
       <ids:normativeText>
-        Installation-related properties such as risk class, mounting height, and maintenance date should be provided when available.
+        Mechanical properties required for pressure-resistance assessment shall be explicitly provided.
       </ids:normativeText>
       <ids:description>
-        Optional properties used by advanced validation rules.
+        Provides the data needed for advanced checks involving burst pressure, charging pressure and construction mode.
       </ids:description>
-      <ids:source>ABNT NBR 12693</ids:source>
-      <ids:clause>Installation and maintenance</ids:clause>
+      <ids:source>Project reference summary based on ABNT NBR 15808</ids:source>
+      <ids:clause>Section 4</ids:clause>
+      <ids:applicabilityNote>
+        As propriedades mecânicas necessárias para avaliação de resistência à pressão devem ser explicitamente informadas.
+      </ids:applicabilityNote>
     </ids:annotation>
 
     <ids:applicability>
       <ids:entity>
-        <ids:name>IfcFireSuppressionTerminal</ids:name>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
       </ids:entity>
     </ids:applicability>
 
     <ids:requirements>
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:name>BurstPressure</ids:name>
+        <ids:dataType>IFCPRESSUREMEASURE</ids:dataType>
+      </ids:property>
 
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:name>NominalChargingPressure</ids:name>
+        <ids:dataType>IFCPRESSUREMEASURE</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:name>PressurisationMode</ids:name>
+        <ids:dataType>IFCLABEL</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:name>JointType</ids:name>
+        <ids:dataType>IFCLABEL</ids:dataType>
+      </ids:property>
+    </ids:requirements>
+  </ids:specification>
+
+  <ids:specification name="Installation Property Presence">
+
+    <ids:annotation>
+      <ids:normativeText>
+        Installation-related properties used in compliance checking shall be explicitly provided.
+      </ids:normativeText>
+      <ids:description>
+        Provides the data needed for installation, risk and travel-distance checks.
+      </ids:description>
+      <ids:source>Project reference summary based on ABNT NBR 12693</ids:source>
+      <ids:clause>Sections 7.2, 7.3 and 7.4</ids:clause>
+      <ids:applicabilityNote>
+        As propriedades de instalação usadas na verificação de conformidade devem ser explicitamente informadas.
+      </ids:applicabilityNote>
+    </ids:annotation>
+
+    <ids:applicability>
+      <ids:entity>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+      </ids:entity>
+    </ids:applicability>
+
+    <ids:requirements>
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_Installation</ids:propertySet>
         <ids:name>RiskClass</ids:name>
@@ -183,8 +244,20 @@
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_Installation</ids:propertySet>
-        <ids:name>MountingHeight_m</ids:name>
+        <ids:name>MountingHeight</ids:name>
         <ids:dataType>IFCLENGTHMEASURE</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Spatial</ids:propertySet>
+        <ids:name>MaxTravelDistance</ids:name>
+        <ids:dataType>IFCLENGTHMEASURE</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireSafety_Context</ids:propertySet>
+        <ids:name>FireClass</ids:name>
+        <ids:dataType>IFCLABEL</ids:dataType>
       </ids:property>
 
       <ids:property>
@@ -192,7 +265,43 @@
         <ids:name>HydrostaticTestDate</ids:name>
         <ids:dataType>IFCDATE</ids:dataType>
       </ids:property>
+    </ids:requirements>
+  </ids:specification>
 
+  <ids:specification name="Storey Fire Safety Context">
+
+    <ids:annotation>
+      <ids:normativeText>
+        Storey-level data required for area-based compliance checks shall be explicitly provided.
+      </ids:normativeText>
+      <ids:description>
+        Provides floor and liquid-surface areas required for Class A and Class B calculations.
+      </ids:description>
+      <ids:source>Project reference summary based on ABNT NBR 12693</ids:source>
+      <ids:clause>Sections 7.2 and 7.3</ids:clause>
+      <ids:applicabilityNote>
+        Os dados do pavimento necessários para verificações baseadas em área devem ser explicitamente informados.
+      </ids:applicabilityNote>
+    </ids:annotation>
+
+    <ids:applicability>
+      <ids:entity>
+        <ids:name>IfcBuildingStorey</ids:name>
+      </ids:entity>
+    </ids:applicability>
+
+    <ids:requirements>
+      <ids:property>
+        <ids:propertySet>Pset_BuildingStorey_FireSafety</ids:propertySet>
+        <ids:name>FloorArea</ids:name>
+        <ids:dataType>IFCAREAMEASURE</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_BuildingStorey_FireSafety</ids:propertySet>
+        <ids:name>LiquidSurfaceArea</ids:name>
+        <ids:dataType>IFCAREAMEASURE</ids:dataType>
+      </ids:property>
     </ids:requirements>
   </ids:specification>
 
@@ -203,10 +312,13 @@
         Each storey shall be provided with at least one fire extinguisher.
       </ids:normativeText>
       <ids:description>
-        Minimum provision requirement for fire safety.
+        Minimum provision requirement at storey level.
       </ids:description>
-      <ids:source>ABNT NBR 12693</ids:source>
-      <ids:clause>General provision rules</ids:clause>
+      <ids:source>Project reference summary based on ABNT NBR 12693</ids:source>
+      <ids:clause>Section 7.5</ids:clause>
+      <ids:applicabilityNote>
+        Cada pavimento deve ser provido com ao menos um extintor de incêndio.
+      </ids:applicabilityNote>
     </ids:annotation>
 
     <ids:applicability>
@@ -221,7 +333,6 @@
         <ids:minOccurs>1</ids:minOccurs>
       </ids:entity>
     </ids:requirements>
-
   </ids:specification>
 
 </ids:ids>
