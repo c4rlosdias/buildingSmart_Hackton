@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idcs:idcs xmlns:idcs="http://feso.org/IDCS"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <idcs:info>
+    <idcs:title>FESO Constraint Specification</idcs:title>
+    <idcs:description>
+      Constraint specification for rules not expressible using IDS.
+    </idcs:description>
+    <idcs:version>1.0</idcs:version>
+  </idcs:info>
+
+  <!-- ===================================================== -->
+  <!-- PRESSURE RULES -->
+  <!-- ===================================================== -->
+
+  <idcs:constraint name="DirectNonWeldedPressure">
+    <idcs:appliesTo>
+      <idcs:entity>FireExtinguisher</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals property="PressurisationMode" value="Direct"/>
+      <idcs:equals property="JointType" value="NonWelded"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:and>
+        <idcs:greaterOrEqual>
+          <idcs:property>PR</idcs:property>
+          <idcs:multiply>
+            <idcs:literal>5</idcs:literal>
+            <idcs:property>PNC</idcs:property>
+          </idcs:multiply>
+        </idcs:greaterOrEqual>
+
+        <idcs:greaterOrEqual>
+          <idcs:property>PR</idcs:property>
+          <idcs:literal unit="MPa">5</idcs:literal>
+        </idcs:greaterOrEqual>
+      </idcs:and>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <!-- ===================================================== -->
+  <!-- CLASS B - FLAMMABLE LIQUIDS -->
+  <!-- ===================================================== -->
+
+  <idcs:constraint name="ModerateRiskClassB">
+    <idcs:appliesTo>
+      <idcs:entity>BuildingStorey</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals property="RiskClass" value="Moderate"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:max>
+        <idcs:multiply>
+          <idcs:property>LiquidSurfaceArea</idcs:property>
+          <idcs:literal>1</idcs:literal>
+        </idcs:multiply>
+        <idcs:literal>20</idcs:literal>
+      </idcs:max>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="HighRiskClassB">
+    <idcs:appliesTo>
+      <idcs:entity>BuildingStorey</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals property="RiskClass" value="High"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:max>
+        <idcs:multiply>
+          <idcs:property>LiquidSurfaceArea</idcs:property>
+          <idcs:literal>2</idcs:literal>
+        </idcs:multiply>
+        <idcs:literal>40</idcs:literal>
+      </idcs:max>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <!-- ===================================================== -->
+  <!-- TRAVEL DISTANCE -->
+  <!-- ===================================================== -->
+
+  <idcs:constraint name="HighRiskTravelDistance">
+    <idcs:appliesTo>
+      <idcs:entity>BuildingStorey</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals property="RiskClass" value="High"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:property>MaxTravelDistance</idcs:property>
+        <idcs:literal unit="m">15</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <!-- ===================================================== -->
+  <!-- MOUNTING HEIGHT -->
+  <!-- ===================================================== -->
+
+  <idcs:constraint name="LowMassMountingHeight">
+    <idcs:appliesTo>
+      <idcs:entity>FireExtinguisher</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:lessOrEqual property="AgentMass_kg" value="4"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:property>MountingHeight_m</idcs:property>
+        <idcs:literal unit="m">1.60</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="HighMassMountingHeight">
+    <idcs:appliesTo>
+      <idcs:entity>FireExtinguisher</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:greater property="AgentMass_kg" value="4"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:property>MountingHeight_m</idcs:property>
+        <idcs:literal unit="m">1.00</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <!-- ===================================================== -->
+  <!-- AGENT COMPATIBILITY -->
+  <!-- ===================================================== -->
+
+  <idcs:constraint name="WaterCompatibility">
+    <idcs:appliesTo>
+      <idcs:entity>FireExtinguisher</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals property="ExtinguisherType" value="Water"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:not>
+        <idcs:equals property="FireClass" value="C"/>
+      </idcs:not>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <!-- ===================================================== -->
+  <!-- HYDROSTATIC TEST -->
+  <!-- ===================================================== -->
+
+  <idcs:constraint name="HydrostaticTestValidity">
+    <idcs:appliesTo>
+      <idcs:entity>FireExtinguisher</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:dateDifference unit="years">
+          <idcs:property>HydrostaticTestDate</idcs:property>
+          <idcs:currentDate/>
+        </idcs:dateDifference>
+        <idcs:literal>5</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+
+</idcs:idcs>
