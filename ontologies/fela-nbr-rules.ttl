@@ -1,0 +1,207 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix fela: <https://example.org/fela#> .
+@prefix fr:   <https://example.org/fela-rules#> .
+
+<https://example.org/fela-rules>
+    a owl:Ontology ;
+    owl:imports <https://example.org/fela> ;
+    rdfs:label "FELA Rules Ontology"@en ;
+    owl:versionInfo "4.0.0" .
+
+#################################################################
+# BASIC REQUIREMENTS (IDS)
+#################################################################
+
+fr:ExtinguisherMustHaveType
+    a fela:NormativeRule ;
+    rdfs:label "Extinguisher must have type"@en ;
+    rdfs:comment "Todo extintor deve possuir um tipo definido."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty fela:ExtinguisherType ;
+    fela:hasRequirementText "Every extinguisher shall have a defined type." ;
+    fela:isExpressibleInIDS true ;
+    fela:isExpressibleInIDCS false .
+
+fr:ExtinguisherMustHaveCapacity
+    a fela:NormativeRule ;
+    rdfs:label "Extinguisher must have capacity"@en ;
+    rdfs:comment "Todo extintor deve possuir capacidade extintora."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty fela:ExtinguishingCapacity ;
+    fela:isExpressibleInIDS true ;
+    fela:isExpressibleInIDCS false .
+
+fr:ExtinguisherMustBeCertified
+    a fela:NormativeRule ;
+    rdfs:label "Extinguisher must be certified"@en ;
+    rdfs:comment "Todo extintor deve ser certificado."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty fela:IsCertified ;
+    fela:isExpressibleInIDS true ;
+    fela:isExpressibleInIDCS false .
+
+#################################################################
+# PRESSURE RULES (IDCS)
+#################################################################
+
+fr:DirectNonWeldedPressure
+    a fela:NormativeRule ;
+    rdfs:label "Direct pressurisation non-welded"@en ;
+    rdfs:comment "PR ≥ 5 × PNC e PR ≥ 5 MPa."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty 
+        fela:BurstPressure ,
+        fela:NominalChargingPressure ,
+        fela:PressurisationMode ,
+        fela:JointType ;
+    fela:hasFormula "BurstPressure >= 5 * NominalChargingPressure AND BurstPressure >= 5 MPa" ;
+    fela:isExpressibleInIDS false ;
+    fela:isExpressibleInIDCS true .
+
+fr:DirectWeldedPressure
+    a fela:NormativeRule ;
+    rdfs:label "Direct pressurisation welded"@en ;
+    rdfs:comment "PR ≥ 8 × PNC e PR ≥ 5 MPa."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty 
+        fela:BurstPressure ,
+        fela:NominalChargingPressure ,
+        fela:PressurisationMode ,
+        fela:JointType ;
+    fela:hasFormula "BurstPressure >= 8 * NominalChargingPressure AND BurstPressure >= 5 MPa" ;
+    fela:isExpressibleInIDCS true .
+
+fr:IndirectNonWeldedPressure
+    a fela:NormativeRule ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty 
+        fela:BurstPressure ,
+        fela:NominalChargingPressure ,
+        fela:PressurisationMode ,
+        fela:JointType ;
+    fela:hasFormula "BurstPressure >= 4 * NominalChargingPressure AND BurstPressure >= 5 MPa" ;
+    fela:isExpressibleInIDCS true .
+
+fr:IndirectWeldedPressure
+    a fela:NormativeRule ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty 
+        fela:BurstPressure ,
+        fela:NominalChargingPressure ,
+        fela:PressurisationMode ,
+        fela:JointType ;
+    fela:hasFormula "BurstPressure >= 7 * NominalChargingPressure AND BurstPressure >= 5 MPa" ;
+    fela:isExpressibleInIDCS true .
+
+#################################################################
+# INSTALLATION RULES
+#################################################################
+
+fr:LowMassMountingHeight
+    a fela:NormativeRule ;
+    rdfs:label "Low mass mounting height"@en ;
+    rdfs:comment "Até 4 kg → altura ≤ 1,60 m."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty 
+        fela:AgentMass ,
+        fela:MountingHeight ;
+    fela:hasFormula "AgentMass <= 4 => MountingHeight <= 1.60" ;
+    fela:isExpressibleInIDCS true .
+
+fr:HighMassMountingHeight
+    a fela:NormativeRule ;
+    rdfs:label "High mass mounting height"@en ;
+    rdfs:comment "Acima de 4 kg → altura ≤ 1,00 m."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty 
+        fela:AgentMass ,
+        fela:MountingHeight ;
+    fela:isExpressibleInIDCS true .
+
+#################################################################
+# TRAVEL DISTANCE
+#################################################################
+
+fr:HighRiskTravelDistance
+    a fela:NormativeRule ;
+    rdfs:label "High risk travel distance"@en ;
+    rdfs:comment "Distância ≤ 15 m."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty 
+        fela:RiskClassProperty ,
+        fela:MaxTravelDistance ;
+    fela:isExpressibleInIDCS true .
+
+#################################################################
+# COVERAGE RULES (STOREY)
+#################################################################
+
+fr:ModerateRiskClassACoverage
+    a fela:NormativeRule ;
+    rdfs:label "Class A moderate risk coverage"@en ;
+    rdfs:comment "Área / 250."@pt ;
+    fela:appliesToClass fela:BuildingStorey ;
+    fela:dependsOnProperty 
+        fela:FloorArea ,
+        fela:RiskClassProperty ;
+    fela:isExpressibleInIDCS true .
+
+fr:ModerateRiskClassB
+    a fela:NormativeRule ;
+    rdfs:label "Class B moderate risk"@en ;
+    rdfs:comment "1 B/m², mínimo 20B."@pt ;
+    fela:appliesToClass fela:BuildingStorey ;
+    fela:dependsOnProperty 
+        fela:LiquidSurfaceArea ,
+        fela:RiskClassProperty ;
+    fela:isExpressibleInIDCS true .
+
+fr:HighRiskClassB
+    a fela:NormativeRule ;
+    rdfs:label "Class B high risk"@en ;
+    rdfs:comment "2 B/m², mínimo 40B."@pt ;
+    fela:appliesToClass fela:BuildingStorey ;
+    fela:dependsOnProperty 
+        fela:LiquidSurfaceArea ,
+        fela:RiskClassProperty ;
+    fela:isExpressibleInIDCS true .
+
+#################################################################
+# COMPATIBILITY RULES
+#################################################################
+
+fr:WaterCompatibility
+    a fela:NormativeRule ;
+    rdfs:label "Water compatibility"@en ;
+    rdfs:comment "Água não pode em classe C."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty 
+        fela:ExtinguisherType ,
+        fela:FireClassProperty ;
+    fela:isExpressibleInIDCS true .
+
+fr:CO2Compatibility
+    a fela:NormativeRule ;
+    rdfs:label "CO2 compatibility"@en ;
+    rdfs:comment "CO2 não pode em classe A."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty 
+        fela:ExtinguisherType ,
+        fela:FireClassProperty ;
+    fela:isExpressibleInIDCS true .
+
+#################################################################
+# MAINTENANCE RULE
+#################################################################
+
+fr:HydrostaticTestValidity
+    a fela:NormativeRule ;
+    rdfs:label "Hydrostatic test validity"@en ;
+    rdfs:comment "Máximo 5 anos."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:dependsOnProperty fela:HydrostaticTestDate ;
+    fela:isExpressibleInIDCS true .
