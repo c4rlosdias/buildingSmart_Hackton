@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ids:ids xmlns:ids="http://standards.buildingsmart.org/IDS"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://standards.buildingsmart.org/IDS ids.xsd">
+
+  <ids:info>
+    <ids:title>FELA Fire Extinguisher IDS</ids:title>
+    <ids:description>
+      IDS specification derived from FELA ontology for portable fire extinguishers.
+      Includes all requirements expressible in IDS.
+    </ids:description>
+    <ids:version>3.0</ids:version>
+    <ids:author>FELA Hackathon Prototype</ids:author>
+  </ids:info>
+
+  <!-- ===================================================== -->
+  <!-- CORE PROPERTIES -->
+  <!-- ===================================================== -->
+
+  <ids:specification name="Fire Extinguisher Core Properties">
+
+    <ids:annotation>
+      <ids:normativeText>
+        Fire extinguishers shall be properly identified and classified according to their type, extinguishing capacity, certification status and agent mass.
+      </ids:normativeText>
+      <ids:description>
+        Basic data required for all extinguisher definitions.
+      </ids:description>
+      <ids:source>FELA ontology derived from ABNT NBR 15808</ids:source>
+      <ids:clause>General requirements</ids:clause>
+      <ids:applicabilityNote>
+        Extintores devem ser corretamente identificados quanto ao tipo, capacidade extintora, certificação e massa do agente.
+      </ids:applicabilityNote>
+    </ids:annotation>
+
+    <ids:applicability>
+      <ids:entity>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+      </ids:entity>
+    </ids:applicability>
+
+    <ids:requirements>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:name>ExtinguisherType</ids:name>
+        <ids:dataType>IFCLABEL</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:name>ExtinguishingCapacity</ids:name>
+        <ids:dataType>IFCLABEL</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:name>IsCertified</ids:name>
+        <ids:dataType>IFCBOOLEAN</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:name>AgentMass</ids:name>
+        <ids:dataType>IFCMASSMEASURE</ids:dataType>
+      </ids:property>
+
+    </ids:requirements>
+
+  </ids:specification>
+
+  <!-- ===================================================== -->
+  <!-- TYPE ENUMERATION -->
+  <!-- ===================================================== -->
+
+  <ids:specification name="Allowed Extinguisher Types">
+
+    <ids:annotation>
+      <ids:normativeText>
+        The extinguishing agent type shall belong to the recognised extinguisher categories.
+      </ids:normativeText>
+      <ids:description>
+        Restricts extinguisher types to standardised agent families.
+      </ids:description>
+      <ids:source>FELA ontology</ids:source>
+      <ids:applicabilityNote>
+        O tipo de extintor deve pertencer a uma categoria reconhecida.
+      </ids:applicabilityNote>
+    </ids:annotation>
+
+    <ids:applicability>
+      <ids:entity>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+      </ids:entity>
+    </ids:applicability>
+
+    <ids:requirements>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:name>ExtinguisherType</ids:name>
+        <ids:allowedValues>
+          <ids:value>Water</ids:value>
+          <ids:value>CO2</ids:value>
+          <ids:value>Foam</ids:value>
+          <ids:value>DryChemicalABC</ids:value>
+          <ids:value>DryChemicalBC</ids:value>
+        </ids:allowedValues>
+      </ids:property>
+
+    </ids:requirements>
+
+  </ids:specification>
+
+  <!-- ===================================================== -->
+  <!-- CERTIFICATION -->
+  <!-- ===================================================== -->
+
+  <ids:specification name="Certification Requirement">
+
+    <ids:annotation>
+      <ids:normativeText>
+        All extinguishers shall be certified.
+      </ids:normativeText>
+      <ids:description>
+        Ensures certification is explicitly declared and true.
+      </ids:description>
+      <ids:source>FELA ontology</ids:source>
+      <ids:applicabilityNote>
+        Todos os extintores devem ser certificados.
+      </ids:applicabilityNote>
+    </ids:annotation>
+
+    <ids:applicability>
+      <ids:entity>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+      </ids:entity>
+    </ids:applicability>
+
+    <ids:requirements>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:name>IsCertified</ids:name>
+        <ids:expectedValue>true</ids:expectedValue>
+      </ids:property>
+
+    </ids:requirements>
+
+  </ids:specification>
+
+  <!-- ===================================================== -->
+  <!-- CAPACITY FORMAT -->
+  <!-- ===================================================== -->
+
+  <ids:specification name="Capacity Format">
+
+    <ids:annotation>
+      <ids:normativeText>
+        The extinguishing capacity shall follow standard rating notation.
+      </ids:normativeText>
+      <ids:description>
+        Validates extinguisher rating string format.
+      </ids:description>
+      <ids:source>FELA ontology</ids:source>
+      <ids:applicabilityNote>
+        A capacidade extintora deve seguir a notação padrão.
+      </ids:applicabilityNote>
+    </ids:annotation>
+
+    <ids:applicability>
+      <ids:entity>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+      </ids:entity>
+    </ids:applicability>
+
+    <ids:requirements>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:name>ExtinguishingCapacity</ids:name>
+        <ids:pattern>^([0-9]+A)?(:[0-9]+B)?(:C)?$</ids:pattern>
+      </ids:property>
+
+    </ids:requirements>
+
+  </ids:specification>
+
+  <!-- ===================================================== -->
+  <!-- MECHANICAL DATA PRESENCE -->
+  <!-- ===================================================== -->
+
+  <ids:specification name="Mechanical Properties Presence">
+
+    <ids:annotation>
+      <ids:normativeText>
+        Mechanical properties required for pressure resistance verification shall be provided.
+      </ids:normativeText>
+      <ids:description>
+        Required input for IDCS pressure rules.
+      </ids:description>
+      <ids:source>FELA ontology</ids:source>
+      <ids:applicabilityNote>
+        Propriedades mecânicas necessárias devem ser informadas.
+      </ids:applicabilityNote>
+    </ids:annotation>
+
+    <ids:applicability>
+      <ids:entity>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+      </ids:entity>
+    </ids:applicability>
+
+    <ids:requirements>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:name>BurstPressure</ids:name>
+        <ids:dataType>IFCPRESSUREMEASURE</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:name>NominalChargingPressure</ids:name>
+        <ids:dataType>IFCPRESSUREMEASURE</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:name>PressurisationMode</ids:name>
+        <ids:dataType>IFCLABEL</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:name>JointType</ids:name>
+        <ids:dataType>IFCLABEL</ids:dataType>
+      </ids:property>
+
+    </ids:requirements>
+
+  </ids:specification>
+
+  <!-- ===================================================== -->
+  <!-- INSTALLATION + CONTEXT -->
+  <!-- ===================================================== -->
+
+  <ids:specification name="Installation and Context Data">
+
+    <ids:annotation>
+      <ids:normativeText>
+        Installation and contextual properties required for compliance shall be provided.
+      </ids:normativeText>
+      <ids:description>
+        Provides input data for spatial and contextual rules.
+      </ids:description>
+      <ids:source>FELA ontology</ids:source>
+      <ids:applicabilityNote>
+        Propriedades de instalação e contexto devem ser informadas.
+      </ids:applicabilityNote>
+    </ids:annotation>
+
+    <ids:applicability>
+      <ids:entity>
+        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+      </ids:entity>
+    </ids:applicability>
+
+    <ids:requirements>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Installation</ids:propertySet>
+        <ids:name>RiskClass</ids:name>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Installation</ids:propertySet>
+        <ids:name>MountingHeight</ids:name>
+        <ids:dataType>IFCLENGTHMEASURE</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_Spatial</ids:propertySet>
+        <ids:name>MaxTravelDistance</ids:name>
+        <ids:dataType>IFCLENGTHMEASURE</ids:dataType>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireSafety_Context</ids:propertySet>
+        <ids:name>FireClass</ids:name>
+      </ids:property>
+
+      <ids:property>
+        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:name>HydrostaticTestDate</ids:name>
+        <ids:dataType>IFCDATE</ids:dataType>
+      </ids:property>
+
+    </ids:requirements>
+
+  </ids:specification>
+
+</ids:ids>
