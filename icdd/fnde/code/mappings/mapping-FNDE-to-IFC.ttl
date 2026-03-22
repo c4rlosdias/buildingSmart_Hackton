@@ -1,0 +1,7 @@
+@prefix ex:   <https://example.local/fnde/> .
+@prefix ifc:  <http://ifcowl.openbimstandards.org/IFC4_ADD2#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+
+# Mapeamento direto entre a propriedade FNDE.Ambiente e o atributo IfcSpace.Name
+ex:Ambiente
+    owl:equivalentProperty ifc:IfcSpace_Name .

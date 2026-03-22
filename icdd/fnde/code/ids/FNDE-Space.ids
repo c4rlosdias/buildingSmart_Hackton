@@ -1,0 +1,9 @@
+<ids xmlns="http://standards.buildingsmart.org/IDS">
+  <specification name="FNDE Space Naming Requirement">
+    <entity name="IfcSpace"/>
+    <property name="Ambiente"
+              uri="https://example.local/fnde/Ambiente">
+      <description>Nome do ambiente conforme padrão FNDE</description>
+    </property>
+  </specification>
+</ids>

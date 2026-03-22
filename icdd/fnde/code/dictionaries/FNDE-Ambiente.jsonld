@@ -1,0 +1,8 @@
+{
+  "@context": "https://schema.bsd.digital/bsdd/v3",
+  "@id": "https://example.local/fnde/Ambiente",
+  "name": "Ambiente",
+  "description": "Nome do ambiente segundo o padrão FNDE",
+  "datatype": "string",
+  "propertySet": "FNDE"
+}
