@@ -1,0 +1,99 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+
+@prefix feso: <https://example.org/feso#> .
+@prefix fr:   <https://example.org/feso-rules#> .
+
+<https://example.org/feso-rules>
+    a owl:Ontology ;
+    owl:imports <https://example.org/feso> ;
+    rdfs:label "FESO Rules Ontology"@en ;
+    owl:versionInfo "1.0.0" .
+
+#################################################################
+# PRESSURE RULES
+#################################################################
+
+fr:DirectNonWeldedPressureRule
+    a feso:NormativeRule ;
+    feso:appliesToClass feso:FireExtinguisher ;
+    feso:hasFormula "PR >= 5 * PNC AND PR >= 5 MPa" ;
+    feso:hasConditionText "Direct pressurisation and non-welded joints." ;
+    feso:isComputableByIDS false ;
+    feso:isComputableBySHACLAlone true .
+
+fr:DirectWeldedPressureRule
+    a feso:NormativeRule ;
+    feso:appliesToClass feso:FireExtinguisher ;
+    feso:hasFormula "PR >= 8 * PNC AND PR >= 5 MPa" ;
+    feso:hasConditionText "Direct pressurisation and welded joints." ;
+    feso:isComputableByIDS false ;
+    feso:isComputableBySHACLAlone true .
+
+#################################################################
+# CLASS B RULES
+#################################################################
+
+fr:ModerateRiskClassBRule
+    a feso:NormativeRule ;
+    feso:appliesToClass feso:BuildingStorey ;
+    feso:hasRiskClass feso:ModerateRisk ;
+    feso:hasFormula "1 B unit per m2 of liquid surface, minimum 20B" ;
+    feso:hasMinimumValue "20"^^xsd:decimal ;
+    feso:isComputableByIDS false ;
+    feso:isComputableBySHACLAlone false .
+
+fr:HighRiskClassBRule
+    a feso:NormativeRule ;
+    feso:appliesToClass feso:BuildingStorey ;
+    feso:hasRiskClass feso:HighRisk ;
+    feso:hasFormula "2 B units per m2 of liquid surface, minimum 40B" ;
+    feso:hasMinimumValue "40"^^xsd:decimal ;
+    feso:isComputableByIDS false ;
+    feso:isComputableBySHACLAlone false .
+
+#################################################################
+# TRAVEL DISTANCE
+#################################################################
+
+fr:HighRiskTravelDistanceRule
+    a feso:NormativeRule ;
+    feso:appliesToClass feso:BuildingStorey ;
+    feso:hasRiskClass feso:HighRisk ;
+    feso:hasMaximumValue "15"^^xsd:decimal ;
+    feso:hasUnit "m" ;
+    feso:isComputableByIDS false ;
+    feso:isComputableBySHACLAlone false .
+
+#################################################################
+# MOUNTING HEIGHT
+#################################################################
+
+fr:LowMassMountingRule
+    a feso:NormativeRule ;
+    feso:appliesToClass feso:FireExtinguisher ;
+    feso:hasFormula "mass <= 4 kg => height <= 1.60 m" ;
+    feso:isComputableByIDS false ;
+    feso:isComputableBySHACLAlone true .
+
+fr:HighMassMountingRule
+    a feso:NormativeRule ;
+    feso:appliesToClass feso:FireExtinguisher ;
+    feso:hasFormula "mass > 4 kg => height <= 1.00 m" ;
+    feso:isComputableByIDS false ;
+    feso:isComputableBySHACLAlone true .
+
+#################################################################
+# COMPATIBILITY
+#################################################################
+
+fr:WaterCompatibilityRule
+    a feso:NormativeRule ;
+    feso:hasAgentType feso:Water ;
+    feso:allowsFireClass feso:ClassA ;
+    feso:forbidsFireClass feso:ClassC ;
+    feso:isComputableByIDS false ;
+    feso:isComputableBySHACLAlone true .

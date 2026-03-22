@@ -1,0 +1,103 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+
+@prefix feso: <https://example.org/feso#> .
+
+<https://example.org/feso>
+    a owl:Ontology ;
+    rdfs:label "FESO Core Ontology"@en ;
+    dct:description "Core ontology for fire extinguisher standards, including domain concepts and rule metamodel."@en ;
+    owl:versionInfo "1.0.0" .
+
+#################################################################
+# DOMAIN CLASSES
+#################################################################
+
+feso:FireExtinguisher a owl:Class .
+feso:BuildingStorey a owl:Class .
+
+feso:RiskClass a owl:Class .
+feso:FireClass a owl:Class .
+feso:ExtinguishingAgent a owl:Class .
+
+#################################################################
+# ENUMS
+#################################################################
+
+feso:LightRisk a feso:RiskClass .
+feso:ModerateRisk a feso:RiskClass .
+feso:HighRisk a feso:RiskClass .
+
+feso:ClassA a feso:FireClass .
+feso:ClassB a feso:FireClass .
+feso:ClassC a feso:FireClass .
+
+feso:Water a feso:ExtinguishingAgent .
+feso:DryChemicalABC a feso:ExtinguishingAgent .
+feso:DryChemicalBC a feso:ExtinguishingAgent .
+feso:CO2 a feso:ExtinguishingAgent .
+feso:Foam a feso:ExtinguishingAgent .
+
+#################################################################
+# DOMAIN PROPERTIES
+#################################################################
+
+feso:hasPNC a rdf:Property .
+feso:hasPR a rdf:Property .
+
+feso:hasPressurisationMode a rdf:Property .
+feso:hasJointType a rdf:Property .
+
+feso:hasAgentMassKg a rdf:Property .
+feso:mountingHeightM a rdf:Property .
+
+feso:nextHydrostaticTestDate a rdf:Property .
+feso:isDisposable a rdf:Property .
+feso:manufactureDate a rdf:Property .
+
+#################################################################
+# RULE METAMODEL
+#################################################################
+
+feso:NormativeRule a owl:Class .
+
+feso:appliesToClass a owl:ObjectProperty ;
+    rdfs:domain feso:NormativeRule ;
+    rdfs:range owl:Class .
+
+feso:dependsOnProperty a owl:ObjectProperty ;
+    rdfs:domain feso:NormativeRule ;
+    rdfs:range rdf:Property .
+
+feso:hasRiskClass a owl:ObjectProperty ;
+    rdfs:domain feso:NormativeRule ;
+    rdfs:range feso:RiskClass .
+
+feso:hasAgentType a owl:ObjectProperty ;
+    rdfs:domain feso:NormativeRule ;
+    rdfs:range feso:ExtinguishingAgent .
+
+feso:allowsFireClass a owl:ObjectProperty ;
+    rdfs:domain feso:NormativeRule ;
+    rdfs:range feso:FireClass .
+
+feso:forbidsFireClass a owl:ObjectProperty ;
+    rdfs:domain feso:NormativeRule ;
+    rdfs:range feso:FireClass .
+
+feso:hasFormula a owl:DatatypeProperty .
+feso:hasRequirementText a owl:DatatypeProperty .
+feso:hasConditionText a owl:DatatypeProperty .
+
+feso:hasMinimumValue a owl:DatatypeProperty .
+feso:hasMaximumValue a owl:DatatypeProperty .
+feso:hasFactor a owl:DatatypeProperty .
+feso:hasUnit a owl:DatatypeProperty .
+
+feso:hasSourceSection a owl:DatatypeProperty .
+
+feso:isComputableByIDS a owl:DatatypeProperty .
+feso:isComputableBySHACLAlone a owl:DatatypeProperty .
