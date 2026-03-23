@@ -39,7 +39,8 @@ classes = (
     IFC_OT_ExecutarExterno,
     IFC_UL_ElementList,
     IFC_PT_PainelPrincipal,
-    IFC_OT_ShowReport
+    IFC_OT_ShowReport,
+    IFC_OT_SelectElement,
     
 )
 

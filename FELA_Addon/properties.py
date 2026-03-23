@@ -5,21 +5,17 @@ class Element(bpy.types.PropertyGroup):
     info      : bpy.props.StringProperty(name="Info")
 
 class IFC_PG_Propriedades(bpy.types.PropertyGroup):
-    specfilepath: bpy.props.StringProperty(
-        name="Caminho IFC",
-        description="Specification file",
+    idsfilepath: bpy.props.StringProperty(
+        name="idsfilepath",
+        description="ids file",
         subtype="FILE_PATH",
         default="",
     )
-    capabilities: bpy.props.EnumProperty(
-        name="Capability",
-        description="Selecione a capability do infobim para executar",
-        items=[
-            ("LIST_BUILDINGS", "Listar Edifícios", "Lista os edifícios e pavimentos do arquivo IFC"),
-            ("LIST_ELEMENTS", "Listar Elementos", "Lista os elementos de uma classe IFC específica"),
-            ("INSPECT_ELEMENT", "Inspecionar Elemento", "Inspeciona um elemento pelo GlobalId"),
-            ("LIST_PROPERTY_SETS", "Listar Property Sets", "Lista os property sets de um elemento específico"),
-        ],
-        default="LIST_BUILDINGS",
+    idcsfilepath: bpy.props.StringProperty(
+        name="idcsfilepath",
+        description="idcs file",
+        subtype="FILE_PATH",
+        default="",
     )
+
     elements: bpy.props.CollectionProperty(name="Elements", type=Element)

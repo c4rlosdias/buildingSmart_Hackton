@@ -18,11 +18,12 @@ class IFC_PT_PainelPrincipal(bpy.types.Panel):
             if bim_path:
                 layout.label(text="IFC carregado:", icon="CHECKMARK")
                 layout.label(text=os.path.basename(bim_path))
-                layout.label(text="Select specification file:")
-                layout.prop(props, "specfilepath", text="")
+
+                layout.label(text="Select ids file:")
+                layout.prop(props, "idsfilepath", text="")
                 layout.separator()
-                layout.label(text="Select infobim capability:")
-                layout.prop(props, "capabilities", text="")
+                layout.label(text="Select idcs file:")
+                layout.prop(props, "idcsfilepath", text="")
 
                 layout.separator()
                 layout.operator("ifc.executar_externo", icon="PLAY")
@@ -49,5 +50,6 @@ class IFC_UL_ElementList(bpy.types.UIList):
     def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index):
         if item:
             layout.label(text=f"Name: {item.name} | GlobalId: {item.global_id}")
+            layout.operator("ifc.select_element", text="Select").element_index = index
 
 

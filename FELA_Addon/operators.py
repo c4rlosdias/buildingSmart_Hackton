@@ -4,6 +4,7 @@ import json
 import webbrowser
 import bonsai.tool as tool
 from capability.plugin.capability.validate_ids import ValidateIdsCapability
+from capability.plugin.capability.validate_idcs import ValidateIdcsCapability
 from .utils import run_infobim_capability, add_elements
 
 
@@ -27,13 +28,24 @@ class IFC_OT_ExecutarExterno(bpy.types.Operator):
             return {"CANCELLED"}
 
         try:
-            resultado = run_infobim_capability(
+
+            resultado_ids = run_infobim_capability(
                 ValidateIdsCapability(),
                 ifc_path=ifcfilepath,
-                ids_path=props.specfilepath,
+                ids_path=props.idsfilepath,
             )
-            with open("resultado.json", "w", encoding="utf-8") as f:
-                json.dump(resultado, f, ensure_ascii=False, indent=4)
+
+            resultado_idcs = run_infobim_capability(
+                ValidateIdcsCapability(),
+                ifc_path=ifcfilepath,
+                idcs_path=props.idcsfilepath,
+            )
+
+            with open("resultado_ids.json", "w", encoding="utf-8") as f:
+                json.dump(resultado_ids, f, ensure_ascii=False, indent=4)
+
+            with open("resultado_idcs.json", "w", encoding="utf-8") as f:
+                json.dump(resultado_idcs, f, ensure_ascii=False, indent=4)
 
             #add_elements(context, resultado)
 
@@ -200,3 +212,28 @@ class IFC_OT_ShowReport(bpy.types.Operator):
         webbrowser.open(report_path)
 
         return {"FINISHED"}
+    
+class IFC_OT_SelectElement(bpy.types.Operator):
+    bl_idname = "ifc.select_element"
+    bl_label = "Select Element in Blender"
+    bl_description = "Select the corresponding element in Blender"
+
+    element_index: bpy.props.IntProperty()
+
+    def execute(self, context):
+        props = context.scene.ifc_props
+        if self.element_index < len(props.elements):
+            element = props.elements[self.element_index]
+            obj_name = f"IFC_{element.global_id}"
+            obj = bpy.data.objects.get(obj_name)
+            if obj:
+                bpy.ops.object.select_all(action='DESELECT')
+                obj.select_set(True)
+                context.view_layer.objects.active = obj
+                return {"FINISHED"}
+            else:
+                self.report({"WARNING"}, f"Object not found for element: {element.name}")
+                return {"CANCELLED"}
+        else:
+            self.report({"ERROR"}, "Invalid element index")
+            return {"CANCELLED"}
