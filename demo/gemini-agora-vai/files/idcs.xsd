@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://fela.org/IDCS"
+           xmlns:idcs="http://fela.org/IDCS"
+           elementFormDefault="qualified">
+
+  <!-- ROOT -->
+  <xs:element name="idcs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="info" type="idcs:InfoType"/>
+        <xs:element name="constraint" type="idcs:ConstraintType" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- INFO -->
+  <xs:complexType name="InfoType">
+    <xs:sequence>
+      <xs:element name="title" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="version" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- CONSTRAINT -->
+  <xs:complexType name="ConstraintType">
+    <xs:sequence>
+      <xs:element name="annotation" type="idcs:AnnotationType" minOccurs="0"/>
+      <xs:element name="appliesTo" type="idcs:AppliesToType"/>
+      <xs:element name="condition" type="idcs:ConditionType" minOccurs="0"/>
+      <xs:element name="expression" type="idcs:ExpressionType"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- ANNOTATION -->
+  <xs:complexType name="AnnotationType">
+    <xs:sequence>
+      <xs:element name="normativeText" type="xs:string"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="source" type="xs:string" minOccurs="0"/>
+      <xs:element name="clause" type="xs:string" minOccurs="0"/>
+      <xs:element name="applicabilityNote" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- APPLIES -->
+  <xs:complexType name="AppliesToType">
+    <xs:sequence>
+      <xs:element name="entity" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- CONDITION -->
+  <xs:complexType name="ConditionType">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="equals" type="idcs:EqualsType"/>
+      <xs:element name="and" type="idcs:ConditionGroupType"/>
+      <xs:element name="or" type="idcs:ConditionGroupType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="ConditionGroupType">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="equals" type="idcs:EqualsType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="EqualsType">
+    <xs:attribute name="propertySet" type="xs:string" use="required"/>
+    <xs:attribute name="property" type="xs:string" use="required"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- EXPRESSIONS -->
+  <xs:complexType name="ExpressionType">
+    <xs:choice>
+      <xs:element name="and" type="idcs:LogicalType"/>
+      <xs:element name="greaterOrEqual" type="idcs:ComparisonType"/>
+      <xs:element name="lessOrEqual" type="idcs:ComparisonType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="LogicalType">
+    <xs:sequence>
+      <xs:element name="greaterOrEqual" type="idcs:ComparisonType" maxOccurs="unbounded"/>
+      <xs:element name="lessOrEqual" type="idcs:ComparisonType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ComparisonType">
+    <xs:sequence>
+      <xs:element name="propertyRef" type="idcs:PropertyRefType"/>
+      <xs:choice>
+        <xs:element name="literal" type="idcs:LiteralType"/>
+        <xs:element name="multiply" type="idcs:MultiplyType"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- PROPERTY REF -->
+  <xs:complexType name="PropertyRefType">
+    <xs:attribute name="propertySet" type="xs:string" use="required"/>
+    <xs:attribute name="property" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- LITERAL -->
+  <xs:complexType name="LiteralType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="unit" type="xs:string" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- MULTIPLY -->
+  <xs:complexType name="MultiplyType">
+    <xs:sequence>
+      <xs:element name="literal" type="idcs:LiteralType"/>
+      <xs:element name="propertyRef" type="idcs:PropertyRefType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
