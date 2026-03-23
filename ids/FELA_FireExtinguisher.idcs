@@ -31,7 +31,7 @@
     </fela:annotation>
 
     <fela:appliesTo>
-      <fela:entity>IfcFireSuppressionTerminalType</fela:entity>
+      <fela:entity>IfcFireSuppressionTerminal</fela:entity>
     </fela:appliesTo>
 
     <fela:condition>
@@ -73,7 +73,7 @@
     </fela:annotation>
 
     <fela:appliesTo>
-      <fela:entity>IfcFireSuppressionTerminalType</fela:entity>
+      <fela:entity>IfcFireSuppressionTerminal</fela:entity>
     </fela:appliesTo>
 
     <fela:condition>
@@ -110,7 +110,7 @@
     </fela:annotation>
 
     <fela:appliesTo>
-      <fela:entity>IfcFireSuppressionTerminalType</fela:entity>
+      <fela:entity>IfcFireSuppressionTerminal</fela:entity>
     </fela:appliesTo>
 
     <fela:condition>
@@ -144,7 +144,7 @@
     </fela:annotation>
 
     <fela:appliesTo>
-      <fela:entity>IfcFireSuppressionTerminalType</fela:entity>
+      <fela:entity>IfcFireSuppressionTerminal</fela:entity>
     </fela:appliesTo>
 
     <fela:condition>
