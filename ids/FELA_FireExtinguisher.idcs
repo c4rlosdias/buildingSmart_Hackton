@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fela:idcs xmlns:fela="http://fela.org/IDCS"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <fela:info>
+    <fela:title>FELA Constraint Specification</fela:title>
+    <fela:description>
+      Constraint specification derived from FELA ontology for rules not expressible in IDS.
+    </fela:description>
+    <fela:version>3.0</fela:version>
+  </fela:info>
+
+  <!-- ===================================================== -->
+  <!-- PRESSURE RULES -->
+  <!-- ===================================================== -->
+
+  <fela:constraint name="DirectNonWeldedPressure">
+    <fela:annotation>
+      <fela:normativeText>
+        The burst pressure shall be at least five times the nominal charging pressure and not less than 5 MPa for directly pressurised extinguishers with non-welded joints.
+      </fela:normativeText>
+      <fela:description>
+        Cross-property constraint involving burst pressure and nominal charging pressure under specific construction conditions.
+      </fela:description>
+      <fela:source>FELA ontology derived from ABNT NBR 15808</fela:source>
+      <fela:clause>Section 4</fela:clause>
+      <fela:applicabilityNote>
+        A pressão de ruptura deve ser pelo menos cinco vezes a pressão nominal de carga e não inferior a 5 MPa para extintores de pressurização direta com uniões não soldadas.
+      </fela:applicabilityNote>
+    </fela:annotation>
+
+    <fela:appliesTo>
+      <fela:entity>IfcFireSuppressionTerminalType</fela:entity>
+    </fela:appliesTo>
+
+    <fela:condition>
+      <fela:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Direct"/>
+      <fela:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="NonWelded"/>
+    </fela:condition>
+
+    <fela:expression>
+      <fela:and>
+        <fela:greaterOrEqual>
+          <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <fela:multiply>
+            <fela:literal>5</fela:literal>
+            <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+          </fela:multiply>
+        </fela:greaterOrEqual>
+
+        <fela:greaterOrEqual>
+          <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <fela:literal unit="MPa">5</fela:literal>
+        </fela:greaterOrEqual>
+      </fela:and>
+    </fela:expression>
+  </fela:constraint>
+
+  <fela:constraint name="DirectWeldedPressure">
+    <fela:annotation>
+      <fela:normativeText>
+        The burst pressure shall be at least eight times the nominal charging pressure and not less than 5 MPa for directly pressurised extinguishers with welded joints.
+      </fela:normativeText>
+      <fela:description>
+        Pressure resistance rule for welded construction under direct pressurisation.
+      </fela:description>
+      <fela:source>FELA ontology</fela:source>
+      <fela:clause>Section 4</fela:clause>
+      <fela:applicabilityNote>
+        A pressão de ruptura deve ser pelo menos oito vezes a pressão nominal de carga e não inferior a 5 MPa para extintores com união soldada.
+      </fela:applicabilityNote>
+    </fela:annotation>
+
+    <fela:appliesTo>
+      <fela:entity>IfcFireSuppressionTerminalType</fela:entity>
+    </fela:appliesTo>
+
+    <fela:condition>
+      <fela:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Direct"/>
+      <fela:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="Welded"/>
+    </fela:condition>
+
+    <fela:expression>
+      <fela:and>
+        <fela:greaterOrEqual>
+          <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <fela:multiply>
+            <fela:literal>8</fela:literal>
+            <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+          </fela:multiply>
+        </fela:greaterOrEqual>
+
+        <fela:greaterOrEqual>
+          <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <fela:literal unit="MPa">5</fela:literal>
+        </fela:greaterOrEqual>
+      </fela:and>
+    </fela:expression>
+  </fela:constraint>
+
+  <fela:constraint name="IndirectNonWeldedPressure">
+    <fela:annotation>
+      <fela:normativeText>
+        The burst pressure shall be at least four times the nominal charging pressure and not less than 5 MPa for indirectly pressurised extinguishers with non-welded joints.
+      </fela:normativeText>
+      <fela:applicabilityNote>
+        Pressurização indireta e união não soldada.
+      </fela:applicabilityNote>
+    </fela:annotation>
+
+    <fela:appliesTo>
+      <fela:entity>IfcFireSuppressionTerminalType</fela:entity>
+    </fela:appliesTo>
+
+    <fela:condition>
+      <fela:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Indirect"/>
+      <fela:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="NonWelded"/>
+    </fela:condition>
+
+    <fela:expression>
+      <fela:and>
+        <fela:greaterOrEqual>
+          <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <fela:multiply>
+            <fela:literal>4</fela:literal>
+            <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+          </fela:multiply>
+        </fela:greaterOrEqual>
+
+        <fela:greaterOrEqual>
+          <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <fela:literal unit="MPa">5</fela:literal>
+        </fela:greaterOrEqual>
+      </fela:and>
+    </fela:expression>
+  </fela:constraint>
+
+  <fela:constraint name="IndirectWeldedPressure">
+    <fela:annotation>
+      <fela:normativeText>
+        The burst pressure shall be at least seven times the nominal charging pressure and not less than 5 MPa for indirectly pressurised extinguishers with welded joints.
+      </fela:normativeText>
+    </fela:annotation>
+
+    <fela:appliesTo>
+      <fela:entity>IfcFireSuppressionTerminalType</fela:entity>
+    </fela:appliesTo>
+
+    <fela:condition>
+      <fela:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Indirect"/>
+      <fela:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="Welded"/>
+    </fela:condition>
+
+    <fela:expression>
+      <fela:and>
+        <fela:greaterOrEqual>
+          <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <fela:multiply>
+            <fela:literal>7</fela:literal>
+            <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+          </fela:multiply>
+        </fela:greaterOrEqual>
+
+        <fela:greaterOrEqual>
+          <fela:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <fela:literal unit="MPa">5</fela:literal>
+        </fela:greaterOrEqual>
+      </fela:and>
+    </fela:expression>
+  </fela:constraint>
+
+</fela:idcs>
