@@ -15,7 +15,7 @@
     owl:versionInfo "3.0.0" .
 
 #################################################################
-# DOMAIN PROPS
+# IFC MAPPING PROPS
 #################################################################
 fela:ifcEquivalentClass a owl:ObjectProperty ;
     rdfs:domain owl:Class ;
