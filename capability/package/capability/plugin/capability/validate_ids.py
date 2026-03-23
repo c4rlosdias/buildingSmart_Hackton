@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from ontobdc.run.core.capability import Capability, CapabilityMetadata
 from ontobdc.run.core.port.contex import CliContextPort
@@ -79,6 +79,11 @@ class ValidateIdsCapability(Capability):
             "org.local.domain.ids.validation.passed": summary["passed"],
             "org.local.domain.ids.validation.summary": summary,
         }
+
+    def get_default_cli_renderer(self) -> Optional[Any]:
+        from ..adapter.renderer.validate_ids import ValidateIdsRenderer
+
+        return ValidateIdsRenderer()
 
     def _get_required_str(self, context: CliContextPort, key: str) -> str:
         val = context.get_parameter_value(key)
