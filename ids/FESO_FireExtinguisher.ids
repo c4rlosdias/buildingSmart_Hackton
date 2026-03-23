@@ -5,11 +5,11 @@
 
   <ids:info>
     <ids:title>FESO Fire Extinguisher IDS</ids:title>
+    <ids:version>2.0</ids:version>
     <ids:description>
       IDS specification for portable fire extinguishers. This file contains only requirements that can be expressed with IDS.
     </ids:description>
-    <ids:version>2.0</ids:version>
-    <ids:author>Hackathon prototype</ids:author>
+    <ids:author>hackathon@example.org</ids:author>
   </ids:info>
 
   <ids:specification name="Fire Extinguisher Core Properties">
