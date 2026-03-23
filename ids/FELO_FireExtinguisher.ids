@@ -42,27 +42,27 @@
     <ids:requirements>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>ExtinguisherType</ids:simpleValue></ids:name>
-        <ids:dataType>IFCLABEL</ids:dataType>
+        <ids:dataType><ids:simpleValue>IFCLABEL</ids:simpleValue></ids:dataType>
       </ids:property>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>ExtinguishingCapacity</ids:simpleValue></ids:name>
-        <ids:dataType>IFCLABEL</ids:dataType>
+        <ids:dataType><ids:simpleValue>IFCLABEL</ids:simpleValue></ids:dataType>
       </ids:property>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>IsCertified</ids:simpleValue></ids:name>
-        <ids:dataType>IFCBOOLEAN</ids:dataType>
+        <ids:dataType><ids:simpleValue>IFCBOOLEAN</ids:simpleValue></ids:dataType>
       </ids:property>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>AgentMass</ids:simpleValue></ids:name>
-        <ids:dataType>IFCMASSMEASURE</ids:dataType>
+        <ids:dataType><ids:simpleValue>IFCMASSMEASURE</ids:simpleValue></ids:dataType>
       </ids:property>
 
     </ids:requirements>
@@ -97,7 +97,7 @@
     <ids:requirements>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>ExtinguisherType</ids:simpleValue></ids:name>
         <ids:allowedValues>
           <ids:value>Water</ids:value>
@@ -140,9 +140,9 @@
     <ids:requirements>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>IsCertified</ids:simpleValue></ids:name>
-        <ids:expectedValue>true</ids:expectedValue>
+        <ids:expectedValue><ids:simpleValue>true</ids:simpleValue></ids:expectedValue>
       </ids:property>
 
     </ids:requirements>
@@ -177,9 +177,9 @@
     <ids:requirements>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>ExtinguishingCapacity</ids:simpleValue></ids:name>
-        <ids:pattern>^([0-9]+A)?(:[0-9]+B)?(:C)?$</ids:pattern>
+        <ids:pattern><ids:simpleValue>^([0-9]+A)?(:[0-9]+B)?(:C)?$</ids:simpleValue></ids:pattern>
       </ids:property>
 
     </ids:requirements>
@@ -214,27 +214,27 @@
     <ids:requirements>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Mechanical</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>BurstPressure</ids:simpleValue></ids:name>
-        <ids:dataType>IFCPRESSUREMEASURE</ids:dataType>
+        <ids:dataType><ids:simpleValue>IFCPRESSUREMEASURE</ids:simpleValue></ids:dataType>
       </ids:property>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Mechanical</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>NominalChargingPressure</ids:simpleValue></ids:name>
-        <ids:dataType>IFCPRESSUREMEASURE</ids:dataType>
+        <ids:dataType><ids:simpleValue>IFCPRESSUREMEASURE</ids:simpleValue></ids:dataType>
       </ids:property>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Mechanical</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>PressurisationMode</ids:simpleValue></ids:name>
-        <ids:dataType>IFCLABEL</ids:dataType>
+        <ids:dataType><ids:simpleValue>IFCLABEL</ids:simpleValue></ids:dataType>
       </ids:property>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Mechanical</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>JointType</ids:simpleValue></ids:name>
-        <ids:dataType>IFCLABEL</ids:dataType>
+        <ids:dataType><ids:simpleValue>IFCLABEL</ids:simpleValue></ids:dataType>
       </ids:property>
 
     </ids:requirements>
@@ -269,31 +269,31 @@
     <ids:requirements>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_Installation</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Installation</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>RiskClass</ids:simpleValue></ids:name>
       </ids:property>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_Installation</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Installation</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>MountingHeight</ids:simpleValue></ids:name>
-        <ids:dataType>IFCLENGTHMEASURE</ids:dataType>
+        <ids:dataType><ids:simpleValue>IFCLENGTHMEASURE</ids:simpleValue></ids:dataType>
       </ids:property>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_Spatial</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Spatial</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>MaxTravelDistance</ids:simpleValue></ids:name>
-        <ids:dataType>IFCLENGTHMEASURE</ids:dataType>
+        <ids:dataType><ids:simpleValue>IFCLENGTHMEASURE</ids:simpleValue></ids:dataType>
       </ids:property>
 
       <ids:property>
-        <ids:propertySet>Pset_FireSafety_Context</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireSafety_Context</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>FireClass</ids:simpleValue></ids:name>
       </ids:property>
 
       <ids:property>
-        <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
+        <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
         <ids:name><ids:simpleValue>HydrostaticTestDate</ids:simpleValue></ids:name>
-        <ids:dataType>IFCDATE</ids:dataType>
+        <ids:dataType><ids:simpleValue>IFCDATE</ids:simpleValue></ids:dataType>
       </ids:property>
 
     </ids:requirements>
