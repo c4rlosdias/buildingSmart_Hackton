@@ -1,0 +1,10 @@
+{
+    "org.infobim.domain.ifc.element.inspect.source": {
+        "schema": "IFC4",
+        "type": "ifc_path",
+        "value": "C:/Users/c4rlo/OneDrive/Documentos/TRABALHO/CERTI/SUMMITS/Hackaton/buildingSmart_Hackton/IFC_files/TIPO1-ARQ-MOD_R03.norm.ifc",
+        "info": {
+            "id": 60028,
+            "type": "IfcWindow",
+            "GlobalId": "3KMfmpZYLFSxCrtAiUm60L",
+            "OwnerHistory": 
