@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idcs xmlns="http://fela.org/IDCS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://fela.org/IDCS idcs.xsd">
+  <info>
+    <title>ABNT NBR 15808 – Extintores de Incêndio Portáteis (compilado)</title>
+    <description>Requisitos normativos estruturados a partir do documento nbr15808-extintores.md, mapeados para IDCS conforme FELA.</description>
+    <version>1.0.0</version>
+  </info>
+
+<constraints>
+  <constraint name="NBR15808-4-PR-ge-5xPNC-direta-nao-soldada">
+    <annotation>
+      <normativeText>Pressurização direta, juntas não soldadas: PR ≥ 5 × PNC e ≥ 5 MPa</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <and>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="direta"/>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="não soldadas"/>
+      </and>
+    </condition>
+    <expression>
+      <greaterOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <multiply>
+          <literal>5</literal>
+          <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+        </multiply>
+      </greaterOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="NBR15808-4-PR-ge-5MPa-direta-nao-soldada">
+    <annotation>
+      <normativeText>Pressurização direta, juntas não soldadas: PR ≥ 5 × PNC e ≥ 5 MPa</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <and>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="direta"/>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="não soldadas"/>
+      </and>
+    </condition>
+    <expression>
+      <greaterOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <literal unit="MPa">5</literal>
+      </greaterOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="NBR15808-4-PR-ge-8xPNC-direta-soldada">
+    <annotation>
+      <normativeText>Pressurização direta, juntas soldadas: PR ≥ 8 × PNC e ≥ 5 MPa</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <and>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="direta"/>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="soldadas"/>
+      </and>
+    </condition>
+    <expression>
+      <greaterOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <multiply>
+          <literal>8</literal>
+          <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+        </multiply>
+      </greaterOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="NBR15808-4-PR-ge-5MPa-direta-soldada">
+    <annotation>
+      <normativeText>Pressurização direta, juntas soldadas: PR ≥ 8 × PNC e ≥ 5 MPa</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <and>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="direta"/>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="soldadas"/>
+      </and>
+    </condition>
+    <expression>
+      <greaterOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <literal unit="MPa">5</literal>
+      </greaterOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="NBR15808-4-PR-ge-4xPNC-indireta-nao-soldada">
+    <annotation>
+      <normativeText>Pressurização indireta, juntas não soldadas: PR ≥ 4 × PNC e ≥ 5 MPa</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <and>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="indireta"/>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="não soldadas"/>
+      </and>
+    </condition>
+    <expression>
+      <greaterOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <multiply>
+          <literal>4</literal>
+          <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+        </multiply>
+      </greaterOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="NBR15808-4-PR-ge-5MPa-indireta-nao-soldada">
+    <annotation>
+      <normativeText>Pressurização indireta, juntas não soldadas: PR ≥ 4 × PNC e ≥ 5 MPa</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <and>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="indireta"/>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="não soldadas"/>
+      </and>
+    </condition>
+    <expression>
+      <greaterOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <literal unit="MPa">5</literal>
+      </greaterOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="NBR15808-4-PR-ge-7xPNC-indireta-soldada">
+    <annotation>
+      <normativeText>Pressurização indireta, juntas soldadas: PR ≥ 7 × PNC e ≥ 5 MPa</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <and>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="indireta"/>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="soldadas"/>
+      </and>
+    </condition>
+    <expression>
+      <greaterOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <multiply>
+          <literal>7</literal>
+          <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+        </multiply>
+      </greaterOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="NBR15808-4-PR-ge-5MPa-indireta-soldada">
+    <annotation>
+      <normativeText>Pressurização indireta, juntas soldadas: PR ≥ 7 × PNC e ≥ 5 MPa</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <and>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="indireta"/>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="soldadas"/>
+      </and>
+    </condition>
+    <expression>
+      <greaterOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <literal unit="MPa">5</literal>
+      </greaterOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="NBR15808-3-INMETRO-certificado-igual-true-ge">
+    <annotation>
+      <normativeText>A certificação INMETRO é obrigatória para todos os extintores comercializados no Brasil.</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <expression>
+      <greaterOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_FELA" property="IsCertified"/>
+        <literal>true</literal>
+      </greaterOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="NBR15808-3-INMETRO-certificado-igual-true-le">
+    <annotation>
+      <normativeText>A certificação INMETRO é obrigatória para todos os extintores comercializados no Brasil.</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <expression>
+      <lessOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_FELA" property="IsCertified"/>
+        <literal>true</literal>
+      </lessOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="NBR12693-7-4-altura-manipulo-ge-0.10m">
+    <annotation>
+      <normativeText>Altura do manípulo: Entre 10 cm e 1,60 m do piso acabado</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <expression>
+      <greaterOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Installation" property="MountingHeight"/>
+        <literal unit="m">0.10</literal>
+      </greaterOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="NBR12693-7-4-altura-manipulo-le-1.60m">
+    <annotation>
+      <normativeText>Altura do manípulo: Entre 10 cm e 1,60 m do piso acabado</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <expression>
+      <lessOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Installation" property="MountingHeight"/>
+        <literal unit="m">1.60</literal>
+      </lessOrEqual>
+    </expression>
+  </constraint>
+</constraints>
+</idcs>

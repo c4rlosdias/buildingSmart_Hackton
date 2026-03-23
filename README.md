@@ -47,6 +47,8 @@ flowchart TD
 - Capabilities:
   - ICDD/IFC conversion: normalizes IFC and applies mappings
   - TTL → IDS: extracts IDS-expressible rules from ontology and generates IDS
+  - IDS validation: validates an IFC model against an IDS file (ifctester)
+  - IDCS validation: validates cross-property constraints against an IFC model (SymPy + IfcOpenShell)
 - IDS/IDCS:
   - Examples in `ids/`
 
@@ -77,17 +79,25 @@ Result: `IFC_files/TIPO1-ARQ-MOD_R03.norm.ifc`
 .venv/bin/infobim run \
   --id org.local.domain.ids.capability.ttl.to_ids \
   --onto-path ontologies/fela-nbr-rules.ttl \
-  --ids-output-path /tmp/feso.ids
+  --ids-output-path /tmp/fela.ids
 ```
 
-4) Validate IDS (optional, via ifctester)
+4) Validate IDS (via ifctester)
 
 ```bash
-.venv/bin/python - <<'PY'
-from ifctester import ids
-x = ids.open('/tmp/feso.ids', validate=True)
-print('spec_count', len(x.specifications))
-PY
+.venv/bin/infobim run \
+  --id org.local.domain.ids.capability.validate \
+  --ids-path /tmp/fela.ids \
+  --ifc-path ifc_files/TIPO1-ARQ-MOD_R03.norm.ifc
+```
+
+5) Validate IDCS (cross-property constraints)
+
+```bash
+.venv/bin/infobim run \
+  --id org.local.domain.idcs.capability.validate \
+  --idcs-path ids/FELA_FireExtinguisher.idcs \
+  --ifc-path ifc_files/TIPO1-ARQ-MOD_R03.norm.ifc
 ```
 
 ## Relevant Structure
@@ -96,6 +106,10 @@ PY
   - Normalizes IFC and applies rules/mappings (ICDD → IFC)
 - `capability/package/capability/plugin/capability/ttl_to_ids.py`
   - Reads Turtle (RDFLib), filters IDS-expressible rules, and generates specifications
+- `capability/package/capability/plugin/capability/validate_ids.py`
+  - Runs IDS validation (ifctester) and prints a Rich report in the terminal
+- `capability/package/capability/plugin/capability/validate_idcs.py`
+  - Runs IDCS constraint validation (SymPy + IfcOpenShell) and prints a Rich report with calculation traces
 - `tests/test_ttl_to_ids_read_fela_computable_rules.py`
   - Unit tests (pytest) for the TTL rule extractor only
 
@@ -103,3 +117,4 @@ PY
 
 - The TTL parser uses RDFLib and avoids namespace coupling by matching predicates with localname `isExpressibleInIDS` (fallback `isComputableByIDS`).
 - IDS is generated via `ifctester.ids` (`Ids.to_xml(...)`).
+- Validation output is optimized for demos: full paths in headers, summary counters, and “Details” tables with entity IDs and example traces.

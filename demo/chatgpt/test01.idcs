@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idcs:idcs xmlns:idcs="http://fela.org/IDCS">
+  <idcs:info>
+    <idcs:title>ABNT NBR 15808 / NBR 12693 - Fire Extinguisher Constraints</idcs:title>
+    <idcs:description>Deterministic IDCS compilation of normative constraints expressible with the provided FELA core and IDCS schema.</idcs:description>
+    <idcs:version>1.0.0</idcs:version>
+  </idcs:info>
+  <idcs:constraints>
+  <idcs:constraint name="extinguisher_must_be_certified_equal_true">
+    <idcs:annotation>
+      <idcs:normativeText>A certificação INMETRO é obrigatória para todos os extintores comercializados no Brasil.</idcs:normativeText>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:expression>
+      <idcs:and>
+        <idcs:greaterOrEqual>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_FELA" property="IsCertified"/>
+          <idcs:literal>true</idcs:literal>
+        </idcs:greaterOrEqual>
+        <idcs:lessOrEqual>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_FELA" property="IsCertified"/>
+          <idcs:literal>true</idcs:literal>
+        </idcs:lessOrEqual>
+      </idcs:and>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="burst_pressure_direct_unsoldered_ge_5_times_pnc">
+    <idcs:annotation>
+      <idcs:normativeText>Pressurização direta, juntas não soldadas: PR ≥ 5 × PNC.</idcs:normativeText>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+      <idcs:clause>4</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Direct"/>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="NonWelded"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:greaterOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <idcs:multiply>
+          <idcs:literal>5</idcs:literal>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+        </idcs:multiply>
+      </idcs:greaterOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="burst_pressure_direct_unsoldered_ge_5_mpa">
+    <idcs:annotation>
+      <idcs:normativeText>Pressurização direta, juntas não soldadas: PR ≥ 5 MPa.</idcs:normativeText>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+      <idcs:clause>4</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Direct"/>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="NonWelded"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:greaterOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <idcs:literal unit="MPa">5</idcs:literal>
+      </idcs:greaterOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="burst_pressure_direct_welded_ge_8_times_pnc">
+    <idcs:annotation>
+      <idcs:normativeText>Pressurização direta, juntas soldadas: PR ≥ 8 × PNC.</idcs:normativeText>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+      <idcs:clause>4</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Direct"/>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="Welded"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:greaterOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <idcs:multiply>
+          <idcs:literal>8</idcs:literal>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+        </idcs:multiply>
+      </idcs:greaterOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="burst_pressure_direct_welded_ge_5_mpa">
+    <idcs:annotation>
+      <idcs:normativeText>Pressurização direta, juntas soldadas: PR ≥ 5 MPa.</idcs:normativeText>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+      <idcs:clause>4</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Direct"/>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="Welded"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:greaterOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <idcs:literal unit="MPa">5</idcs:literal>
+      </idcs:greaterOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="burst_pressure_indirect_unsoldered_ge_4_times_pnc">
+    <idcs:annotation>
+      <idcs:normativeText>Pressurização indireta, juntas não soldadas: PR ≥ 4 × PNC.</idcs:normativeText>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+      <idcs:clause>4</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Indirect"/>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="NonWelded"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:greaterOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <idcs:multiply>
+          <idcs:literal>4</idcs:literal>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+        </idcs:multiply>
+      </idcs:greaterOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="burst_pressure_indirect_unsoldered_ge_5_mpa">
+    <idcs:annotation>
+      <idcs:normativeText>Pressurização indireta, juntas não soldadas: PR ≥ 5 MPa.</idcs:normativeText>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+      <idcs:clause>4</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Indirect"/>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="NonWelded"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:greaterOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <idcs:literal unit="MPa">5</idcs:literal>
+      </idcs:greaterOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="burst_pressure_indirect_welded_ge_7_times_pnc">
+    <idcs:annotation>
+      <idcs:normativeText>Pressurização indireta, juntas soldadas: PR ≥ 7 × PNC.</idcs:normativeText>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+      <idcs:clause>4</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Indirect"/>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="Welded"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:greaterOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <idcs:multiply>
+          <idcs:literal>7</idcs:literal>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+        </idcs:multiply>
+      </idcs:greaterOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="burst_pressure_indirect_welded_ge_5_mpa">
+    <idcs:annotation>
+      <idcs:normativeText>Pressurização indireta, juntas soldadas: PR ≥ 5 MPa.</idcs:normativeText>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+      <idcs:clause>4</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Indirect"/>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="Welded"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:greaterOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <idcs:literal unit="MPa">5</idcs:literal>
+      </idcs:greaterOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="hydrostatic_test_pressure_ge_1_5_times_pnc">
+    <idcs:annotation>
+      <idcs:normativeText>Ensaio hidrostático: pressão ≥ 1,5 × PNC por 30 s, em laboratório acreditado.</idcs:normativeText>
+      <idcs:source>ABNT NBR 15808</idcs:source>
+      <idcs:clause>6</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:expression>
+      <idcs:greaterOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+        <idcs:multiply>
+          <idcs:literal>1.5</idcs:literal>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+        </idcs:multiply>
+      </idcs:greaterOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="mounting_height_ge_0_10_m">
+    <idcs:annotation>
+      <idcs:normativeText>Altura do manípulo entre 10 cm e 1,60 m do piso acabado.</idcs:normativeText>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>7.4</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:expression>
+      <idcs:greaterOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Installation" property="MountingHeight"/>
+        <idcs:literal unit="m">0.10</idcs:literal>
+      </idcs:greaterOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="mounting_height_le_1_60_m">
+    <idcs:annotation>
+      <idcs:normativeText>Altura do manípulo entre 10 cm e 1,60 m do piso acabado.</idcs:normativeText>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>7.4</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Installation" property="MountingHeight"/>
+        <idcs:literal unit="m">1.60</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="travel_distance_light_risk_class_a_le_20_m">
+    <idcs:annotation>
+      <idcs:normativeText>Risco leve: distância máxima a percorrer para proteção classe A é 20 m.</idcs:normativeText>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>7.2</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Installation" property="RiskClassProperty" value="LightRisk"/>
+        <idcs:equals propertySet="Pset_FireSafety_Context" property="FireClassProperty" value="ClassA"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Spatial" property="MaxTravelDistance"/>
+        <idcs:literal unit="m">20</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="travel_distance_moderate_risk_class_a_le_20_m">
+    <idcs:annotation>
+      <idcs:normativeText>Risco moderado: distância máxima a percorrer para proteção classe A é 20 m.</idcs:normativeText>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>7.2</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Installation" property="RiskClassProperty" value="ModerateRisk"/>
+        <idcs:equals propertySet="Pset_FireSafety_Context" property="FireClassProperty" value="ClassA"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Spatial" property="MaxTravelDistance"/>
+        <idcs:literal unit="m">20</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="travel_distance_high_risk_class_a_le_15_m">
+    <idcs:annotation>
+      <idcs:normativeText>Risco alto: distância máxima a percorrer para proteção classe A é 15 m.</idcs:normativeText>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>7.2</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Installation" property="RiskClassProperty" value="HighRisk"/>
+        <idcs:equals propertySet="Pset_FireSafety_Context" property="FireClassProperty" value="ClassA"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Spatial" property="MaxTravelDistance"/>
+        <idcs:literal unit="m">15</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="travel_distance_moderate_risk_class_b_le_15_m">
+    <idcs:annotation>
+      <idcs:normativeText>Risco moderado: distância máxima para líquidos inflamáveis é 15 m.</idcs:normativeText>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>7.3</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Installation" property="RiskClassProperty" value="ModerateRisk"/>
+        <idcs:equals propertySet="Pset_FireSafety_Context" property="FireClassProperty" value="ClassB"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Spatial" property="MaxTravelDistance"/>
+        <idcs:literal unit="m">15</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+  <idcs:constraint name="travel_distance_high_risk_class_b_le_15_m">
+    <idcs:annotation>
+      <idcs:normativeText>Risco alto: distância máxima para líquidos inflamáveis é 15 m.</idcs:normativeText>
+      <idcs:source>ABNT NBR 12693</idcs:source>
+      <idcs:clause>7.3</idcs:clause>
+    </idcs:annotation>
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminal</idcs:entity>
+    </idcs:appliesTo>
+    <idcs:condition>
+      <idcs:and>
+        <idcs:equals propertySet="Pset_FireExtinguisher_Installation" property="RiskClassProperty" value="HighRisk"/>
+        <idcs:equals propertySet="Pset_FireSafety_Context" property="FireClassProperty" value="ClassB"/>
+      </idcs:and>
+    </idcs:condition>
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Spatial" property="MaxTravelDistance"/>
+        <idcs:literal unit="m">15</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+    </idcs:constraints>
+</idcs:idcs>

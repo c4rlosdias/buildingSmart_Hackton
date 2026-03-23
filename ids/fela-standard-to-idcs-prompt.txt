@@ -155,6 +155,24 @@ PROPERTY MAPPING:
 
 ---
 
+IFC ENTITY RESOLUTION (MANDATORY):
+
+The value inside <entity> MUST be a valid IFC schema entity name (e.g., IfcFireSuppressionTerminal).
+
+FORBIDDEN:
+- Using FELA domain class names as IFC entities (e.g., "FireExtinguisher", "BuildingStorey").
+
+REQUIRED:
+- If the ontology provides an IFC binding, use it:
+  - If a FELA class has fela:ifcEquivalentClassName, then <entity> MUST be that value.
+- If no explicit IFC binding is provided, use this default binding for this standard:
+  - fela:FireExtinguisher -> IfcFireSuppressionTerminal
+  - fela:BuildingStorey -> IfcBuildingStorey
+
+The <entity> value MUST be identical across all constraints that apply to the same target class.
+
+---
+
 XSD VALIDATION (MANDATORY):
 
 The generated XML MUST conform to the provided IDCS XML Schema (XSD).
@@ -186,6 +204,24 @@ OUTPUT REQUIREMENTS:
 - No markdown
 - No comments outside XML
 - No additional text
+
+---
+
+ROOT AND CONSTRAINT CONTAINER (MANDATORY):
+
+The output MUST be one single XML document with this exact top-level structure:
+
+<idcs:idcs xmlns:idcs="http://fela.org/IDCS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <idcs:info>...</idcs:info>
+  <idcs:constraints>
+    <idcs:constraint ...>...</idcs:constraint>
+    <idcs:constraint ...>...</idcs:constraint>
+    ...
+  </idcs:constraints>
+</idcs:idcs>
+
+All idcs:constraint elements MUST be direct children of exactly one idcs:constraints container.
+Do NOT output any idcs:constraint outside idcs:constraints.
 
 ---
 
