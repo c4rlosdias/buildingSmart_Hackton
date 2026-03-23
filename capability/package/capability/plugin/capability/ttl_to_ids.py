@@ -1,5 +1,4 @@
 from pathlib import Path
-import re
 from typing import Any, Dict, List
 from ifctester import ids
 from ontobdc.run.core.capability import Capability, CapabilityMetadata
@@ -85,7 +84,7 @@ class TtlToIdsCapability(Capability):
         if onto_path.suffix.lower() != ".ttl":
             return
 
-        computable_rules = self._read_ttl_feso_computable_rules(onto_path)
+        computable_rules = self._read_ttl_fela_computable_rules(onto_path)
         for rule in computable_rules:
             name = rule.get("label") or self._compact_iri(rule.get("subject", "")) or "Unnamed"
             spec = ids.Specification(
@@ -95,45 +94,60 @@ class TtlToIdsCapability(Capability):
             )
             ids_doc.specifications.append(spec)
 
-    def _read_ttl_feso_computable_rules(self, onto_path: Path) -> List[Dict[str, str]]:
+    def _read_ttl_fela_computable_rules(self, onto_path: Path) -> List[Dict[str, str]]:
         try:
-            from rdflib import Graph, Namespace
+            from rdflib import Graph
+            from rdflib.namespace import RDFS
         except Exception as e:
             raise ImportError("rdflib is required to parse Turtle (.ttl) files") from e
 
         g = Graph()
         g.parse(str(onto_path), format="turtle")
 
-        feso = Namespace("https://example.org/feso#")
-        fr = Namespace("https://example.org/feso-rules#")
-        rdfs = Namespace("http://www.w3.org/2000/01/rdf-schema#")
-
         results: List[Dict[str, str]] = []
 
-        subjects: set[Any] = set()
-        subjects |= set(self._subjects_with_true(g, fr.isExpressibleInIDS))
-        if not subjects:
-            subjects |= set(self._subjects_with_true(g, feso.isComputableByIDS))
+        triples: Dict[str, Dict[str, str]] = {}
+        # triples: set[Any] = set()
+        # predicates = set(g.predicates())
+        # expressible_predicates = [p for p in predicates if self._ttl_localname(p) == "isExpressibleInIDS"]
+        # # computable_predicates = [p for p in predicates if self._ttl_localname(p) == "isComputableByIDS"]
 
-        for subject in subjects:
-            label = next(g.objects(subject, rdfs.label), None)
-            applies_to_class = next(g.objects(subject, feso.appliesToClass), None)
-            requirement_text = next(g.objects(subject, feso.hasRequirementText), None)
-            formula = next(g.objects(subject, feso.hasFormula), None)
-            condition_text = next(g.objects(subject, feso.hasConditionText), None)
+        # print(f"Expressible predicates: {expressible_predicates}")
 
-            results.append(
-                {
-                    "subject": str(subject),
-                    "applies_to_class": str(applies_to_class) if applies_to_class is not None else "",
-                    "label": str(label) if label is not None else "",
-                    "requirement_text": str(requirement_text) if requirement_text is not None else "",
-                    "formula": str(formula) if formula is not None else "",
-                    "condition_text": str(condition_text) if condition_text is not None else "",
-                }
-            )
+        # for p in expressible_predicates:
+        #     subjects |= set(self._subjects_with_true(g, p))
 
-        return results
+        for s, p, o in g:
+            triple: Dict[str, Dict[str, str]] = triples.get(str(s), {})
+            triple[str(p)] = str(o)
+            triples[str(s)] = triple
+
+        print(triples)
+        print("---")
+
+        # for subject in subjects:
+        #     print(f"Subject: {subject}, type: {type(subject)}")
+
+            # label = next(g.objects(subject, RDFS.label), None)
+            # print(f"Label: {label}, type: {type(label)}")
+            # applies_to_class = self._ttl_first_object_by_localname(g, subject, "appliesToClass")
+            # print(f"Applies to class: {applies_to_class}, type: {type(applies_to_class)}")
+    #         requirement_text = self._ttl_first_object_by_localname(g, subject, "hasRequirementText")
+    #         formula = self._ttl_first_object_by_localname(g, subject, "hasFormula")
+    #         condition_text = self._ttl_first_object_by_localname(g, subject, "hasConditionText")
+
+    #         results.append(
+    #             {
+    #                 "subject": str(subject),
+    #                 "applies_to_class": str(applies_to_class) if applies_to_class is not None else "",
+    #                 "label": str(label) if label is not None else "",
+    #                 "requirement_text": str(requirement_text) if requirement_text is not None else "",
+    #                 "formula": str(formula) if formula is not None else "",
+    #                 "condition_text": str(condition_text) if condition_text is not None else "",
+    #             }
+    #         )
+
+    #     return results
 
     def _subjects_with_true(self, g: Any, predicate: Any) -> List[Any]:
         subjects: List[Any] = []
@@ -147,9 +161,21 @@ class TtlToIdsCapability(Capability):
                 subjects.append(s)
         return subjects
 
-    def _compact_iri(self, iri: str) -> str:
-        if not iri:
-            return ""
-        if "#" in iri:
-            return iri.rsplit("#", 1)[-1].strip()
-        return iri.rstrip("/").rsplit("/", 1)[-1].strip()
+    def _ttl_localname(self, iri: Any) -> str:
+        text = str(iri)
+        if "#" in text:
+            return text.rsplit("#", 1)[-1]
+        return text.rstrip("/").rsplit("/", 1)[-1]
+
+    # def _ttl_first_object_by_localname(self, g: Any, subject: Any, localname: str) -> Any:
+    #     for p, o in g.predicate_objects(subject):
+    #         if self._ttl_localname(p) == localname:
+    #             return o
+    #     return None
+
+    # def _compact_iri(self, iri: str) -> str:
+    #     if not iri:
+    #         return ""
+    #     if "#" in iri:
+    #         return iri.rsplit("#", 1)[-1].strip()
+    #     return iri.rstrip("/").rsplit("/", 1)[-1].strip()
