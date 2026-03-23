@@ -1,4 +1,4 @@
-# InfoBIM — Ontology → IDS/Capabilities → Report
+# InfoBIM: Ontology → IDS/Capabilities → Report
 
 This project implements a workflow that integrates requirements (PDF), IFC models, and ontologies to produce verifiable rules (IDS/IDCS), run capabilities, and generate reports.
 
@@ -43,12 +43,12 @@ flowchart TD
 ## Main Components
 
 - Ontology and rules:
-  - `shared/ontologies/` holds core and rule ontologies (Turtle)
+  - `ontologies/` holds core and rule ontologies (Turtle)
 - Capabilities:
   - ICDD/IFC conversion: normalizes IFC and applies mappings
   - TTL → IDS: extracts IDS-expressible rules from ontology and generates IDS
 - IDS/IDCS:
-  - Examples in `shared/ids/`
+  - Examples in `ids/`
 
 ## How to Run
 
@@ -65,18 +65,18 @@ bash make_icdd.sh
 ```bash
 .venv/bin/infobim run \
   --id org.local.domain.icdd.capability.ontology.convert \
-  --icdd-path shared/icdd/fnde/pack/ICDD-FNDE-Space.icdd \
-  --ifc-path shared/IFC_files/TIPO1-ARQ-MOD_R03.ifc
+  --icdd-path icdd/fnde/pack/ICDD-FNDE-Space.icdd \
+  --ifc-path IFC_files/TIPO1-ARQ-MOD_R03.ifc
 ```
 
-Result: `shared/IFC_files/TIPO1-ARQ-MOD_R03.norm.ifc`
+Result: `IFC_files/TIPO1-ARQ-MOD_R03.norm.ifc`
 
 3) Transform TTL ontologies into IDS
 
 ```bash
 .venv/bin/infobim run \
   --id org.local.domain.ids.capability.ttl.to_ids \
-  --onto-path shared/ontologies/fela-nbr-rules.ttl \
+  --onto-path ontologies/fela-nbr-rules.ttl \
   --ids-output-path /tmp/feso.ids
 ```
 
@@ -92,11 +92,11 @@ PY
 
 ## Relevant Structure
 
-- `shared/capability/package/capability/plugin/capability/convert_icdd_ontology.py`
+- `capability/package/capability/plugin/capability/convert_icdd_ontology.py`
   - Normalizes IFC and applies rules/mappings (ICDD → IFC)
-- `shared/capability/package/capability/plugin/capability/ttl_to_ids.py`
+- `capability/package/capability/plugin/capability/ttl_to_ids.py`
   - Reads Turtle (RDFLib), filters IDS-expressible rules, and generates specifications
-- `shared/tests/test_ttl_to_ids_read_fela_computable_rules.py`
+- `tests/test_ttl_to_ids_read_fela_computable_rules.py`
   - Unit tests (pytest) for the TTL rule extractor only
 
 ## Notes
