@@ -1,11 +1,11 @@
 import bpy
 class Element(bpy.types.PropertyGroup):
-    name: bpy.props.StringProperty(name="Name")
-    global_id: bpy.props.StringProperty(name="GlobalId")
-    info: bpy.props.StringProperty(name="Info")
+    name      : bpy.props.StringProperty(name="Name")
+    global_id : bpy.props.StringProperty(name="GlobalId")
+    info      : bpy.props.StringProperty(name="Info")
 
 class IFC_PG_Propriedades(bpy.types.PropertyGroup):
-    filepath: bpy.props.StringProperty(
+    specfilepath: bpy.props.StringProperty(
         name="Caminho IFC",
         description="Specification file",
         subtype="FILE_PATH",

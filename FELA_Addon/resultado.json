@@ -1,10 +1,62 @@
 {
-    "org.infobim.domain.ifc.element.inspect.source": {
-        "schema": "IFC4",
-        "type": "ifc_path",
-        "value": "C:/Users/c4rlo/OneDrive/Documentos/TRABALHO/CERTI/SUMMITS/Hackaton/buildingSmart_Hackton/IFC_files/TIPO1-ARQ-MOD_R03.norm.ifc",
-        "info": {
-            "id": 60028,
-            "type": "IfcWindow",
-            "GlobalId": "3KMfmpZYLFSxCrtAiUm60L",
-            "OwnerHistory": 
+    "org.local.domain.ids.validation.passed": false,
+    "org.local.domain.ids.validation.summary": {
+        "passed": false,
+        "ids_path": "C:\\Users\\c4rlo\\OneDrive\\Documentos\\TRABALHO\\CERTI\\SUMMITS\\Hackaton\\buildingSmart_Hackton\\ids\\FELA_FireExtinguisher_fixed.ids",
+        "ifc_path": "C:\\Users\\c4rlo\\OneDrive\\Documentos\\TRABALHO\\CERTI\\SUMMITS\\Hackaton\\buildingSmart_Hackton\\IFC_files\\TIPO1-ARQ-MOD_R03.norm.ifc",
+        "specifications_total": 6,
+        "specifications_passed": 0,
+        "specifications_failed": 6,
+        "specifications_unknown": 0,
+        "specifications": [
+            {
+                "name": "Fire Extinguisher Core Properties",
+                "status": "failed",
+                "applicable_entities": 1,
+                "passed_entities": 0,
+                "failed_entities": 1,
+                "requirement_failures": 4
+            },
+            {
+                "name": "Allowed Extinguisher Types",
+                "status": "failed",
+                "applicable_entities": 1,
+                "passed_entities": 0,
+                "failed_entities": 1,
+                "requirement_failures": 1
+            },
+            {
+                "name": "Certification Requirement",
+                "status": "failed",
+                "applicable_entities": 1,
+                "passed_entities": 0,
+                "failed_entities": 1,
+                "requirement_failures": 1
+            },
+            {
+                "name": "Capacity Format",
+                "status": "failed",
+                "applicable_entities": 1,
+                "passed_entities": 0,
+                "failed_entities": 1,
+                "requirement_failures": 1
+            },
+            {
+                "name": "Mechanical Properties Presence",
+                "status": "failed",
+                "applicable_entities": 1,
+                "passed_entities": 0,
+                "failed_entities": 1,
+                "requirement_failures": 4
+            },
+            {
+                "name": "Installation and Context Data",
+                "status": "failed",
+                "applicable_entities": 1,
+                "passed_entities": 0,
+                "failed_entities": 1,
+                "requirement_failures": 5
+            }
+        ]
+    }
+}
