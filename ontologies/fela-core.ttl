@@ -15,12 +15,18 @@
     owl:versionInfo "3.0.0" .
 
 #################################################################
-# DOMAIN CLASSES
+# IFC MAPPING PROPS
 #################################################################
-
 fela:ifcEquivalentClass a owl:ObjectProperty ;
     rdfs:domain owl:Class ;
     rdfs:range owl:Class .
+
+fela:ifcPropertySetName a owl:DatatypeProperty .
+fela:ifcPropertyName a owl:DatatypeProperty .
+
+#################################################################
+# DOMAIN CLASSES
+#################################################################
 
 fela:FireExtinguisher a owl:Class ;
     fela:ifcEquivalentClass ifc:IfcFireSuppressionTerminal .
@@ -52,26 +58,32 @@ fela:belongsToPset a owl:ObjectProperty ;
 
 fela:Pset_FireExtinguisher_FELA a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_FireExtinguisher_FELA" ;
     fela:appliesTo fela:FireExtinguisher .
 
 fela:Pset_FireExtinguisher_Mechanical a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_FireExtinguisher_Mechanical" ;
     fela:appliesTo fela:FireExtinguisher .
 
 fela:Pset_FireExtinguisher_Installation a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_FireExtinguisher_Installation" ;
     fela:appliesTo fela:FireExtinguisher .
 
 fela:Pset_FireExtinguisher_Spatial a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_FireExtinguisher_Spatial" ;
     fela:appliesTo fela:FireExtinguisher .
 
 fela:Pset_FireSafety_Context a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_FireSafety_Context" ;
     fela:appliesTo fela:FireExtinguisher .
 
 fela:Pset_BuildingStorey_FireSafety a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_BuildingStorey_FireSafety" ;
     fela:appliesTo fela:BuildingStorey .
 
 #################################################################
@@ -99,74 +111,89 @@ fela:DryChemicalBC a fela:ExtinguishingAgent .
 fela:BurstPressure a owl:DatatypeProperty ;
     rdfs:label "Burst Pressure"@en ;
     rdfs:comment "Pressão de Ruptura"@pt ;
+    fela:ifcPropertyName "BurstPressure" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_Mechanical .
 
 fela:NominalChargingPressure a owl:DatatypeProperty ;
     rdfs:label "Nominal Charging Pressure"@en ;
     rdfs:comment "Pressão Nominal de Carga"@pt ;
+    fela:ifcPropertyName "NominalChargingPressure" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_Mechanical .
 
 fela:PressurisationMode a owl:DatatypeProperty ;
     rdfs:label "Pressurisation Mode"@en ;
     rdfs:comment "Tipo de Pressurização"@pt ;
+    fela:ifcPropertyName "PressurisationMode" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_Mechanical .
 
 fela:JointType a owl:DatatypeProperty ;
     rdfs:label "Joint Type"@en ;
     rdfs:comment "Tipo de União"@pt ;
+    fela:ifcPropertyName "JointType" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_Mechanical .
 
 fela:ExtinguisherType a owl:DatatypeProperty ;
     rdfs:label "Extinguisher Type"@en ;
     rdfs:comment "Tipo de Extintor"@pt ;
+    fela:ifcPropertyName "ExtinguisherType" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_FELA .
 
 fela:ExtinguishingCapacity a owl:DatatypeProperty ;
     rdfs:label "Extinguishing Capacity"@en ;
     rdfs:comment "Capacidade Extintora"@pt ;
+    fela:ifcPropertyName "ExtinguishingCapacity" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_FELA .
 
 fela:IsCertified a owl:DatatypeProperty ;
     rdfs:label "Is Certified"@en ;
     rdfs:comment "Certificado"@pt ;
+    fela:ifcPropertyName "IsCertified" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_FELA .
 
 fela:AgentMass a owl:DatatypeProperty ;
     rdfs:label "Agent Mass"@en ;
     rdfs:comment "Massa do Agente Extintor"@pt ;
+    fela:ifcPropertyName "AgentMass" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_FELA .
 
 fela:HydrostaticTestDate a owl:DatatypeProperty ;
     rdfs:label "Hydrostatic Test Date"@en ;
     rdfs:comment "Data do Ensaio Hidrostático"@pt ;
+    fela:ifcPropertyName "HydrostaticTestDate" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_FELA .
 
 fela:RiskClassProperty a owl:ObjectProperty ;
     rdfs:range fela:RiskClass ;
+    fela:ifcPropertyName "RiskClassProperty" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_Installation .
 
 fela:MountingHeight a owl:DatatypeProperty ;
     rdfs:label "Mounting Height"@en ;
     rdfs:comment "Altura de Instalação"@pt ;
+    fela:ifcPropertyName "MountingHeight" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_Installation .
 
 fela:MaxTravelDistance a owl:DatatypeProperty ;
     rdfs:label "Maximum Travel Distance"@en ;
     rdfs:comment "Distância Máxima de Percurso"@pt ;
+    fela:ifcPropertyName "MaxTravelDistance" ;
     fela:belongsToPset fela:Pset_FireExtinguisher_Spatial .
 
 fela:FloorArea a owl:DatatypeProperty ;
     rdfs:label "Floor Area"@en ;
     rdfs:comment "Área do Pavimento"@pt ;
+    fela:ifcPropertyName "FloorArea" ;
     fela:belongsToPset fela:Pset_BuildingStorey_FireSafety .
 
 fela:LiquidSurfaceArea a owl:DatatypeProperty ;
     rdfs:label "Liquid Surface Area"@en ;
     rdfs:comment "Área de Superfície de Líquido Inflamável"@pt ;
+    fela:ifcPropertyName "LiquidSurfaceArea" ;
     fela:belongsToPset fela:Pset_BuildingStorey_FireSafety .
 
 fela:FireClassProperty a owl:ObjectProperty ;
     rdfs:range fela:FireClass ;
+    fela:ifcPropertyName "FireClassProperty" ;
     fela:belongsToPset fela:Pset_FireSafety_Context .
 
 #################################################################
