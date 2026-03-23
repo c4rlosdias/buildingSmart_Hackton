@@ -1,0 +1,132 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix fela: <https://example.org/fela#> .
+@prefix nbr:  <https://example.org/fela-nbr-rules#> .
+
+<https://example.org/fela-nbr-rules-gemini>
+    a owl:Ontology ;
+    owl:imports <https://example.org/fela> ;
+    rdfs:label "FELA NBR Rules Ontology - Gemini Edition"@en ;
+    rdfs:comment "Instanciação das regras NBR 15808 e NBR 12693 utilizando o meta-modelo FELA."@pt .
+
+#################################################################
+# 1. REGRAS DE INSTALAÇÃO (NBR 12693)
+#################################################################
+
+### Regra: Distância Máxima de Percurso - Classe A (Risco Leve)
+nbr:Rule_DistanciaA_RiscoLeve a fela:NormativeRule ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:hasRequirementText "A distância máxima de percurso para extintores classe A em risco leve é de 20m." ;
+    # Condição: Se o Risco for Leve
+    fela:hasCondition [
+        a fela:EqualsCondition ;
+        fela:conditionLeftOperand fela:RiskClassProperty ;
+        fela:conditionRightOperand fela:LightRisk 
+    ] ;
+    # Restrição: Distância <= 20m
+    fela:hasConstraint [
+        a fela:ComparisonConstraint ;
+        fela:usesOperator fela:LessOrEqualOperator ;
+        fela:constraintLeftOperand fela:MaxTravelDistance ;
+        fela:constraintRightOperand [ 
+            a fela:LiteralValue ; 
+            fela:hasValue "20" ; 
+            fela:hasUnit "m" 
+        ]
+    ] .
+
+### Regra: Altura de Instalação (Manípulo)
+nbr:Rule_AlturaInstalacao_Geral a fela:NormativeRule ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:hasRequirementText "O manípulo deve estar entre 0,10m e 1,60m do piso acabado." ;
+    fela:hasConstraint [
+        a fela:AndConstraint ;
+        fela:hasSubConstraint [
+            a fela:ComparisonConstraint ;
+            fela:usesOperator fela:GreaterOrEqualOperator ;
+            fela:constraintLeftOperand fela:MountingHeight ;
+            fela:constraintRightOperand [ a fela:LiteralValue; fela:hasValue "0.10"; fela:hasUnit "m" ]
+        ] ;
+        fela:hasSubConstraint [
+            a fela:ComparisonConstraint ;
+            fela:usesOperator fela:LessOrEqualOperator ;
+            fela:constraintLeftOperand fela:MountingHeight ;
+            fela:constraintRightOperand [ a fela:LiteralValue; fela:hasValue "1.60"; fela:hasUnit "m" ]
+        ]
+    ] .
+
+#################################################################
+# 2. REGRAS DE FABRICAÇÃO E MANUTENÇÃO (NBR 15808)
+#################################################################
+
+### Regra: Pressão de Ruptura (PR) para Pressurização Direta / Soldada
+nbr:Rule_PressaoRuptura_DiretaSoldada a fela:NormativeRule ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:hasRequirementText "Para pressurização direta com juntas soldadas, PR >= 8 * PNC." ;
+    fela:hasCondition [
+        a fela:AndCondition ;
+        fela:hasSubCondition [ 
+            a fela:EqualsCondition ; 
+            fela:conditionLeftOperand fela:PressurisationMode ; 
+            fela:conditionRightOperand [ a fela:LiteralValue; fela:hasValue "Direct" ] 
+        ] ;
+        fela:hasSubCondition [ 
+            a fela:EqualsCondition ; 
+            fela:conditionLeftOperand fela:JointType ; 
+            fela:conditionRightOperand [ a fela:LiteralValue; fela:hasValue "Welded" ] 
+        ]
+    ] ;
+    fela:hasConstraint [
+        a fela:ComparisonConstraint ;
+        fela:usesOperator fela:GreaterOrEqualOperator ;
+        fela:constraintLeftOperand fela:BurstPressure ;
+        fela:constraintRightOperand [
+            a fela:MultiplyExpression ;
+            fela:hasOperand fela:NominalChargingPressure ;
+            fela:hasOperand [ a fela:LiteralValue; fela:hasValue "8" ]
+        ]
+    ] .
+
+### Regra: Validade do Ensaio Hidrostático
+nbr:Rule_ValidadeHidrostatico a fela:NormativeRule ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:hasRequirementText "O ensaio hidrostático deve ter sido realizado há menos de 5 anos." ;
+    fela:hasConstraint [
+        a fela:ComparisonConstraint ;
+        fela:usesOperator fela:LessThanOperator ;
+        fela:constraintLeftOperand [
+            a fela:DateDifferenceExpression ;
+            fela:hasOperand [ a fela:CurrentDateExpression ] ;
+            fela:hasOperand fela:HydrostaticTestDate
+        ] ;
+        fela:constraintRightOperand [ 
+            a fela:LiteralValue ; 
+            fela:hasValue "5" ; 
+            fela:hasUnit "years" 
+        ]
+    ] .
+
+#################################################################
+# 3. COMPATIBILIDADE DE AGENTES (NBR 15808 / TABELA 2)
+#################################################################
+
+### Regra: Proibição de Água (AP) em Equipamentos Elétricos (Classe C)
+nbr:Rule_AgenteAgua_ProibeClasseC a fela:NormativeRule ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:hasRequirementText "Extintores de Água Pressurizada não podem ser usados em fogos de Classe C." ;
+    fela:hasCondition [
+        a fela:EqualsCondition ;
+        fela:conditionLeftOperand fela:ExtinguisherType ;
+        fela:conditionRightOperand [ a fela:LiteralValue; fela:hasValue "AP" ]
+    ] ;
+    fela:hasConstraint [
+        a fela:NotConstraint ;
+        fela:hasSubConstraint [
+            a fela:MembershipConstraint ;
+            fela:usesOperator fela:InOperator ;
+            fela:constraintLeftOperand fela:FireClassProperty ;
+            fela:constraintRightOperand fela:ClassC
+        ]
+    ] .

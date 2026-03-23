@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idcs xmlns="http://fela.org/IDCS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <info>
+    <title>NBR 15808 and NBR 12693 - Fire Extinguishers Standard</title>
+    <description>Formalized constraints for portable fire extinguishers and installation requirements according to Brazilian standards.</description>
+    <version>4.0.0</version>
+  </info>
+
+  <constraint name="BurstPressure_Direct_NonWelded">
+    <annotation>
+      <normativeText>Pressurização direta, juntas não soldadas: PR ≥ 5 × PNC e PR ≥ 5 MPa</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <and>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Direct"/>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="NonWelded"/>
+      </and>
+    </condition>
+    <expression>
+      <and>
+        <greaterOrEqual>
+          <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <multiply>
+            <literal>5</literal>
+            <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+          </multiply>
+        </greaterOrEqual>
+        <greaterOrEqual>
+          <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <literal unit="MPa">5</literal>
+        </greaterOrEqual>
+      </and>
+    </expression>
+  </constraint>
+
+  <constraint name="BurstPressure_Direct_Welded">
+    <annotation>
+      <normativeText>Pressurização direta, juntas soldadas: PR ≥ 8 × PNC e PR ≥ 5 MPa</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <and>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Direct"/>
+        <equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="Welded"/>
+      </and>
+    </condition>
+    <expression>
+      <and>
+        <greaterOrEqual>
+          <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <multiply>
+            <literal>8</literal>
+            <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+          </multiply>
+        </greaterOrEqual>
+        <greaterOrEqual>
+          <propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <literal unit="MPa">5</literal>
+        </greaterOrEqual>
+      </and>
+    </expression>
+  </constraint>
+
+  <constraint name="CoverageArea_ClassA_LightRisk">
+    <annotation>
+      <normativeText>Risco Leve: Área máxima coberta por 1 unidade A = 500 m²</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <equals propertySet="Pset_FireExtinguisher_Installation" property="RiskClass" value="Leve"/>
+    </condition>
+    <expression>
+      <lessOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Installation" property="CoveredArea_m2"/>
+        <literal unit="m2">500</literal>
+      </lessOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="TravelDistance_ClassA_LightRisk">
+    <annotation>
+      <normativeText>Risco Leve: Distância máx. a percorrer = 20 m</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <equals propertySet="Pset_FireExtinguisher_Installation" property="RiskClass" value="Leve"/>
+    </condition>
+    <expression>
+      <lessOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_Spatial" property="MaxTravelDistance"/>
+        <literal unit="m">20</literal>
+      </lessOrEqual>
+    </expression>
+  </constraint>
+
+  <constraint name="MountingHeight_SmallExtinguisher">
+    <annotation>
+      <normativeText>Extintor ≤ 4 kg / 4 L: Altura máxima do manípulo: 1,60 m</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <lessOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_NBR15808" property="AgentMass_kg"/>
+        <literal>4</literal>
+      </lessOrEqual>
+    </condition>
+    <expression>
+      <and>
+        <lessOrEqual>
+          <propertyRef propertySet="Pset_FireExtinguisher_Installation" property="MountingHeight"/>
+          <literal unit="m">1.60</literal>
+        </lessOrEqual>
+        <greaterOrEqual>
+          <propertyRef propertySet="Pset_FireExtinguisher_Installation" property="MountingHeight"/>
+          <literal unit="m">0.10</literal>
+        </greaterOrEqual>
+      </and>
+    </expression>
+  </constraint>
+
+  <constraint name="MountingHeight_LargeExtinguisher">
+    <annotation>
+      <normativeText>Extintor > 4 kg / 4 L: Altura máxima do manípulo: 1,00 m</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcFireSuppressionTerminal</entity>
+    </appliesTo>
+    <condition>
+      <greaterOrEqual>
+        <propertyRef propertySet="Pset_FireExtinguisher_NBR15808" property="AgentMass_kg"/>
+        <literal>4.001</literal>
+      </greaterOrEqual>
+    </condition>
+    <expression>
+      <and>
+        <lessOrEqual>
+          <propertyRef propertySet="Pset_FireExtinguisher_Installation" property="MountingHeight"/>
+          <literal unit="m">1.00</literal>
+        </lessOrEqual>
+        <greaterOrEqual>
+          <propertyRef propertySet="Pset_FireExtinguisher_Installation" property="MountingHeight"/>
+          <literal unit="m">0.10</literal>
+        </greaterOrEqual>
+      </and>
+    </expression>
+  </constraint>
+
+  <constraint name="LiquidProtection_HighRisk">
+    <annotation>
+      <normativeText>Risco Alto: 2 unidades B / m² de superfície de líquido (mínimo 40B)</normativeText>
+    </annotation>
+    <appliesTo>
+      <entity>IfcBuildingStorey</entity>
+    </appliesTo>
+    <condition>
+      <equals propertySet="Pset_BuildingStorey_FireSafety" property="RiskClass" value="Alto"/>
+    </condition>
+    <expression>
+      <and>
+        <greaterOrEqual>
+          <propertyRef propertySet="Pset_BuildingStorey_FireSafety" property="AvailableUnities_B"/>
+          <multiply>
+            <literal>2</literal>
+            <propertyRef propertySet="Pset_BuildingStorey_FireSafety" property="LiquidSurfaceArea"/>
+          </multiply>
+        </greaterOrEqual>
+        <greaterOrEqual>
+          <propertyRef propertySet="Pset_BuildingStorey_FireSafety" property="AvailableUnities_B"/>
+          <literal>40</literal>
+        </greaterOrEqual>
+      </and>
+    </expression>
+  </constraint>
+
+</idcs>

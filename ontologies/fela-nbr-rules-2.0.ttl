@@ -1,0 +1,146 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix fela: <https://example.org/fela#> .
+@prefix fr:   <https://example.org/fela-nbr-rules#> .
+
+<https://example.org/fela-nbr-rules>
+    a owl:Ontology ;
+    owl:imports <https://example.org/fela> ;
+    rdfs:label "FELA NBR Rules Ontology"@en ;
+    owl:versionInfo "1.0.0" .
+
+#################################################################
+# RULE: DIRECT PRESSURISATION + NON-WELDED JOINT
+#################################################################
+
+fr:DirectNonWeldedPressure
+    a fela:NormativeRule ;
+    rdfs:label "Direct pressurisation non-welded pressure requirement"@en ;
+    rdfs:comment "PR ≥ 5 × PNC e PR ≥ 5 MPa."@pt ;
+
+    fela:appliesToClass fela:FireExtinguisher ;
+
+    fela:dependsOnProperty
+        fela:BurstPressure ,
+        fela:NominalChargingPressure ,
+        fela:PressurisationMode ,
+        fela:JointType ;
+
+    fela:hasRequirementText
+        "For directly pressurised extinguishers with non-welded joints, the burst pressure shall be at least five times the nominal charging pressure and not less than 5 MPa."@en ;
+
+    fela:isExpressibleInIDS false ;
+    fela:isExpressibleInIDCS true ;
+
+    # enforce structure
+    fela:mustBeAtomic true ;
+    fela:mustUseStructuredConditions true ;
+    fela:mustUseStructuredConstraints true ;
+    fela:forbidsAggregatedRewriting true ;
+
+    #################################################################
+    # CONDITIONS
+    #################################################################
+
+    fela:hasCondition fr:Cond_DirectPressurisation ;
+    fela:hasCondition fr:Cond_NonWeldedJoint ;
+
+    #################################################################
+    # CONSTRAINTS (NO AGGREGATION)
+    #################################################################
+
+    fela:hasConstraint fr:Constraint_PR_GTE_5xPNC ;
+    fela:hasConstraint fr:Constraint_PR_GTE_5MPa .
+
+#################################################################
+# CONDITIONS
+#################################################################
+
+fr:Cond_DirectPressurisation
+    a fela:EqualsCondition ;
+    fela:conditionLeftOperand fr:Ref_PressurisationMode ;
+    fela:conditionRightOperand fr:Literal_Direct ;
+    fela:usesOperator fela:EqualsOperator .
+
+fr:Cond_NonWeldedJoint
+    a fela:EqualsCondition ;
+    fela:conditionLeftOperand fr:Ref_JointType ;
+    fela:conditionRightOperand fr:Literal_NonWelded ;
+    fela:usesOperator fela:EqualsOperator .
+
+#################################################################
+# CONSTRAINT 1: PR ≥ 5 × PNC
+#################################################################
+
+fr:Constraint_PR_GTE_5xPNC
+    a fela:ComparisonConstraint ;
+    fela:constraintLeftOperand fr:Ref_BurstPressure ;
+    fela:constraintRightOperand fr:Expr_5xPNC ;
+    fela:usesOperator fela:GreaterOrEqualOperator .
+
+#################################################################
+# CONSTRAINT 2: PR ≥ 5 MPa
+#################################################################
+
+fr:Constraint_PR_GTE_5MPa
+    a fela:ComparisonConstraint ;
+    fela:constraintLeftOperand fr:Ref_BurstPressure ;
+    fela:constraintRightOperand fr:Literal_5MPa ;
+    fela:usesOperator fela:GreaterOrEqualOperator .
+
+#################################################################
+# EXPRESSIONS
+#################################################################
+
+fr:Expr_5xPNC
+    a fela:MultiplyExpression ;
+    fela:hasOperand fr:Literal_5 ;
+    fela:hasOperand fr:Ref_NominalChargingPressure .
+
+#################################################################
+# PROPERTY REFERENCES
+#################################################################
+
+fr:Ref_BurstPressure
+    a fela:PropertyReference ;
+    fela:refersToProperty fela:BurstPressure .
+
+fr:Ref_NominalChargingPressure
+    a fela:PropertyReference ;
+    fela:refersToProperty fela:NominalChargingPressure .
+
+fr:Ref_PressurisationMode
+    a fela:PropertyReference ;
+    fela:refersToProperty fela:PressurisationMode .
+
+fr:Ref_JointType
+    a fela:PropertyReference ;
+    fela:refersToProperty fela:JointType .
+
+#################################################################
+# LITERALS
+#################################################################
+
+fr:Literal_5
+    a fela:LiteralValue ;
+    fela:hasValue "5" ;
+    fela:hasDatatypeIRI xsd:decimal .
+
+fr:Literal_5MPa
+    a fela:LiteralValue ;
+    fela:hasValue "5" ;
+    fela:hasDatatypeIRI xsd:decimal ;
+    fela:hasUnit "MPa" .
+
+fr:Literal_Direct
+    a fela:LiteralValue ;
+    fela:hasValue "Direct" ;
+    fela:hasDatatypeIRI xsd:string .
+
+fr:Literal_NonWelded
+    a fela:LiteralValue ;
+    fela:hasValue "NonWelded" ;
+    fela:hasDatatypeIRI xsd:string .
