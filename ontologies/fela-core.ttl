@@ -58,26 +58,32 @@ fela:belongsToPset a owl:ObjectProperty ;
 
 fela:Pset_FireExtinguisher_FELA a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_FireExtinguisher_FELA" ;
     fela:appliesTo fela:FireExtinguisher .
 
 fela:Pset_FireExtinguisher_Mechanical a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_FireExtinguisher_Mechanical" ;
     fela:appliesTo fela:FireExtinguisher .
 
 fela:Pset_FireExtinguisher_Installation a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_FireExtinguisher_Installation" ;
     fela:appliesTo fela:FireExtinguisher .
 
 fela:Pset_FireExtinguisher_Spatial a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_FireExtinguisher_Spatial" ;
     fela:appliesTo fela:FireExtinguisher .
 
 fela:Pset_FireSafety_Context a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_FireSafety_Context" ;
     fela:appliesTo fela:FireExtinguisher .
 
 fela:Pset_BuildingStorey_FireSafety a owl:Class ;
     rdfs:subClassOf fela:PropertySet ;
+    fela:ifcPropertySetName "Pset_BuildingStorey_FireSafety" ;
     fela:appliesTo fela:BuildingStorey .
 
 #################################################################
