@@ -19,22 +19,24 @@ class ValidateIdcsRenderer:
 
         status_text = Text("PASSED", style="bold green") if passed else Text("FAILED", style="bold red")
 
-        subtitle = Text()
-        idcs_path = summary.get("idcs_path", "")
-        ifc_path = summary.get("ifc_path", "")
-        if idcs_path:
-            subtitle.append("IDCS: ", style="bold")
-            subtitle.append(str(idcs_path).split("/")[-1], style="cyan")
-        if ifc_path:
-            if subtitle.plain:
-                subtitle.append("\n")
-            subtitle.append("IFC: ", style="bold")
-            subtitle.append(str(ifc_path).split("/")[-1], style="cyan")
+        idcs_path = str(summary.get("idcs_path", "") or "")
+        ifc_path = str(summary.get("ifc_path", "") or "")
 
-        console.print(Panel.fit(Text.assemble("IDCS Validation: ", status_text), subtitle=subtitle))
+        header = Text()
+        header.append("IDCS Validation: ", style="bold")
+        header.append(status_text)
+        if idcs_path:
+            header.append("\nIDCS: ", style="bold")
+            header.append(idcs_path, style="cyan")
+        if ifc_path:
+            header.append("\nIFC: ", style="bold")
+            header.append(ifc_path, style="cyan")
+
+        target_width = max(len(line) for line in header.plain.splitlines()) + 4
+        console.print(Panel(header, width=target_width, expand=False))
 
         totals = Text()
-        totals.append("Total: ", style="bold")
+        totals.append("Constraints — Total: ", style="bold")
         totals.append(str(summary.get("constraints_total", 0)))
         totals.append("  Passed: ", style="bold")
         totals.append(str(summary.get("constraints_passed", 0)), style="green")
@@ -43,6 +45,17 @@ class ValidateIdcsRenderer:
         totals.append("  Unknown: ", style="bold")
         totals.append(str(summary.get("constraints_unknown", 0)), style="yellow")
         console.print(totals)
+
+        inst = Text()
+        inst.append("Instances  — Total: ", style="bold")
+        inst.append(str(summary.get("objects_total", 0)))
+        inst.append("  Passed: ", style="bold")
+        inst.append(str(summary.get("objects_passed", 0)), style="green")
+        inst.append("  Failed: ", style="bold")
+        inst.append(str(summary.get("objects_failed", 0)), style="red")
+        inst.append("  Unknown: ", style="bold")
+        inst.append(str(summary.get("objects_unknown", 0)), style="yellow")
+        console.print(inst)
 
         table = Table(title="Constraints", expand=True, show_lines=False)
         table.add_column("Name", style="cyan", overflow="fold")
@@ -89,7 +102,7 @@ class ValidateIdcsRenderer:
                 )
 
         if examples:
-            et = Table(title="Examples", expand=True, show_lines=True)
+            et = Table(title="Details", expand=True, show_lines=True)
             et.add_column("Constraint", style="cyan", overflow="fold")
             et.add_column("Entity", style="magenta", overflow="fold")
             et.add_column("Status", overflow="fold")

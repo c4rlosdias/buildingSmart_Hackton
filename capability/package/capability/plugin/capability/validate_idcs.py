@@ -283,6 +283,10 @@ class ValidateIdcsCapability(Capability):
             "constraints_passed": 0,
             "constraints_failed": 0,
             "constraints_unknown": 0,
+            "objects_total": 0,
+            "objects_passed": 0,
+            "objects_failed": 0,
+            "objects_unknown": 0,
             "constraints": [],
         }
 
@@ -400,6 +404,11 @@ class ValidateIdcsCapability(Capability):
             else:
                 result["constraints_unknown"] += 1
                 result["passed"] = False
+            # Acumula contagens globais de instâncias
+            result["objects_total"] += len(applicable)
+            result["objects_passed"] += passed_entities
+            result["objects_failed"] += failed_entities
+            result["objects_unknown"] += unknown_entities
 
             # 8) Anexa o resultado por constraint, com contagens e exemplos para o renderer.
             result["constraints"].append(
