@@ -1,0 +1,89 @@
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION(('ViewDefinition [CoordinationView]'),'2;1');
+FILE_NAME('FELA_fire_extinguisher.ifc','2026-03-22T12:00:00',('ChatGPT'),(''),'','','');
+FILE_SCHEMA(('IFC4'));
+ENDSEC;
+
+DATA;
+
+#1=IFCPERSON($,'User',$,$,$,$,$,$);
+#2=IFCORGANIZATION($,'Org',$,$,$);
+#3=IFCPERSONANDORGANIZATION(#1,#2,$);
+#4=IFCAPPLICATION(#2,'1.0','FELA Generator','FELA_APP');
+#5=IFCOWNERHISTORY(#3,#4,$,.ADDED.,$,$,$,0);
+
+#10=IFCPROJECT('3hs8F$kLr9xQ2aP1ZtYbV0',#5,'FELA Project',$,$,$,$,$,$);
+
+#20=IFCFIRESUPPRESSIONTERMINAL(
+  '1Jk9LmN0pQwErTyUiOpAsD',
+  #5,
+  'Portable Fire Extinguisher',
+  $,
+  $,
+  $,
+  $,
+  $,
+  .NOTDEFINED.
+);
+
+----------------------------------------------------------------
+-- Pset_FireExtinguisher_FELA
+----------------------------------------------------------------
+
+#100=IFCPROPERTYSET('2Aq3DsFgHjK1LmNoPqRsTu',#5,'Pset_FireExtinguisher_FELA',$,(
+  IFCPROPERTYSINGLEVALUE('ExtinguisherType',$,IFCLABEL('CO2'),$),
+  IFCPROPERTYSINGLEVALUE('ExtinguishingCapacity',$,IFCLABEL('2A:20B:C'),$),
+  IFCPROPERTYSINGLEVALUE('IsCertified',$,IFCBOOLEAN(.T.),$),
+  IFCPROPERTYSINGLEVALUE('AgentMass',$,IFCMASSMEASURE(6.0),$),
+  IFCPROPERTYSINGLEVALUE('HydrostaticTestDate',$,IFCDATE('2023-01-01'),$)
+));
+
+----------------------------------------------------------------
+-- Pset_FireExtinguisher_Mechanical
+----------------------------------------------------------------
+
+#110=IFCPROPERTYSET('3Bc4EfGhIjKlMnOpQrStUv',#5,'Pset_FireExtinguisher_Mechanical',$,(
+  IFCPROPERTYSINGLEVALUE('BurstPressure',$,IFCPRESSUREMEASURE(15.0),$),
+  IFCPROPERTYSINGLEVALUE('NominalChargingPressure',$,IFCPRESSUREMEASURE(3.0),$),
+  IFCPROPERTYSINGLEVALUE('PressurisationMode',$,IFCLABEL('Direct'),$),
+  IFCPROPERTYSINGLEVALUE('JointType',$,IFCLABEL('Welded'),$)
+));
+
+----------------------------------------------------------------
+-- Pset_FireExtinguisher_Installation
+----------------------------------------------------------------
+
+#120=IFCPROPERTYSET('4Cd5FgHiJkLmNoPqRsTuVw',#5,'Pset_FireExtinguisher_Installation',$,(
+  IFCPROPERTYSINGLEVALUE('RiskClass',$,IFCLABEL('Moderate'),$),
+  IFCPROPERTYSINGLEVALUE('MountingHeight',$,IFCLENGTHMEASURE(1.2),$)
+));
+
+----------------------------------------------------------------
+-- Pset_FireExtinguisher_Spatial
+----------------------------------------------------------------
+
+#130=IFCPROPERTYSET('5De6GhIjKlMnOpQrStUvWx',#5,'Pset_FireExtinguisher_Spatial',$,(
+  IFCPROPERTYSINGLEVALUE('MaxTravelDistance',$,IFCLENGTHMEASURE(15.0),$)
+));
+
+----------------------------------------------------------------
+-- Pset_FireSafety_Context
+----------------------------------------------------------------
+
+#140=IFCPROPERTYSET('6Ef7HiJkLmNoPqRsTuVwXy',#5,'Pset_FireSafety_Context',$,(
+  IFCPROPERTYSINGLEVALUE('FireClass',$,IFCLABEL('B'),$)
+));
+
+----------------------------------------------------------------
+-- RELATIONSHIPS
+----------------------------------------------------------------
+
+#200=IFCRELDEFINESBYPROPERTIES('7Fg8IjKlMnOpQrStUvWxYz',#5,$,$,(#20),#100);
+#201=IFCRELDEFINESBYPROPERTIES('8Gh9JkLmNoPqRsTuVwXyZa',#5,$,$,(#20),#110);
+#202=IFCRELDEFINESBYPROPERTIES('9Hi0KlMnOpQrStUvWxYzAb',#5,$,$,(#20),#120);
+#203=IFCRELDEFINESBYPROPERTIES('0Ij1LmNoPqRsTuVwXyZaBc',#5,$,$,(#20),#130);
+#204=IFCRELDEFINESBYPROPERTIES('1Jk2MnOpQrStUvWxYzAbCd',#5,$,$,(#20),#140);
+
+ENDSEC;
+END-ISO-10303-21;
