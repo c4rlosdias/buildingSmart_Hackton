@@ -26,6 +26,7 @@ class IFC_PT_PainelPrincipal(bpy.types.Panel):
 
                 layout.separator()
                 layout.operator("ifc.executar_externo", icon="PLAY")
+                layout.operator("ifc.show_report", icon="FILE_TEXT")
 
                 layout.separator()
                 self.layout.template_list(
@@ -36,6 +37,7 @@ class IFC_PT_PainelPrincipal(bpy.types.Panel):
                     props,
                     "element_index"
                 )
+                
                 box = layout.box()
                 box.label(text="Resultado da última execução:", icon="INFO")
 

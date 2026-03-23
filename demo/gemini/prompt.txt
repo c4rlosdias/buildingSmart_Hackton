@@ -1,0 +1,1 @@
+leia a norma do pdf, leia a ontologia fela-core e crie uma ontologia fela-nbr-rules-gemini.ttl que importa a fela-core e crie instancias da fela-core que representem a norma do pdf
