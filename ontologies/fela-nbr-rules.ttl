@@ -9,7 +9,7 @@
 <https://example.org/fela-rules>
     a owl:Ontology ;
     owl:imports <https://example.org/fela> ;
-    rdfs:label "FELA Rules Ontology"@en ;
+    rdfs:label "FELA NBR Rules Ontology"@en ;
     owl:versionInfo "4.0.0" .
 
 #################################################################
