@@ -1,6 +1,6 @@
 
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 from ontobdc.run.core.port.contex import CliContextPort
 from ontobdc.run.core.capability import Capability, CapabilityMetadata
 
@@ -54,10 +54,13 @@ class ValidateIdcsCapability(Capability):
         objects: Dict[str, Any] = {}
         idcs_doc: Dict[str, Any] = {}
 
+        resolved_idcs_path = str(Path(idcs_path).expanduser().resolve())
+        resolved_ifc_path = str(Path(ifc_path).expanduser().resolve())
+
         try:
-            idcs_doc = self._load_idcs(idcs_path)
+            idcs_doc = self._load_idcs(resolved_idcs_path)
         except Exception as e:
-            raise ValueError(f"Failed to load IDCS file: {idcs_path}. Error: {e}")
+            raise ValueError(f"Failed to load IDCS file: {resolved_idcs_path}. Error: {e}")
 
         for first_level_child in idcs_doc["children"]:
             if first_level_child["tag"] == "constraints":
@@ -125,19 +128,15 @@ class ValidateIdcsCapability(Capability):
                     objects[constraint_name]["annotation"] = self._annotation_to_dict(child)
 
         if not objects:
-            raise ValueError(f"IDCS file {idcs_path} does not contain any objects.")
+            raise ValueError(f"IDCS file {resolved_idcs_path} does not contain any objects.")
 
-        result: Dict[str, Any] = self._validate(objects, ifc_path)
-
-        return result
-
+        result: Dict[str, Any] = self._validate(objects, resolved_ifc_path)
         return {
             "org.local.domain.idcs.validation.passed": result.get("passed", False),
             "org.local.domain.idcs.validation.summary": {
-                "idcs_path": idcs_path,
-                "ifc_path": ifc_path,
-                "constraints_total": len(objects),
-                "objects": objects,
+                "idcs_path": resolved_idcs_path,
+                "ifc_path": resolved_ifc_path,
+                **result,
             },
         }
 
@@ -220,16 +219,11 @@ class ValidateIdcsCapability(Capability):
         return elem_to_dict(root)
 
     def _validate(self, objects: Dict[str, Any], ifc_path: str) -> Dict[str, Any]:
+        import sympy as sp
         import ifcopenshell
+        import ifcopenshell.util.element
 
         ifc_file = ifcopenshell.open(ifc_path)
-
-        for constraint_name, constraint in objects.items():
-            if "expression" not in constraint.keys():
-                continue
-
-            expression = constraint["expression"]
-            # print(constraint_name, expression.keys(), expression.values())
 
         result: Dict[str, Any] = {
             "passed": True,
@@ -241,36 +235,117 @@ class ValidateIdcsCapability(Capability):
         }
 
         for constraint_name, constraint in objects.items():
-            expression_ast = constraint.get("expression")
-            if not expression_ast:
+            try:
+                sympy_expr = self._ast_to_sympy(constraint.get("expression"))
+            except Exception as e:
+                result["passed"] = False
                 result["constraints_unknown"] += 1
                 result["constraints"].append(
                     {
                         "constraintName": constraint_name,
                         "status": "unknown",
-                        "reason": "missing_expression",
+                        "reason": f"compile_error: {type(e).__name__}: {e}",
                     }
                 )
                 continue
 
-            try:
-                sympy_expr = self._ast_to_sympy(expression_ast)
-                sympy_str = str(sympy_expr)
-                status = "compiled"
-                reason = ""
-            except Exception as e:
-                sympy_str = ""
-                status = "unknown"
-                reason = f"compile_error: {type(e).__name__}: {e}"
+            symbols = sorted([s for s in getattr(sympy_expr, "free_symbols", set())], key=lambda x: str(x))
+            symbol_refs: list[tuple[sp.Symbol, str, str]] = []
+            for s in symbols:
+                name = str(s)
+                if "." not in name:
+                    continue
+                pset, prop = name.split(".", 1)
+                symbol_refs.append((s, pset, prop))
+
+            entity_type = constraint.get("ifcClass", "")
+            if not entity_type:
                 result["passed"] = False
                 result["constraints_unknown"] += 1
+                result["constraints"].append(
+                    {"constraintName": constraint_name, "status": "unknown", "reason": "missing_ifcClass"}
+                )
+                continue
+
+            applicable = list(self._iter_entities_matching(ifc_file, entity_type, constraint.get("conditions", {})))
+
+            passed_entities = 0
+            failed_entities = 0
+            unknown_entities = 0
+            examples: list[Dict[str, Any]] = []
+
+            for el in applicable:
+                subs: Dict[sp.Symbol, Any] = {}
+                missing: list[str] = []
+                values_map: Dict[str, Any] = {}
+                for sym, pset, prop in symbol_refs:
+                    raw = self._get_pset_prop_value(ifcopenshell.util.element.get_psets(el) or {}, pset, prop)
+                    num = self._coerce_number(raw)
+                    key = f"{pset}.{prop}"
+                    if num is None:
+                        missing.append(f"{pset}.{prop}")
+                        values_map[key] = {"missing": True}
+                    else:
+                        subs[sym] = num
+                        values_map[key] = {"value": float(num)}
+
+                if missing:
+                    unknown_entities += 1
+                    if len(examples) < 3:
+                        examples.append(
+                            {
+                                "entity": str(getattr(el, "GlobalId", "")) or str(el),
+                                "status": "unknown",
+                                "expr": str(sympy_expr),
+                                "values": values_map,
+                            }
+                        )
+                    continue
+
+                evaluated = sympy_expr.subs(subs)
+                try:
+                    ok = bool(evaluated)
+                except Exception:
+                    ok = False
+
+                if ok:
+                    passed_entities += 1
+                else:
+                    failed_entities += 1
+                    if len(examples) < 3:
+                        examples.append(
+                            {
+                                "entity": str(getattr(el, "GlobalId", "")) or str(el),
+                                "status": "failed",
+                                "expr": str(sympy_expr),
+                                "values": values_map,
+                            }
+                        )
+
+            if len(applicable) == 0:
+                status = "unknown"
+            else:
+                status = "passed" if failed_entities == 0 and unknown_entities == 0 else "failed" if failed_entities else "unknown"
+            if status == "passed":
+                result["constraints_passed"] += 1
+            elif status == "failed":
+                result["constraints_failed"] += 1
+                result["passed"] = False
+            else:
+                result["constraints_unknown"] += 1
+                result["passed"] = False
 
             result["constraints"].append(
                 {
                     "constraintName": constraint_name,
                     "status": status,
-                    "sympy": sympy_str,
-                    "reason": reason,
+                    "ifcClass": entity_type,
+                    "applicable_entities": len(applicable),
+                    "passed_entities": passed_entities,
+                    "failed_entities": failed_entities,
+                    "unknown_entities": unknown_entities,
+                    "sympy": str(sympy_expr),
+                    "examples": examples,
                 }
             )
 
@@ -352,3 +427,109 @@ class ValidateIdcsCapability(Capability):
             return sp.Symbol(f"{pset}.{prop}")
 
         raise ValueError(f"Unsupported operator: {op}")
+
+    def _iter_entities_matching(self, ifc_file: Any, entity_type: str, conditions: Dict[str, Any]):
+        base_type = entity_type.rstrip()  # guard
+
+        # Case 1: direct entity instances (e.g., IfcFireSuppressionTerminal)
+        if not base_type.endswith("Type"):
+            for el in ifc_file.by_type(base_type):
+                if self._matches_conditions(el, conditions):
+                    yield el
+            return
+
+        # Case 2: entity type (e.g., IfcFireSuppressionTerminalType) -> find occurrences via IfcRelDefinesByType
+        try:
+            rels = ifc_file.by_type("IfcRelDefinesByType")
+        except Exception:
+            rels = []
+
+        for rel in rels or []:
+            try:
+                t = rel.RelatingType
+            except Exception:
+                t = None
+            if not t or not getattr(t, "is_a", lambda *_: False)(base_type):
+                continue
+            for el in rel.RelatedObjects or []:
+                if self._matches_conditions(el, conditions, type_hint=t):
+                    yield el
+
+    def _matches_conditions(self, el: Any, conditions: Dict[str, Any]) -> bool:
+        try:
+            import ifcopenshell.util.element
+
+            psets = self._collect_psets(el) or {}
+        except Exception:
+            return False
+
+        pset_conditions = conditions.get("propertySet", {}) if isinstance(conditions, dict) else {}
+        for pset_name, pset_rule in (pset_conditions or {}).items():
+            expected_props = (pset_rule or {}).get("properties", {})
+            if not isinstance(expected_props, dict):
+                continue
+            for prop_name, expected in expected_props.items():
+                actual = self._get_pset_prop_value(psets, pset_name, prop_name)
+                if str(actual).strip() != str(expected).strip():
+                    return False
+        return True
+
+    def _collect_psets(self, el: Any) -> Dict[str, Any]:
+        """
+        Merge occurrence and type Psets into a single dict: { PsetName: { PropName: value, ... }, ... }
+        """
+        try:
+            import ifcopenshell.util.element
+            merged: Dict[str, Any] = {}
+            occ_psets = ifcopenshell.util.element.get_psets(el) or {}
+            if isinstance(occ_psets, dict):
+                merged.update(occ_psets)
+            # Pull type property sets via IsDefinedBy -> RelDefinesByType -> RelatingType.HasPropertySets
+            for rel in getattr(el, "IsDefinedBy", []) or []:
+                try:
+                    if not getattr(rel, "is_a", lambda *_: False)("IfcRelDefinesByType"):
+                        continue
+                    t = rel.RelatingType
+                    for pset in getattr(t, "HasPropertySets", []) or []:
+                        if getattr(pset, "is_a", lambda *_: False)("IfcPropertySet"):
+                            props: Dict[str, Any] = {}
+                            for ip in getattr(pset, "HasProperties", []) or []:
+                                name = getattr(ip, "Name", None)
+                                val = getattr(ip, "NominalValue", None)
+                                if name:
+                                    props[str(name)] = val
+                            merged[str(getattr(pset, "Name", ""))] = props
+                except Exception:
+                    continue
+            return merged
+        except Exception:
+            return {}
+
+    def _get_pset_prop_value(self, psets: Dict[str, Any], pset_name: str, prop_name: str) -> Any:
+        props = psets.get(pset_name)
+        if isinstance(props, dict):
+            return props.get(prop_name)
+        return None
+
+    def _coerce_number(self, value: Any) -> float | None:
+        if value is None:
+            return None
+        if isinstance(value, bool):
+            return 1.0 if value else 0.0
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, dict):
+            for k in ("NominalValue", "nominal_value", "value", "wrappedValue"):
+                if k in value:
+                    return self._coerce_number(value.get(k))
+        try:
+            s = str(value).strip()
+            if not s:
+                return None
+            return float(s)
+        except Exception:
+            return None
+
+    def get_default_cli_renderer(self) -> Any:
+        from ..adapter.renderer.validate_idcs import ValidateIdcsRenderer
+        return ValidateIdcsRenderer()
