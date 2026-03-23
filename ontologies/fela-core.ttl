@@ -3,6 +3,7 @@
 @prefix owl:  <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 @prefix dct:  <http://purl.org/dc/terms/> .
+@prefix ifc: <https://standards.buildingsmart.org/IFC/DEV/IFC4/OWL#> .
 
 @prefix fela: <https://example.org/fela#> .
 
@@ -17,12 +18,15 @@
 # DOMAIN CLASSES
 #################################################################
 
-fela:ifc_equivalentClass rdf:type owl:AnnotationProperty .
+fela:ifcEquivalentClass a owl:ObjectProperty ;
+    rdfs:domain owl:Class ;
+    rdfs:range owl:Class .
 
 fela:FireExtinguisher a owl:Class ;
-    fela:ifc_equivalentClass "IfcFireSuppressionTerminal" .
+    fela:ifcEquivalentClass ifc:IfcFireSuppressionTerminal .
+
 fela:BuildingStorey a owl:Class ;
-    fela:ifc_equivalentClass "IfcBuildingStorey" .
+    fela:ifcEquivalentClass ifc:IfcBuildingStorey .
 
 fela:RiskClass a owl:Class .
 fela:FireClass a owl:Class .
