@@ -1,7 +1,7 @@
 ISO-10303-21;
 HEADER;
 FILE_DESCRIPTION(('ViewDefinition [CoordinationView]'),'2;1');
-FILE_NAME('feso_fire_extinguisher.ifc','2026-03-22T12:00:00',('ChatGPT'),(''),'','','');
+FILE_NAME('FELA_fire_extinguisher.ifc','2026-03-22T12:00:00',('ChatGPT'),(''),'','','');
 FILE_SCHEMA(('IFC4'));
 ENDSEC;
 
@@ -10,10 +10,10 @@ DATA;
 #1=IFCPERSON($,'User',$,$,$,$,$,$);
 #2=IFCORGANIZATION($,'Org',$,$,$);
 #3=IFCPERSONANDORGANIZATION(#1,#2,$);
-#4=IFCAPPLICATION(#2,'1.0','FESO Generator','FESO_APP');
+#4=IFCAPPLICATION(#2,'1.0','FELA Generator','FELA_APP');
 #5=IFCOWNERHISTORY(#3,#4,$,.ADDED.,$,$,$,0);
 
-#10=IFCPROJECT('3hs8F$kLr9xQ2aP1ZtYbV0',#5,'FESO Project',$,$,$,$,$,$);
+#10=IFCPROJECT('3hs8F$kLr9xQ2aP1ZtYbV0',#5,'FELA Project',$,$,$,$,$,$);
 
 #20=IFCFIRESUPPRESSIONTERMINALTYPE(
   '1Jk9LmN0pQwErTyUiOpAsD',
@@ -28,10 +28,10 @@ DATA;
 );
 
 ----------------------------------------------------------------
--- Pset_FireExtinguisher_FESO
+-- Pset_FireExtinguisher_FELA
 ----------------------------------------------------------------
 
-#100=IFCPROPERTYSET('2Aq3DsFgHjK1LmNoPqRsTu',#5,'Pset_FireExtinguisher_FESO',$,(
+#100=IFCPROPERTYSET('2Aq3DsFgHjK1LmNoPqRsTu',#5,'Pset_FireExtinguisher_FELA',$,(
   IFCPROPERTYSINGLEVALUE('ExtinguisherType',$,IFCLABEL('CO2'),$),
   IFCPROPERTYSINGLEVALUE('ExtinguishingCapacity',$,IFCLABEL('2A:20B:C'),$),
   IFCPROPERTYSINGLEVALUE('IsCertified',$,IFCBOOLEAN(.T.),$),
