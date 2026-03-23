@@ -24,14 +24,25 @@ class ValidateIdsRenderer:
         ifc_path = summary.get("ifc_path", "")
         if ids_path:
             subtitle.append("IDS: ", style="bold")
-            subtitle.append(str(ids_path), style="cyan")
+            subtitle.append(str(ids_path).split("/")[-1], style="cyan")
         if ifc_path:
             if subtitle.plain:
                 subtitle.append("\n")
             subtitle.append("IFC: ", style="bold")
-            subtitle.append(str(ifc_path), style="cyan")
+            subtitle.append(str(ifc_path).split("/")[-1], style="cyan")
 
         console.print(Panel.fit(Text.assemble("IDS Validation: ", status_text), subtitle=subtitle))
+
+        if "error" in summary:
+            error_lines = Text()
+            error_lines.append(str(summary.get("error_type", "Error")), style="bold red")
+            error_lines.append("\n")
+            error_lines.append(str(summary.get("error", "")))
+            if summary.get("xml_error"):
+                error_lines.append("\n\n")
+                error_lines.append(str(summary.get("xml_error")), style="dim")
+            console.print(Panel(error_lines, title="IDS Load Error", border_style="red"))
+            return
 
         table = Table(title="Specifications")
         table.add_column("Name", style="cyan")
@@ -39,7 +50,7 @@ class ValidateIdsRenderer:
         table.add_column("Applicable", justify="right")
         table.add_column("Passed", justify="right", style="green")
         table.add_column("Failed", justify="right", style="red")
-        table.add_column("Failures", justify="right", style="yellow")
+        table.add_column("Warnings", justify="right", style="yellow")
 
         for spec in summary.get("specifications", []) or []:
             spec_status = spec.get("status", "unknown")

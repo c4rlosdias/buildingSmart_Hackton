@@ -1,8 +1,8 @@
+
 from pathlib import Path
 from typing import Any, Dict, Optional
-
-from ontobdc.run.core.capability import Capability, CapabilityMetadata
 from ontobdc.run.core.port.contex import CliContextPort
+from ontobdc.run.core.capability import Capability, CapabilityMetadata
 
 
 class ValidateIdsCapability(Capability):
@@ -63,11 +63,16 @@ class ValidateIdsCapability(Capability):
                 "ids_path": ids_path,
                 "ifc_path": ifc_path,
                 "error": str(e),
+                "error_type": type(e).__name__,
                 "specifications_total": 0,
                 "specifications_passed": 0,
                 "specifications_failed": 0,
+                "specifications_unknown": 0,
                 "specifications": [],
             }
+            xml_error = getattr(e, "xml_error", None)
+            if xml_error is not None:
+                summary["xml_error"] = str(xml_error)
             return {
                 "org.local.domain.ids.validation.passed": False,
                 "org.local.domain.ids.validation.summary": summary,
