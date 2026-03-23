@@ -1,0 +1,82 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix fela: <https://example.org/fela#> .
+@prefix nbr:  <https://example.org/fela-nbr#> .
+
+<https://example.org/fela-nbr-rules-gemini>
+    a owl:Ontology ;
+    rdfs:label "FELA NBR 15808 Rules Ontology"@en ;
+    owl:imports <https://example.org/fela> ;
+    rdfs:comment "Instanciação das regras da ABNT NBR 15808:2010 utilizando o metamodelo FELA Core."@pt .
+
+#################################################################
+# REGRAS DE PRESSÃO (Seção 6)
+#################################################################
+
+nbr:Rule_PressaoEnsaio a fela:NormativeRule ;
+    fela:hasRequirementText "A pressão de ensaio (PE) deve ser igual a 2,5 vezes a Pressão Normal de Carregamento (PNC), nunca inferior a 2 MPa."@pt ;
+    fela:hasFormula "PE >= max(2.5 * PNC, 2.0)" ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    rdfs:isDefinedBy "ABNT NBR 15808:2010 Cláusula 6.2" .
+
+nbr:Rule_PressaoRuptura_Direta a fela:NormativeRule ;
+    fela:hasRequirementText "Para extintores de pressurização direta, a pressão de ruptura (PR) deve ser 5 vezes a PNC, mínima de 5 MPa."@pt ;
+    fela:hasFormula "PR >= max(5.0 * PNC, 5.0)" ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    rdfs:isDefinedBy "ABNT NBR 15808:2010 Cláusula 6.3" .
+
+#################################################################
+# REGRAS DE CAPACIDADE EXTINTORA (Seção 9)
+#################################################################
+
+nbr:Rule_CapacidadeMinima_Agua_2A a fela:NormativeRule ;
+    fela:hasRequirementText "Extintores à base d'água entre 6L e 10L devem possuir capacidade extintora mínima de 2-A."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:hasRequirementValue "2-A" ;
+    rdfs:comment "Baseado na Tabela 6 da NBR 15808."@pt ;
+    rdfs:isDefinedBy "ABNT NBR 15808:2010 Tabela 6" .
+
+nbr:Rule_CapacidadeMinima_CO2_5B a fela:NormativeRule ;
+    fela:hasRequirementText "Extintores de CO2 com carga entre 4kg e 6kg devem possuir capacidade extintora mínima de 5-B."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    fela:hasRequirementValue "5-B" ;
+    rdfs:isDefinedBy "ABNT NBR 15808:2010 Tabela 7" .
+
+#################################################################
+# REGRAS CONSTRUTIVAS E ACESSÓRIOS (Seção 7)
+#################################################################
+
+nbr:Rule_MassaTotal_Portatil a fela:NormativeRule ;
+    fela:hasRequirementText "A massa total de um extintor portátil não pode ultrapassar 20 kg."@pt ;
+    fela:hasFormula "TotalMass <= 20.0" ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    rdfs:isDefinedBy "ABNT NBR 15808:2010 Cláusula 3.1" .
+
+nbr:Rule_AlçaTransporte_Obrigatoriedade a fela:NormativeRule ;
+    fela:hasRequirementText "Extintores com massa total >= 1,5 kg e diâmetro >= 75 mm devem possuir alça de transporte."@pt ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    rdfs:isDefinedBy "ABNT NBR 15808:2010 Cláusula 7.9.1" .
+
+nbr:Rule_ComprimentoMangueira_CO2 a fela:NormativeRule ;
+    fela:hasRequirementText "Extintores de CO2 com carga > 2kg devem ter mangueira com comprimento mínimo de 750 mm."@pt ;
+    fela:hasFormula "HoseLength >= 750" ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    rdfs:isDefinedBy "ABNT NBR 15808:2010 Cláusula 7.5.1.1 e 7.5.1.3" .
+
+#################################################################
+# REGRAS DE DESEMPENHO (Seção 8)
+#################################################################
+
+nbr:Rule_Rendimento_Minimo_Po a fela:NormativeRule ;
+    fela:hasRequirementText "O rendimento de descarga para extintores de pó deve ser de no mínimo 85%."@pt ;
+    fela:hasFormula "DischargeYield >= 0.85" ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    rdfs:isDefinedBy "ABNT NBR 15808:2010 Tabela 4" .
+
+nbr:Rule_TempoDescarga_ClasseB a fela:NormativeRule ;
+    fela:hasRequirementText "O tempo mínimo de descarga para extintores classe 20-B deve ser de 8 segundos."@pt ;
+    fela:hasFormula "DischargeTime >= 8" ;
+    fela:appliesToClass fela:FireExtinguisher ;
+    rdfs:isDefinedBy "ABNT NBR 15808:2010 Tabela 10" .
