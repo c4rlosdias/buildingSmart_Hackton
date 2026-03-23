@@ -15,7 +15,7 @@ DATA;
 
 #10=IFCPROJECT('3hs8F$kLr9xQ2aP1ZtYbV0',#5,'FELA Project',$,$,$,$,$,$);
 
-#20=IFCFIRESUPPRESSIONTERMINALTYPE(
+#20=IFCFIRESUPPRESSIONTERMINAL(
   '1Jk9LmN0pQwErTyUiOpAsD',
   #5,
   'Portable Fire Extinguisher',
