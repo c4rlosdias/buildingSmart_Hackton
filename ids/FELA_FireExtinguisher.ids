@@ -9,15 +9,15 @@
       IDS specification derived from FELA ontology for portable fire extinguishers.
       Includes all requirements expressible in IDS.
     </ids:description>
-    <ids:version>3.0</ids:version>
-    <ids:author>FELA Hackathon Prototype</ids:author>
+    <ids:author>fela@infobim.org</ids:author>
   </ids:info>
 
   <!-- ===================================================== -->
   <!-- CORE PROPERTIES -->
   <!-- ===================================================== -->
 
-  <ids:specification name="Fire Extinguisher Core Properties">
+    <ids:specifications>
+  <ids:specification name="Fire Extinguisher Core Properties" ifcVersion="IFC4 IFC4X3_ADD2">
 
     <ids:annotation>
       <ids:normativeText>
@@ -35,7 +35,7 @@
 
     <ids:applicability>
       <ids:entity>
-        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+        <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
       </ids:entity>
     </ids:applicability>
 
@@ -43,25 +43,25 @@
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
-        <ids:name>ExtinguisherType</ids:name>
+        <ids:name><ids:simpleValue>ExtinguisherType</ids:simpleValue></ids:name>
         <ids:dataType>IFCLABEL</ids:dataType>
       </ids:property>
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
-        <ids:name>ExtinguishingCapacity</ids:name>
+        <ids:name><ids:simpleValue>ExtinguishingCapacity</ids:simpleValue></ids:name>
         <ids:dataType>IFCLABEL</ids:dataType>
       </ids:property>
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
-        <ids:name>IsCertified</ids:name>
+        <ids:name><ids:simpleValue>IsCertified</ids:simpleValue></ids:name>
         <ids:dataType>IFCBOOLEAN</ids:dataType>
       </ids:property>
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
-        <ids:name>AgentMass</ids:name>
+        <ids:name><ids:simpleValue>AgentMass</ids:simpleValue></ids:name>
         <ids:dataType>IFCMASSMEASURE</ids:dataType>
       </ids:property>
 
@@ -73,7 +73,7 @@
   <!-- TYPE ENUMERATION -->
   <!-- ===================================================== -->
 
-  <ids:specification name="Allowed Extinguisher Types">
+  <ids:specification name="Allowed Extinguisher Types" ifcVersion="IFC4 IFC4X3_ADD2">
 
     <ids:annotation>
       <ids:normativeText>
@@ -90,7 +90,7 @@
 
     <ids:applicability>
       <ids:entity>
-        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+        <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
       </ids:entity>
     </ids:applicability>
 
@@ -98,7 +98,7 @@
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
-        <ids:name>ExtinguisherType</ids:name>
+        <ids:name><ids:simpleValue>ExtinguisherType</ids:simpleValue></ids:name>
         <ids:allowedValues>
           <ids:value>Water</ids:value>
           <ids:value>CO2</ids:value>
@@ -116,7 +116,7 @@
   <!-- CERTIFICATION -->
   <!-- ===================================================== -->
 
-  <ids:specification name="Certification Requirement">
+  <ids:specification name="Certification Requirement" ifcVersion="IFC4 IFC4X3_ADD2">
 
     <ids:annotation>
       <ids:normativeText>
@@ -133,7 +133,7 @@
 
     <ids:applicability>
       <ids:entity>
-        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+        <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
       </ids:entity>
     </ids:applicability>
 
@@ -141,7 +141,7 @@
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
-        <ids:name>IsCertified</ids:name>
+        <ids:name><ids:simpleValue>IsCertified</ids:simpleValue></ids:name>
         <ids:expectedValue>true</ids:expectedValue>
       </ids:property>
 
@@ -153,7 +153,7 @@
   <!-- CAPACITY FORMAT -->
   <!-- ===================================================== -->
 
-  <ids:specification name="Capacity Format">
+  <ids:specification name="Capacity Format" ifcVersion="IFC4 IFC4X3_ADD2">
 
     <ids:annotation>
       <ids:normativeText>
@@ -170,7 +170,7 @@
 
     <ids:applicability>
       <ids:entity>
-        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+        <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
       </ids:entity>
     </ids:applicability>
 
@@ -178,7 +178,7 @@
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
-        <ids:name>ExtinguishingCapacity</ids:name>
+        <ids:name><ids:simpleValue>ExtinguishingCapacity</ids:simpleValue></ids:name>
         <ids:pattern>^([0-9]+A)?(:[0-9]+B)?(:C)?$</ids:pattern>
       </ids:property>
 
@@ -190,7 +190,7 @@
   <!-- MECHANICAL DATA PRESENCE -->
   <!-- ===================================================== -->
 
-  <ids:specification name="Mechanical Properties Presence">
+  <ids:specification name="Mechanical Properties Presence" ifcVersion="IFC4 IFC4X3_ADD2">
 
     <ids:annotation>
       <ids:normativeText>
@@ -207,7 +207,7 @@
 
     <ids:applicability>
       <ids:entity>
-        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+        <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
       </ids:entity>
     </ids:applicability>
 
@@ -215,25 +215,25 @@
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
-        <ids:name>BurstPressure</ids:name>
+        <ids:name><ids:simpleValue>BurstPressure</ids:simpleValue></ids:name>
         <ids:dataType>IFCPRESSUREMEASURE</ids:dataType>
       </ids:property>
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
-        <ids:name>NominalChargingPressure</ids:name>
+        <ids:name><ids:simpleValue>NominalChargingPressure</ids:simpleValue></ids:name>
         <ids:dataType>IFCPRESSUREMEASURE</ids:dataType>
       </ids:property>
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
-        <ids:name>PressurisationMode</ids:name>
+        <ids:name><ids:simpleValue>PressurisationMode</ids:simpleValue></ids:name>
         <ids:dataType>IFCLABEL</ids:dataType>
       </ids:property>
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_Mechanical</ids:propertySet>
-        <ids:name>JointType</ids:name>
+        <ids:name><ids:simpleValue>JointType</ids:simpleValue></ids:name>
         <ids:dataType>IFCLABEL</ids:dataType>
       </ids:property>
 
@@ -245,7 +245,7 @@
   <!-- INSTALLATION + CONTEXT -->
   <!-- ===================================================== -->
 
-  <ids:specification name="Installation and Context Data">
+  <ids:specification name="Installation and Context Data" ifcVersion="IFC4 IFC4X3_ADD2">
 
     <ids:annotation>
       <ids:normativeText>
@@ -262,7 +262,7 @@
 
     <ids:applicability>
       <ids:entity>
-        <ids:name>IfcFireSuppressionTerminalType</ids:name>
+        <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
       </ids:entity>
     </ids:applicability>
 
@@ -270,29 +270,29 @@
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_Installation</ids:propertySet>
-        <ids:name>RiskClass</ids:name>
+        <ids:name><ids:simpleValue>RiskClass</ids:simpleValue></ids:name>
       </ids:property>
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_Installation</ids:propertySet>
-        <ids:name>MountingHeight</ids:name>
+        <ids:name><ids:simpleValue>MountingHeight</ids:simpleValue></ids:name>
         <ids:dataType>IFCLENGTHMEASURE</ids:dataType>
       </ids:property>
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_Spatial</ids:propertySet>
-        <ids:name>MaxTravelDistance</ids:name>
+        <ids:name><ids:simpleValue>MaxTravelDistance</ids:simpleValue></ids:name>
         <ids:dataType>IFCLENGTHMEASURE</ids:dataType>
       </ids:property>
 
       <ids:property>
         <ids:propertySet>Pset_FireSafety_Context</ids:propertySet>
-        <ids:name>FireClass</ids:name>
+        <ids:name><ids:simpleValue>FireClass</ids:simpleValue></ids:name>
       </ids:property>
 
       <ids:property>
         <ids:propertySet>Pset_FireExtinguisher_FELA</ids:propertySet>
-        <ids:name>HydrostaticTestDate</ids:name>
+        <ids:name><ids:simpleValue>HydrostaticTestDate</ids:simpleValue></ids:name>
         <ids:dataType>IFCDATE</ids:dataType>
       </ids:property>
 
@@ -300,4 +300,5 @@
 
   </ids:specification>
 
+    </ids:specifications>
 </ids:ids>
