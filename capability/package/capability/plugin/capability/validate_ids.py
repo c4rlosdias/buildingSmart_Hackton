@@ -117,6 +117,10 @@ class ValidateIdsCapability(Capability):
         passed_count = 0
         failed_count = 0
         unknown_count = 0
+        objects_total = 0
+        objects_passed = 0
+        objects_failed = 0
+        objects_unknown = 0
 
         for spec in getattr(ids_doc, "specifications", []) or []:
             status = getattr(spec, "status", None)
@@ -133,14 +137,48 @@ class ValidateIdsCapability(Capability):
             for facet in getattr(spec, "requirements", []) or []:
                 failures += len(getattr(facet, "failures", []) or [])
 
+            applicable_entities = getattr(spec, "applicable_entities", []) or []
+            passed_entities_raw = getattr(spec, "passed_entities", []) or []
+            failed_entities_raw = getattr(spec, "failed_entities", []) or []
+
+            def _entity_id(el: Any) -> str:
+                return str(getattr(el, "GlobalId", "")) or str(el)
+
+            passed_entities = sorted(list(passed_entities_raw), key=_entity_id)
+            failed_entities = sorted(list(failed_entities_raw), key=_entity_id)
+
+            objects_total += len(applicable_entities)
+            objects_passed += len(passed_entities)
+            objects_failed += len(failed_entities)
+            unknown_for_spec = max(0, len(applicable_entities) - len(passed_entities) - len(failed_entities))
+            objects_unknown += unknown_for_spec
+
+            examples = []
+            for el in failed_entities[:3]:
+                examples.append(
+                    {
+                        "entity": str(getattr(el, "GlobalId", "")) or str(el),
+                        "status": "failed",
+                    }
+                )
+            for el in passed_entities[:3]:
+                examples.append(
+                    {
+                        "entity": str(getattr(el, "GlobalId", "")) or str(el),
+                        "status": "passed",
+                    }
+                )
+
             specs.append(
                 {
                     "name": getattr(spec, "name", ""),
                     "status": "passed" if is_pass else "failed" if is_fail else "unknown",
-                    "applicable_entities": len(getattr(spec, "applicable_entities", []) or []),
-                    "passed_entities": len(getattr(spec, "passed_entities", []) or []),
-                    "failed_entities": len(getattr(spec, "failed_entities", []) or []),
+                    "applicable_entities": len(applicable_entities),
+                    "passed_entities": len(passed_entities),
+                    "failed_entities": len(failed_entities),
+                    "unknown_entities": unknown_for_spec,
                     "requirement_failures": failures,
+                    "examples": examples,
                 }
             )
 
@@ -152,6 +190,10 @@ class ValidateIdsCapability(Capability):
             "specifications_passed": passed_count,
             "specifications_failed": failed_count,
             "specifications_unknown": unknown_count,
+            "objects_total": objects_total,
+            "objects_passed": objects_passed,
+            "objects_failed": objects_failed,
+            "objects_unknown": objects_unknown,
             "specifications": specs,
         }
 

@@ -1,7 +1,0 @@
-engine: venv
-capability:
-  package:
-  - ontobdc.module
-  - infobim.module
-  parameter:
-  - infobim.run.core.strategy
