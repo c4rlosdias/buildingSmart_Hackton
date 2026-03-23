@@ -3,10 +3,6 @@ import json
 import logging
 import datetime
 
-from infobim.module.ifc.plugin.capability.list_buildings import ListIfcBuildingsCapability
-# from infobim.module.ifc.plugin.capability.list_elements import ListIfcElementsCapability
-# from infobim.module.ifc.plugin.capability.inspect_element import InspectIfcElementCapability
-# from infobim.module.ifc.plugin.capability.list_property_sets import ListIfcPropertySetsCapability
 from ontobdc.run.core.capability import CapabilityExecutor
 from ontobdc.run.adapter.contex import CliContextAdapter
 
@@ -74,3 +70,4 @@ def run_infobim_capability(capability, **params) -> dict:
     logger.info(json.dumps(entry, ensure_ascii=False))
 
     return resultado
+
