@@ -1,1 +1,1 @@
-__all__ = ["ValidateIdsRenderer"]
+__all__ = ["ValidateIdsRenderer", "ValidateIdcsRenderer"]
