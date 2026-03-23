@@ -97,11 +97,12 @@ class ValidateIdcsRenderer:
                         "status": ex.get("status", ""),
                         "expr": ex.get("expr", ""),
                         "values": ex.get("values", {}),
-                        "missing": ex.get("missing", []),
                     }
                 )
 
         if examples:
+            status_order = {"failed": 0, "unknown": 1, "passed": 2}
+            examples.sort(key=lambda x: (status_order.get(x.get("status", "unknown"), 1), x.get("constraintName", ""), x.get("entity", "")))
             et = Table(title="Details", expand=True, show_lines=True)
             et.add_column("Constraint", style="cyan", overflow="fold")
             et.add_column("Entity", style="magenta", overflow="fold")

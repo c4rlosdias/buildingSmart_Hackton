@@ -332,7 +332,8 @@ class ValidateIdcsCapability(Capability):
             passed_entities = 0
             failed_entities = 0
             unknown_entities = 0
-            examples: list[Dict[str, Any]] = []
+            examples_nonpassed: list[Dict[str, Any]] = []
+            examples_passed: list[Dict[str, Any]] = []
 
             for el in applicable:
                 # 5) Monta o dicionário de substituição SymPy (Symbol -> valor numérico).
@@ -357,8 +358,8 @@ class ValidateIdcsCapability(Capability):
                     # Se faltar qualquer variável, não dá para avaliar o booleano com segurança.
                     # Marcamos como unknown e registramos a memória de cálculo parcial.
                     unknown_entities += 1
-                    if len(examples) < 3:
-                        examples.append(
+                    if len(examples_nonpassed) < 3:
+                        examples_nonpassed.append(
                             {
                                 "entity": str(getattr(el, "GlobalId", "")) or str(el),
                                 "status": "unknown",
@@ -377,11 +378,20 @@ class ValidateIdcsCapability(Capability):
 
                 if ok:
                     passed_entities += 1
+                    if len(examples_passed) < 3:
+                        examples_passed.append(
+                            {
+                                "entity": str(getattr(el, "GlobalId", "")) or str(el),
+                                "status": "passed",
+                                "expr": str(sympy_expr),
+                                "values": values_map,
+                            }
+                        )
                 else:
                     # Falha: registra exemplos com GUID e valores usados para demonstrar a conta.
                     failed_entities += 1
-                    if len(examples) < 3:
-                        examples.append(
+                    if len(examples_nonpassed) < 3:
+                        examples_nonpassed.append(
                             {
                                 "entity": str(getattr(el, "GlobalId", "")) or str(el),
                                 "status": "failed",
@@ -421,7 +431,7 @@ class ValidateIdcsCapability(Capability):
                     "failed_entities": failed_entities,
                     "unknown_entities": unknown_entities,
                     "sympy": str(sympy_expr),
-                    "examples": examples,
+                    "examples": [*examples_nonpassed, *examples_passed],
                 }
             )
 
@@ -591,11 +601,6 @@ class ValidateIdcsCapability(Capability):
     def _get_pset_prop_value(self, el: Any, pset_name: str, prop_name: str) -> Any:
         # Acesso simples ao valor do property dentro do Pset.
         props = self._collect_psets(el).get(pset_name)
-        if props is not None:
-            print(f'Pset: {pset_name}')
-            print(f'Prop: {prop_name}')
-            print(props)
-
         if isinstance(props, dict):
             return props.get(prop_name)
 
