@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idcs:idcs xmlns:idcs="http://feso.org/IDCS"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <idcs:info>
+    <idcs:title>FESO Constraint Specification</idcs:title>
+    <idcs:description>
+      Constraint specification for rules not expressible using IDS.
+    </idcs:description>
+    <idcs:version>2.0</idcs:version>
+  </idcs:info>
+
+  <idcs:constraint name="DirectNonWeldedPressure">
+    <idcs:annotation>
+      <idcs:normativeText xml:lang="en">
+        The burst pressure shall be at least five times the nominal charging pressure and not less than 5 MPa for directly pressurised extinguishers with non-welded joints.
+      </idcs:normativeText>
+      <idcs:description>
+        Cross-property pressure constraint with conditional applicability.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 15808</idcs:source>
+      <idcs:clause>Section 4</idcs:clause>
+      <idcs:applicabilityNote>
+        A pressão de ruptura deve ser pelo menos cinco vezes a pressão nominal de carga e não inferior a 5 MPa para extintores de pressurização direta com uniões não soldadas.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminalType</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Direct"/>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="NonWelded"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:and>
+        <idcs:greaterOrEqual>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <idcs:multiply>
+            <idcs:literal>5</idcs:literal>
+            <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+          </idcs:multiply>
+        </idcs:greaterOrEqual>
+
+        <idcs:greaterOrEqual>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <idcs:literal unit="MPa">5</idcs:literal>
+        </idcs:greaterOrEqual>
+      </idcs:and>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="DirectWeldedPressure">
+    <idcs:annotation>
+      <idcs:normativeText>
+        The burst pressure shall be at least eight times the nominal charging pressure and not less than 5 MPa for directly pressurised extinguishers with welded joints.
+      </idcs:normativeText>
+      <idcs:description>
+        Cross-property pressure constraint for directly pressurised welded extinguishers.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 15808</idcs:source>
+      <idcs:clause>Section 4</idcs:clause>
+      <idcs:applicabilityNote>
+        A pressão de ruptura deve ser pelo menos oito vezes a pressão nominal de carga e não inferior a 5 MPa para extintores de pressurização direta com uniões soldadas.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminalType</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Direct"/>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="Welded"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:and>
+        <idcs:greaterOrEqual>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <idcs:multiply>
+            <idcs:literal>8</idcs:literal>
+            <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+          </idcs:multiply>
+        </idcs:greaterOrEqual>
+
+        <idcs:greaterOrEqual>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <idcs:literal unit="MPa">5</idcs:literal>
+        </idcs:greaterOrEqual>
+      </idcs:and>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="IndirectNonWeldedPressure">
+    <idcs:annotation>
+      <idcs:normativeText>
+        The burst pressure shall be at least four times the nominal charging pressure and not less than 5 MPa for indirectly pressurised extinguishers with non-welded joints.
+      </idcs:normativeText>
+      <idcs:description>
+        Cross-property pressure constraint for indirectly pressurised non-welded extinguishers.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 15808</idcs:source>
+      <idcs:clause>Section 4</idcs:clause>
+      <idcs:applicabilityNote>
+        A pressão de ruptura deve ser pelo menos quatro vezes a pressão nominal de carga e não inferior a 5 MPa para extintores de pressurização indireta com uniões não soldadas.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminalType</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Indirect"/>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="NonWelded"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:and>
+        <idcs:greaterOrEqual>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <idcs:multiply>
+            <idcs:literal>4</idcs:literal>
+            <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+          </idcs:multiply>
+        </idcs:greaterOrEqual>
+
+        <idcs:greaterOrEqual>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <idcs:literal unit="MPa">5</idcs:literal>
+        </idcs:greaterOrEqual>
+      </idcs:and>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="IndirectWeldedPressure">
+    <idcs:annotation>
+      <idcs:normativeText>
+        The burst pressure shall be at least seven times the nominal charging pressure and not less than 5 MPa for indirectly pressurised extinguishers with welded joints.
+      </idcs:normativeText>
+      <idcs:description>
+        Cross-property pressure constraint for indirectly pressurised welded extinguishers.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 15808</idcs:source>
+      <idcs:clause>Section 4</idcs:clause>
+      <idcs:applicabilityNote>
+        A pressão de ruptura deve ser pelo menos sete vezes a pressão nominal de carga e não inferior a 5 MPa para extintores de pressurização indireta com uniões soldadas.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminalType</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="PressurisationMode" value="Indirect"/>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Mechanical" property="JointType" value="Welded"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:and>
+        <idcs:greaterOrEqual>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <idcs:multiply>
+            <idcs:literal>7</idcs:literal>
+            <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="NominalChargingPressure"/>
+          </idcs:multiply>
+        </idcs:greaterOrEqual>
+
+        <idcs:greaterOrEqual>
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_Mechanical" property="BurstPressure"/>
+          <idcs:literal unit="MPa">5</idcs:literal>
+        </idcs:greaterOrEqual>
+      </idcs:and>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="ModerateRiskClassACoverage">
+    <idcs:annotation>
+      <idcs:normativeText>
+        For moderate risk, the maximum floor area covered by one Class A unit shall be 250 square metres.
+      </idcs:normativeText>
+      <idcs:description>
+        Requires computation of Class A demand from floor area in moderate-risk storeys.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 12693</idcs:source>
+      <idcs:clause>Section 7.2</idcs:clause>
+      <idcs:applicabilityNote>
+        Para risco moderado, a área máxima de pavimento coberta por uma unidade Classe A deve ser de 250 metros quadrados.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcBuildingStorey</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Installation" property="RiskClass" value="Moderate"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:equal>
+        <idcs:propertyRef propertySet="Derived_FireSafety" property="RequiredClassAUnits"/>
+        <idcs:ceil>
+          <idcs:divide>
+            <idcs:propertyRef propertySet="Pset_BuildingStorey_FireSafety" property="FloorArea"/>
+            <idcs:literal unit="m2">250</idcs:literal>
+          </idcs:divide>
+        </idcs:ceil>
+      </idcs:equal>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="ModerateRiskClassB">
+    <idcs:annotation>
+      <idcs:normativeText>
+        For moderate risk, one unit of Class B extinguishing capacity shall be provided per square metre of flammable liquid surface, with a minimum of 20B.
+      </idcs:normativeText>
+      <idcs:description>
+        Computes required Class B provision from liquid-surface area and minimum threshold.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 12693</idcs:source>
+      <idcs:clause>Section 7.3</idcs:clause>
+      <idcs:applicabilityNote>
+        Para risco moderado, deve ser prevista uma unidade de capacidade extintora Classe B por metro quadrado de superfície de líquido inflamável, com mínimo de 20B.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcBuildingStorey</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Installation" property="RiskClass" value="Moderate"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:equal>
+        <idcs:propertyRef propertySet="Derived_FireSafety" property="RequiredClassBUnits"/>
+        <idcs:max>
+          <idcs:multiply>
+            <idcs:propertyRef propertySet="Pset_BuildingStorey_FireSafety" property="LiquidSurfaceArea"/>
+            <idcs:literal>1</idcs:literal>
+          </idcs:multiply>
+          <idcs:literal>20</idcs:literal>
+        </idcs:max>
+      </idcs:equal>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="HighRiskClassB">
+    <idcs:annotation>
+      <idcs:normativeText>
+        For high risk, two units of Class B extinguishing capacity shall be provided per square metre of flammable liquid surface, with a minimum of 40B.
+      </idcs:normativeText>
+      <idcs:description>
+        Computes required Class B provision from liquid-surface area and minimum threshold for high risk.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 12693</idcs:source>
+      <idcs:clause>Section 7.3</idcs:clause>
+      <idcs:applicabilityNote>
+        Para risco alto, devem ser previstas duas unidades de capacidade extintora Classe B por metro quadrado de superfície de líquido inflamável, com mínimo de 40B.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcBuildingStorey</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Installation" property="RiskClass" value="High"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:equal>
+        <idcs:propertyRef propertySet="Derived_FireSafety" property="RequiredClassBUnits"/>
+        <idcs:max>
+          <idcs:multiply>
+            <idcs:propertyRef propertySet="Pset_BuildingStorey_FireSafety" property="LiquidSurfaceArea"/>
+            <idcs:literal>2</idcs:literal>
+          </idcs:multiply>
+          <idcs:literal>40</idcs:literal>
+        </idcs:max>
+      </idcs:equal>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="HighRiskTravelDistance">
+    <idcs:annotation>
+      <idcs:normativeText>
+        The maximum travel distance to reach a fire extinguisher shall not exceed 15 metres in high-risk areas.
+      </idcs:normativeText>
+      <idcs:description>
+        Travel-distance constraint for high-risk conditions.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 12693</idcs:source>
+      <idcs:clause>Sections 7.2 and 7.3</idcs:clause>
+      <idcs:applicabilityNote>
+        A distância máxima de percurso até alcançar um extintor não deve exceder 15 metros em áreas de risco alto.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminalType</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals propertySet="Pset_FireExtinguisher_Installation" property="RiskClass" value="High"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Spatial" property="MaxTravelDistance"/>
+        <idcs:literal unit="m">15</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="LowMassMountingHeight">
+    <idcs:annotation>
+      <idcs:normativeText>
+        Fire extinguishers with mass up to 4 kg shall be installed so that the handle height does not exceed 1.60 metres.
+      </idcs:normativeText>
+      <idcs:description>
+        Conditional installation-height rule for extinguishers up to 4 kg.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 12693</idcs:source>
+      <idcs:clause>Section 7.4</idcs:clause>
+      <idcs:applicabilityNote>
+        Extintores com massa de até 4 kg devem ser instalados de modo que a altura do manípulo não exceda 1,60 metros.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminalType</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:lessOrEqual propertySet="Pset_FireExtinguisher_FESO" property="AgentMass" value="4"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Installation" property="MountingHeight"/>
+        <idcs:literal unit="m">1.60</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="HighMassMountingHeight">
+    <idcs:annotation>
+      <idcs:normativeText>
+        Fire extinguishers with mass greater than 4 kg shall be installed so that the handle height does not exceed 1.00 metre.
+      </idcs:normativeText>
+      <idcs:description>
+        Conditional installation-height rule for extinguishers above 4 kg.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 12693</idcs:source>
+      <idcs:clause>Section 7.4</idcs:clause>
+      <idcs:applicabilityNote>
+        Extintores com massa superior a 4 kg devem ser instalados de modo que a altura do manípulo não exceda 1,00 metro.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminalType</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:greater propertySet="Pset_FireExtinguisher_FESO" property="AgentMass" value="4"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:propertyRef propertySet="Pset_FireExtinguisher_Installation" property="MountingHeight"/>
+        <idcs:literal unit="m">1.00</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="WaterCompatibility">
+    <idcs:annotation>
+      <idcs:normativeText>
+        Water extinguishers shall be suitable for Class A fires and shall not be used for Class C fires.
+      </idcs:normativeText>
+      <idcs:description>
+        Compatibility constraint between extinguisher type and fire class.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 15808</idcs:source>
+      <idcs:clause>Section 2</idcs:clause>
+      <idcs:applicabilityNote>
+        Extintores de água devem ser adequados para incêndios Classe A e não devem ser usados em incêndios Classe C.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminalType</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals propertySet="Pset_FireExtinguisher_FESO" property="ExtinguisherType" value="Water"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:not>
+        <idcs:equals propertySet="Pset_FireSafety_Context" property="FireClass" value="C"/>
+      </idcs:not>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="CO2Compatibility">
+    <idcs:annotation>
+      <idcs:normativeText>
+        CO2 extinguishers shall be suitable for Class B and Class C fires and shall not be used for Class A fires.
+      </idcs:normativeText>
+      <idcs:description>
+        Compatibility constraint between CO2 extinguishers and fire class.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 15808</idcs:source>
+      <idcs:clause>Section 2</idcs:clause>
+      <idcs:applicabilityNote>
+        Extintores de CO2 devem ser adequados para incêndios Classe B e Classe C e não devem ser usados em incêndios Classe A.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminalType</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:condition>
+      <idcs:equals propertySet="Pset_FireExtinguisher_FESO" property="ExtinguisherType" value="CO2"/>
+    </idcs:condition>
+
+    <idcs:expression>
+      <idcs:and>
+        <idcs:not>
+          <idcs:equals propertySet="Pset_FireSafety_Context" property="FireClass" value="A"/>
+        </idcs:not>
+      </idcs:and>
+    </idcs:expression>
+  </idcs:constraint>
+
+  <idcs:constraint name="HydrostaticTestValidity">
+    <idcs:annotation>
+      <idcs:normativeText>
+        The hydrostatic test shall be performed at intervals not exceeding five years.
+      </idcs:normativeText>
+      <idcs:description>
+        Time-based check comparing current date with declared hydrostatic test date.
+      </idcs:description>
+      <idcs:source>Project reference summary based on ABNT NBR 15808 and NBR 12962</idcs:source>
+      <idcs:clause>Section 6</idcs:clause>
+      <idcs:applicabilityNote>
+        O ensaio hidrostático deve ser realizado em intervalos não superiores a cinco anos.
+      </idcs:applicabilityNote>
+    </idcs:annotation>
+
+    <idcs:appliesTo>
+      <idcs:entity>IfcFireSuppressionTerminalType</idcs:entity>
+    </idcs:appliesTo>
+
+    <idcs:expression>
+      <idcs:lessOrEqual>
+        <idcs:dateDifference unit="years">
+          <idcs:propertyRef propertySet="Pset_FireExtinguisher_FESO" property="HydrostaticTestDate"/>
+          <idcs:currentDate/>
+        </idcs:dateDifference>
+        <idcs:literal>5</idcs:literal>
+      </idcs:lessOrEqual>
+    </idcs:expression>
+  </idcs:constraint>
+
+</idcs:idcs>
