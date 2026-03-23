@@ -14,6 +14,7 @@
   <!-- PRESSURE RULES -->
   <!-- ===================================================== -->
 
+<fela:constraints>
   <fela:constraint name="DirectNonWeldedPressure">
     <fela:annotation>
       <fela:normativeText>
@@ -168,5 +169,6 @@
       </fela:and>
     </fela:expression>
   </fela:constraint>
+</fela:constraints>
 
 </fela:idcs>

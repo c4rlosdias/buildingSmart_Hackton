@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ids:ids xmlns:ids="http://standards.buildingsmart.org/IDS"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://standards.buildingsmart.org/IDS ids.xsd">
+
+  <ids:info>
+    <ids:title>FELA Fire Extinguisher IDS</ids:title>
+    <ids:description>
+      IDS specification derived from FELA ontology for portable fire extinguishers.
+      Includes all requirements expressible in IDS.
+    </ids:description>
+    <ids:author>fela@infobim.org</ids:author>
+  </ids:info>
+
+  <ids:specifications>
+
+    <!-- ===================================================== -->
+    <!-- CORE PROPERTIES -->
+    <!-- ===================================================== -->
+
+    <ids:specification
+      name="Fire Extinguisher Core Properties"
+      ifcVersion="IFC4 IFC4X3_ADD2"
+      description="Basic data required for all extinguisher definitions."
+      instructions="Fire extinguishers shall be properly identified and classified according to their type, extinguishing capacity, certification status and agent mass. Source: FELA ontology derived from ABNT NBR 15808.">
+
+      <ids:applicability>
+        <ids:entity>
+          <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
+        </ids:entity>
+      </ids:applicability>
+
+      <ids:requirements>
+
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>ExtinguisherType</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>ExtinguishingCapacity</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+        <ids:property dataType="IFCBOOLEAN">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>IsCertified</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+        <ids:property dataType="IFCMASSMEASURE">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>AgentMass</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+      </ids:requirements>
+
+    </ids:specification>
+
+    <!-- ===================================================== -->
+    <!-- TYPE ENUMERATION -->
+    <!-- ===================================================== -->
+
+    <ids:specification
+      name="Allowed Extinguisher Types"
+      ifcVersion="IFC4 IFC4X3_ADD2"
+      description="Restricts extinguisher types to standardised agent families."
+      instructions="The extinguishing agent type shall belong to the recognised extinguisher categories. Source: FELA ontology.">
+
+      <ids:applicability>
+        <ids:entity>
+          <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
+        </ids:entity>
+      </ids:applicability>
+
+      <ids:requirements>
+
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>ExtinguisherType</ids:simpleValue></ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Water"/>
+              <xs:enumeration value="CO2"/>
+              <xs:enumeration value="Foam"/>
+              <xs:enumeration value="DryChemicalABC"/>
+              <xs:enumeration value="DryChemicalBC"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+
+      </ids:requirements>
+
+    </ids:specification>
+
+    <!-- ===================================================== -->
+    <!-- CERTIFICATION -->
+    <!-- ===================================================== -->
+
+    <ids:specification
+      name="Certification Requirement"
+      ifcVersion="IFC4 IFC4X3_ADD2"
+      description="Ensures certification is explicitly declared and true."
+      instructions="All extinguishers shall be certified. Source: FELA ontology.">
+
+      <ids:applicability>
+        <ids:entity>
+          <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
+        </ids:entity>
+      </ids:applicability>
+
+      <ids:requirements>
+
+        <ids:property dataType="IFCBOOLEAN">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>IsCertified</ids:simpleValue></ids:baseName>
+          <ids:value><ids:simpleValue>true</ids:simpleValue></ids:value>
+        </ids:property>
+
+      </ids:requirements>
+
+    </ids:specification>
+
+    <!-- ===================================================== -->
+    <!-- CAPACITY FORMAT -->
+    <!-- ===================================================== -->
+
+    <ids:specification
+      name="Capacity Format"
+      ifcVersion="IFC4 IFC4X3_ADD2"
+      description="Validates extinguisher rating string format."
+      instructions="The extinguishing capacity shall follow standard rating notation. Source: FELA ontology.">
+
+      <ids:applicability>
+        <ids:entity>
+          <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
+        </ids:entity>
+      </ids:applicability>
+
+      <ids:requirements>
+
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>ExtinguishingCapacity</ids:simpleValue></ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="^([0-9]+A)?(:[0-9]+B)?(:C)?$"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+
+      </ids:requirements>
+
+    </ids:specification>
+
+    <!-- ===================================================== -->
+    <!-- MECHANICAL DATA PRESENCE -->
+    <!-- ===================================================== -->
+
+    <ids:specification
+      name="Mechanical Properties Presence"
+      ifcVersion="IFC4 IFC4X3_ADD2"
+      description="Required input for IDCS pressure rules."
+      instructions="Mechanical properties required for pressure resistance verification shall be provided. Source: FELA ontology.">
+
+      <ids:applicability>
+        <ids:entity>
+          <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
+        </ids:entity>
+      </ids:applicability>
+
+      <ids:requirements>
+
+        <ids:property dataType="IFCPRESSUREMEASURE">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Mechanical</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>BurstPressure</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+        <ids:property dataType="IFCPRESSUREMEASURE">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Mechanical</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>NominalChargingPressure</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Mechanical</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>PressurisationMode</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Mechanical</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>JointType</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+      </ids:requirements>
+
+    </ids:specification>
+
+    <!-- ===================================================== -->
+    <!-- INSTALLATION + CONTEXT -->
+    <!-- ===================================================== -->
+
+    <ids:specification
+      name="Installation and Context Data"
+      ifcVersion="IFC4 IFC4X3_ADD2"
+      description="Provides input data for spatial and contextual rules."
+      instructions="Installation and contextual properties required for compliance shall be provided. Source: FELA ontology.">
+
+      <ids:applicability>
+        <ids:entity>
+          <ids:name><ids:simpleValue>IfcFireSuppressionTerminalType</ids:simpleValue></ids:name>
+        </ids:entity>
+      </ids:applicability>
+
+      <ids:requirements>
+
+        <ids:property>
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Installation</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>RiskClass</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+        <ids:property dataType="IFCLENGTHMEASURE">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Installation</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>MountingHeight</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+        <ids:property dataType="IFCLENGTHMEASURE">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_Spatial</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>MaxTravelDistance</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+        <ids:property>
+          <ids:propertySet><ids:simpleValue>Pset_FireSafety_Context</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>FireClass</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+        <ids:property dataType="IFCDATE">
+          <ids:propertySet><ids:simpleValue>Pset_FireExtinguisher_FELA</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>HydrostaticTestDate</ids:simpleValue></ids:baseName>
+        </ids:property>
+
+      </ids:requirements>
+
+    </ids:specification>
+
+  </ids:specifications>
+</ids:ids>
