@@ -7,7 +7,7 @@ class IFC_PT_PainelPrincipal(bpy.types.Panel):
     bl_idname = "IFC_PT_painel_principal"
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
-    bl_category = "IFC"
+    bl_category = "Deterministic IA IFC"
 
     def draw(self, context):
         layout = self.layout
@@ -18,30 +18,34 @@ class IFC_PT_PainelPrincipal(bpy.types.Panel):
             if bim_path:
                 layout.label(text="IFC carregado:", icon="CHECKMARK")
                 layout.label(text=os.path.basename(bim_path))
+                layout.label(text="Select specification file:")
+                layout.prop(props, "specfilepath", text="")
+                layout.separator()
+                layout.label(text="Select infobim capability:")
+                layout.prop(props, "capabilities", text="")
+
+                layout.separator()
+                layout.operator("ifc.executar_externo", icon="PLAY")
+
+                layout.separator()
+                self.layout.template_list(
+                    "IFC_UL_ElementList",
+                    "",
+                    props,
+                    "elements",
+                    props,
+                    "element_index"
+                )
+                box = layout.box()
+                box.label(text="Resultado da última execução:", icon="INFO")
+
             else:
                 layout.label(text="No IFC loaded in Bonsai", icon="ERROR")
-                layout.label(text="Select manually:")
-                layout.prop(props, "filepath", text="")
-        else:
-            layout.label(text="Select manually:")
-            layout.prop(props, "filepath", text="")
 
-        layout.prop(props, "filepath", text="")
-        layout.separator()
-        layout.label(text="Select infobim capability:")
-        layout.prop(props, "capabilities", text="")
 
-        layout.separator()
-        layout.operator("ifc.executar_externo", icon="PLAY")
+class IFC_UL_ElementList(bpy.types.UIList):
+    def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index):
+        if item:
+            layout.label(text=f"Name: {item.name} | GlobalId: {item.global_id}")
 
-        layout.separator()
-        box = layout.box()
-        box.label(text="Resultado da última execução:", icon="INFO")
-        if len(props.elements) > 0:
-            for elem in props.elements:
-                row = box.row(align=True)
-                row.label(text=f"Name:{elem.name} | GlobalId: {elem.global_id}")
-                row.label(text=elem.info)
-        
-        else:
-            box.label(text="(sem resultado ainda)", icon="BLANK1")
+

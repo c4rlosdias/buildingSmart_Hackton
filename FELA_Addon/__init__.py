@@ -26,9 +26,9 @@ import os
 addon_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(addon_dir, "Lib", "site-packages"))
 
-from .properties import IFC_PG_Propriedades, Element
-from .operators import IFC_OT_ExecutarExterno
-from .panels import IFC_PT_PainelPrincipal
+from .properties import *
+from .operators import *
+from .panels import *
 
 # ------------------------------------------------------------------
 # Registro
@@ -37,7 +37,9 @@ classes = (
     Element,
     IFC_PG_Propriedades,
     IFC_OT_ExecutarExterno,
+    IFC_UL_ElementList,
     IFC_PT_PainelPrincipal,
+    
 )
 
 
